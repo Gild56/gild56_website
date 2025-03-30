@@ -1,0 +1,36 @@
+nav {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+nav a {
+    font-weight: bolder;
+    font-size: 200%;
+    background-color: #ffffff;
+    border-bottom: 5px solid transparent;
+    color: #0000bc;
+    padding: 8px;
+    margin: 0;
+    text-decoration: none;
+    transition: 0.15s;
+    display: flex;
+    justify-content: flex-end;
+    display: inline;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+nav a:hover {
+    color: #00064b;
+    transition: .15s;
+}
+
+.current {
+    color: #00064b;
+    border-color: #00064b;
+}

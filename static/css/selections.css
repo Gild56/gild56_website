@@ -1,0 +1,44 @@
+nav a::selection,
+header h1::selection,
+footer li::selection,
+footer p::selection,
+footer h2::selection,
+footer strong::selection {
+    color: #ffffff;
+    background-color: #0037ff;
+}
+
+main li::selection,
+main p::selection,
+main b::selection,
+main i::selection,
+main h1::selection,
+main h2::selection,
+main h3::selection,
+main button::selection,
+main button b::selection,
+textarea::selection,
+input::selection,
+summary::selection,
+.name::selection,
+.link::selection,
+img::selection {
+    color: #0037ff;
+    background-color: #ffffff;
+}
+
+footer a::selection,
+main a::selection {
+    color: #0037ff;
+    background-color: #00aaff;
+}
+
+.path::selection {
+    color: #ffffff;
+    background-color: #4c4c4c;
+}
+
+.red::selection {
+    color: #ffffff;
+    background-color: #770000;
+}

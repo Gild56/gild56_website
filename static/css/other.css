@@ -1,0 +1,57 @@
+.big-margin-bottom {
+    margin-bottom: 4em;
+}
+
+#screenshot {
+    margin-top: 3em;
+    margin-left: 2em;
+    margin-bottom: 0;
+}
+
+#screenshot img {
+    border: 5px solid #00064b;
+    border-radius: 2em;
+    height: 35%;
+}
+
+.path {
+    background-color: #5454ff;
+}
+
+.big {
+    font-size: 300%;
+    margin-bottom: 0;
+}
+
+.medium {
+    font-size: 200%;
+    margin-top: 0;
+}
+
+.red {
+    font-weight: bolder;
+    color: #770000
+}
+
+.no-bg {
+    background-color: transparent !important;
+}
+
+.no-bg:hover {
+    background-color: transparent !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.subimt {
+    padding: 0.2em !important;
+    margin-bottom: 0.5em;
+}
+
+.fit {
+    width: 30px !important;
+    height: 30px !important;
+    transform: translateY(15px);
+}

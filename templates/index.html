@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz Master | Home Page</title>
+        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+
+        <meta name="description" content="Quiz Master is an open-source cross-platform quiz game. It's fully personnalisable and customizable.">
+        <meta name="author" content="Gild56">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Quiz Master">
+        <meta property="og:description" content="Ever wanted to create quizes to play with friends? It's the opportunity to have an open-source cross-platform project. It's fully customizable, personnalisable and very easy to use. Try it now!">
+        <meta property="og:image" content="{{ url_for('static', filename='images/banner.ico') }}">
+        <meta property="og:url" content="https://quizmaster.devatlant.com">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="{{ url_for('index') }}" class="current">Home</a>
+                <a href="{{ url_for('help') }}">Help</a>
+                <a href="{{ url_for('download') }}">Download</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('community') }}">Community</a>
+                {% if logged_in %}
+                    <a href="{{ url_for('log_out') }}">Log Out</a>
+                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+                {% else %}
+                    <a href="{{ url_for('log_in') }}">Log In</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            <div class="columns">
+                <div>
+                    <h1 class="big">Quiz Master</h1>
+                    <h2 class="medium">by Gild56</h2>
+                    <p>
+                        Quiz Master is a <b>cross-platform</b> <i>(for iOS, Android & Windows)</i> project. You can <b>complete tests</b>, <b>collect points</b>, <b>presonalize all</b> for your taste, listen your <b>favorite music</b> and much <i>more</i>!
+                    </p>
+                </div>
+                <div id="screenshot">
+                    <img src="{{ url_for('static', filename='images/screenshot.png') }}">
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="columns">
+                <address>
+                    <p><strong>Author:</strong> Gild56</p>
+                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
+                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
+                </address>
+
+                <section class="right column">
+                    <p class="big-margin-bottom">
+                        All rights reserved. &copy Gild56 <br>To ask for permissions, please write me an email.
+                    </p>
+                    <p>
+                        <strong>Follow me:</strong>
+                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
+                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
+                    </p>
+                </section>
+            </div>
+        </footer>
+    </body>
+</html>

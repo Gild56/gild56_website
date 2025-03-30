@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz Master | Download Page</title>
+        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+
+        <meta name="author" content="Gild56">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('help') }}">Help</a>
+                <a href="{{ url_for('download') }}" class="current">Download</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('community') }}">Community</a>
+                {% if logged_in %}
+                    <a href="{{ url_for('log_out') }}">Log Out</a>
+                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+                {% else %}
+                    <a href="{{ url_for('log_in') }}">Log In</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            <section>
+                <h1>Windows</h1>
+                <p>
+                    <a href="https://github.com/Gild56/quizmaster/releases/download/v1.0.0/Quiz.Master.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
+                    A <b>.EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
+                </p>
+                <p>
+                    <a href="https://github.com/Gild56/quizmaster/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
+                    A <b>.ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you can run the <span class="path">quizmaster/command/play.vbs</span>.
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h1>Android</h1>
+                <p>
+                    The Android version of this project is <span class="red">not yet available</span>. But it's coming soon!<br>
+                    An <b>.APK</b> is executable format used by Android (Samsung, Google Pixel, Poco, Huawei, Xiaomi (Mi), Nokia, etc) phones and tablets.
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h1>iOS</h1>
+                <p>
+                    iOS are Apple's phones and tablets (iPhone and iPad).<br>
+                    The iOS version of this project is <span class="red">not yet available</span>. But it's coming soon!
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h1>MacOS</h1>
+                <p>
+                    MacOS are Apple's desktops and laptops (iMac and MacBook)<br>
+                    The iOS version of this project is <span class="red">not yet available</span>. But it's coming soon!<br>
+                    If you are a developper, you can download the <b>.ZIP</b>, install python, kivy and pandas and try to open the <span class="path">quizmaster/app/main.py</span> file.
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h1>Linux</h1>
+                <p>
+                    Linux is a (Ubuntu, Linux Mint, Fedora, Debian, etc) .<br>
+                    The Linux version of this project is <span class="red">not yet available</span>. But it's coming soon!<br>
+                    If you are a developper, you can download the <b>.ZIP</b>, install python, kivy and pandas and try to open the <span class="path">quizmaster/app/main.py</span> file.
+                </p>
+            </section>
+        </main>
+        <footer>
+            <div class="columns">
+                <address>
+                    <p><strong>Author:</strong> Gild56</p>
+                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
+                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
+                </address>
+
+                <section class="right column">
+                    <p class="big-margin-bottom">
+                        All rights reserved. &copy Gild56<br>To ask for permissions, please write me an email.
+                    </p>
+                    <p>
+                        <strong>Follow me:</strong>
+                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
+                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
+                    </p>
+                </section>
+            </div>
+        </footer>
+    </body>
+</html>

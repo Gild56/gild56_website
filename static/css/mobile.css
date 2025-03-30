@@ -1,0 +1,65 @@
+@media screen and (max-width: 600px) {
+    .columns {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    main {
+        margin-top: 0;
+        margin-left: 2em;
+        margin-right: 0;
+    }
+
+    header {
+        padding: 5px;
+        position: sticky;
+        top: 0px;
+    }
+
+    nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0px;
+    }
+
+    nav a {
+        margin: 0;
+        padding: 0;
+        margin-left: 0.5em;
+        font-size: 100%;
+    }
+
+    .right {
+        text-align: left;
+    }
+
+    .big-margin-bottom {
+        margin: 0;
+    }
+
+    footer p {
+        margin: 2px;
+    }
+
+    #screenshot {
+        margin: 0;
+    }
+
+    #screenshot img {
+        border-radius: 1em;
+        height: 200px;
+    }
+
+    .big-img-container {
+        margin: 0;
+    }
+
+    .bio {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    .bigger-margin-bottom {
+        margin-bottom: 2em;
+    }
+}

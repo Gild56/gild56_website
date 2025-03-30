@@ -1,0 +1,71 @@
+/* Main */
+main a {
+    color:#0037ff;
+    background-color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.15s;
+}
+
+main a:hover {
+    text-decoration: none;
+    color: #000755;
+}
+
+main a:active {
+    color: #000329;
+}
+
+
+/* Form */
+
+form a:hover {
+    text-decoration: none;
+    color: #000755;
+}
+
+form a:active {
+    color: #000329;
+}
+
+
+/*Footer*/
+footer a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #0037ff;
+    font-weight: bold;
+    transition: 0.15s;
+}
+
+footer a:hover {
+    color: #000755;
+}
+
+footer a:active {
+    color: #000329;
+}
+
+/* Comments */
+
+div.post a {
+    color:#ffffff;
+    background-color: inherit;
+    text-decoration: none;
+    font-weight: normal;
+    transition: 0.15s;
+}
+
+div.post a:hover {
+    color:#ffffff;
+    background-color: inherit;
+    text-decoration: underline;
+    font-weight: normal
+}
+
+div.post a:active {
+    color:#ffffff;
+    background-color: inherit;
+    text-decoration: underline;
+    font-weight: normal
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz Master | Contact Page</title>
+        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+
+        <meta name="author" content="Gild56">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('help') }}">Help</a>
+                <a href="{{ url_for('download') }}">Download</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}" class="current">Contact</a>
+                <a href="{{ url_for('community') }}">Community</a>
+                {% if logged_in %}
+                    <a href="{{ url_for('log_out') }}">Log Out</a>
+                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+                {% else %}
+                    <a href="{{ url_for('log_in') }}">Log In</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            <section>
+                <h1>Contact</h1>
+                <p>
+                    If you have a suggestion or a bug, you can contact me on
+                    <a href="mailto:gild56gmd@gmail.com" target="_blank">Mail</a>,
+                    <a href="https://t.me/gild56" target="_blank">Telegram</a> or
+                    <a href="https://discord.com/users/gild56" target="_blank">Discord</a>.<br>
+                    Please, don't spam stupid things.
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h1>GitHub</h1>
+                <p>
+                    If you have a suggestion, a bug or a pull-request, you can also visit the
+                    <a href="github.com/Gild56/quizmaster" target="_blank">GitHup page of the project</a>.
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h1>YouTube</h1>
+                <p>
+                    Finally, you can visit my
+                    <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube channel</a>.<br>
+                    Subscribe please ;)
+                </p>
+            </section>
+        </main>
+        <footer>
+            <div class="columns">
+                <address>
+                    <p><strong>Author:</strong> Gild56</p>
+                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
+                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
+                </address>
+
+                <section class="right column">
+                    <p class="big-margin-bottom">
+                        All rights reserved. &copy Gild56<br>To ask for permissions, please write me an email.
+                    </p>
+                    <p>
+                        <strong>Follow me:</strong>
+                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
+                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
+                    </p>
+                </section>
+            </div>
+        </footer>
+    </body>
+</html>

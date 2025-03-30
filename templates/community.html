@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz Master | Community</title>
+        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/textarea.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+
+        <meta name="author" content="Gild56">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('help') }}">Help</a>
+                <a href="{{ url_for('download') }}">Download</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('community') }}" class="current">Community</a>
+                {% if logged_in %}
+                    <a href="{{ url_for('log_out') }}">Log Out</a>
+                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+                {% else %}
+                    <a href="{{ url_for('log_in') }}">Log In</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            <a id="refresh" href="{{ url_for('community') }}" class="link">
+                <img src="{{ url_for('static', filename='images/reload.png') }}" width="50">
+            </a>
+            {% if logged_in %}
+                <h1 class="no-margin-bottom">Statistics:</h1>
+                <p>
+                    There are <b>{{ users_count }}</b> users registered and <b>{{ posts_and_comments_count }}</b> posts and comments published.<br>
+                    {% if role == "user" %}
+                        You are a user.
+                    {% else %}
+                        You are an admin.
+                    {% endif %}
+                </p>
+                <hr>
+                <h1>Create a post:</h1>
+                <form method="post" action="{{ url_for('community') }}" class="margin-bottom">
+                    <p><textarea id="input-post-text" name="input_post_text" placeholder="Write your post here..."></textarea></p>
+                    <button type="submit">Publish</button>
+                </form>
+            {% else %}
+                <h1>You need to <a href="{{ url_for('log_in') }}">log in</a> to create a post.</h1>
+            {% endif %}
+
+            <hr>
+            <h1>Posts:</h1>
+            {% for post in posts %}
+                <div class="post">
+                    <div class="row">
+                        <div class="img-container">
+                            <a href="{{ url_for('user_profile', profile=post[2]) }}" class="no-bg no-margin">
+                                <img src="{{ get_img(post[2]) }}" height="20", width="20">
+                            </a>
+                        </div>
+                        <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
+                        <a class="link" href="{{ url_for('copy_link', post_id=post[0]) }}">Copy Link</a>
+                        {% if logged_in %}
+                            <a class="link" href="{{ url_for('post', post_id=post[0]) }}">Answer</a>
+                        {% endif %}
+                        {% if role == "admin" or username == post[2] %}
+                            <a class="red link" href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
+                        {% endif %}
+                    </div>
+
+                    <h3>{{ post[1] }}</h3>
+
+                    {% if post[0] in comments_post_ids %}
+                        <details><summary>Read comments...</summary>
+                    {% endif %}
+
+                    {% for comment in comments %}
+                        {% if comment[2] == post[0] %}
+                            <div class="comment">
+                                <div class="row">
+                                    <div class="img-container">
+                                        <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">
+                                            <img src="{{ get_img(comment[3]) }}" height="20", width="20">
+                                        </a>
+                                    </div>
+                                    <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">{{ comment[3] }}</a>
+                                    {% if role == "admin" or username == comment[3] %}
+                                        <a class="red link" href="{{ url_for('delete_comment', comment_id=comment[0]) }}">Delete</a>
+                                    {% endif %}
+                                </div>
+                                <h3>{{ comment[1] }}</h3>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </details>
+                </div>
+            {% endfor %}
+        </main>
+        <footer>
+            <div class="columns">
+                <address>
+                    <p><strong>Author:</strong> Gild56</p>
+                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
+                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
+                </address>
+
+                <section class="right column">
+                    <p class="big-margin-bottom">
+                        All rights reserved. &copy Gild56 <br>To ask for permissions, please write me an email.
+                    </p>
+                    <p>
+                        <strong>Follow me:</strong>
+                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
+                        <a href="https://youtu5be.com/@gild56gmd" target="_blank">YouTube</a>
+                    </p>
+                </section>
+            </div>
+        </footer>
+        <script src="{{ url_for('static', filename='js/placeHolder.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/lockRefreshButton.js') }}"></script>
+    </body>
+</html>

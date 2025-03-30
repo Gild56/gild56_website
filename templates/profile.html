@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz Master | {{ profile }}</title>
+        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/textarea.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+
+        <meta name="author" content="Gild56">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('help') }}">Help</a>
+                <a href="{{ url_for('download') }}">Download</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('community') }}">Community</a>
+                {% if my_profile and logged_in %}
+                    <a href="{{ url_for('log_out') }}">Log Out</a>
+                    <a href="{{ url_for('user_profile', profile=username) }}" class="current">{{ username }}</a>
+                {% elif logged_in %}
+                    <a href="{{ url_for('log_out') }}">Log Out</a>
+                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+                {% else %}
+                    <a href="{{ url_for('log_in') }}">Log In</a>
+                {% endif %}
+            </nav>
+        </header>
+        <main>
+            <div class="columns">
+                <div>
+                    <div class="row">
+                        <h1 class="big no-margin">{{ profile }}</h1>
+                        {% if role == "admin" or username == profile %}
+                            <a class="medium red link" href="{{ url_for('delete_user', profile=profile) }}">Delete</a>
+                        {% endif %}
+                        {% if role == "admin" and profile_role == "user" %}
+                            <a class="medium link" href="{{ url_for('change_role', profile=profile) }}">Make admin</a>
+                        {% endif %}
+                        {% if role == "admin" and profile_role == "admin" %}
+                            <a class="medium link" href="{{ url_for('change_role', profile=profile) }}">Make user</a>
+                        {% endif %}
+                    </div>
+                    <p class="post bio">{{ bio }}</p>
+                </div>
+                <div>
+                    <div class="big-img-container">
+                        <img src="{{ get_img(profile) }}" height="130", width="130">
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="no-margin-bottom">Statistics:</h1>
+            <p>
+                {{ profile }} wrote {{ posts_count }} posts.<br>
+                {% if get_role(profile) == "user" %}
+                    He is a user.
+                {% else %}
+                    He is an admin.
+                {% endif %}
+            </p>
+            <hr>
+
+            {% if my_profile %}
+                <form method="post" action="{{ url_for('user_profile', profile=profile) }}" class="margin-bottom">
+                    <h1>Edit bio:</h1>
+                    <p><textarea id="input-bio" name="input_bio" placeholder="Write your bio here..."></textarea></p>
+                    <button type="submit">Publish</button>
+                    <hr>
+                </form>
+            {% endif %}
+
+            {% if theres_posts %}
+                <h1>Posts:</h1>
+                {% for post in posts %}
+                    {% if post[2] == profile %}
+                        <div class="post">
+                            <div class="row">
+                                <div class="img-container">
+                                    <img src="{{ get_img(post[2]) }}" height="20", width="20">
+                                </div>
+                                <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
+                                <a class="link" href="{{ url_for('copy_link', post_id=post[0]) }}">Copy Link</a>
+                                {% if role == "admin" or username == post[2] %}
+                                    <a class="red link" href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
+                                {% endif %}
+                            </div>
+
+                            <h3>{{ post[1] }}</h3>
+
+                            {% if post[0] in comments_post_ids %}
+                                <details><summary>Read comments...</summary>
+                            {% endif %}
+
+                            {% for comment in comments %}
+                                {% if comment[2] == post[0] %}
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="img-container">
+                                                <img src="{{ get_img(comment[3]) }}" height="20", width="20">
+                                            </div>
+                                            <h1 class="small">{{ comment[3] }}</h1>
+                                            {% if role == "admin" or username == comment[3] %}
+                                                <a class="red link" href="{{ url_for('delete_comment',comment_id=comment[0]) }}">Delete</a>
+                                            {% endif %}
+                                        </div>
+                                        <h3>{{ comment[1] }}</h3>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            </details>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h3 class="bigger-margin-bottom">There's not yet posts from {{ profile }}.</h3>
+            {% endif %}
+        </main>
+        <footer>
+            <div class="columns">
+                <address>
+                    <p><strong>Author:</strong> Gild56</p>
+                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
+                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
+                </address>
+
+                <section class="right column">
+                    <p class="big-margin-bottom">
+                        All rights reserved. &copy Gild56 <br>To ask for permissions, please write me an email.
+                    </p>
+                    <p>
+                        <strong>Follow me:</strong>
+                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
+                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
+                    </p>
+                </section>
+            </div>
+        </footer>
+        <script src="{{ url_for('static', filename='js/placeHolder.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/movePageUp.js') }}"></script>
+    </body>
+</html>

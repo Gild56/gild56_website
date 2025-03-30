@@ -1,0 +1,20 @@
+address {
+    text-align: left;
+    font-style: normal;
+}
+
+.right {
+    text-align: right;
+}
+
+.columns {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+footer .columns {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}

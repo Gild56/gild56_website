@@ -1,0 +1,27 @@
+textarea {
+    left: 20px;
+    width: 100%;
+    height: 5em;
+    padding: 10px;
+    border: 4px solid #ffffff;
+    border-radius: 20px;
+    overflow-y: auto;
+    background-color: #0000cb;
+    resize: none;
+    font-size: 1rem;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+textarea::grammar-error {
+    color: red;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+textarea::placeholder {
+    color: #58d8ff;
+    font-style: italic;
+}
