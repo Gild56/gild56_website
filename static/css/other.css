@@ -2,20 +2,11 @@
     margin-bottom: 4em;
 }
 
-#screenshot {
-    margin-top: 3em;
-    margin-left: 2em;
-    margin-bottom: 0;
-}
-
-#screenshot img {
-    border: 5px solid #00064b;
-    border-radius: 2em;
-    height: 35%;
-}
-
 .path {
     background-color: #5454ff;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
 }
 
 .big {
@@ -24,12 +15,11 @@
 }
 
 .medium {
-    font-size: 200%;
+    font-size: 150%;
     margin-top: 0;
 }
 
 .red {
-    font-weight: bolder;
     color: #770000
 }
 
@@ -54,4 +44,37 @@
     width: 30px !important;
     height: 30px !important;
     transform: translateY(15px);
+}
+
+.no-bold {
+    font-weight: normal !important;
+    font-size: 90%;
+}
+
+.margin-top {
+    margin-top: 2em !important;
+}
+
+.bigger-container {
+    font-size: 150%;
+}
+
+#drawing-container {
+    width: fit-content;
+    margin-right: 3em;
+}
+
+#drawing {
+    border-radius: 100px;
+    margin-left: 2em;
+}
+
+.screenshot {
+    margin-left: 1em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.small-margin-top {
+    margin-top: 20px !important;
 }

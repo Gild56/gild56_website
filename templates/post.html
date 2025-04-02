@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Quiz Master | Post</title>
+        <title>Gild56 | Post</title>
         <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/textarea.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
@@ -21,9 +22,7 @@
         <header>
             <nav>
                 <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('help') }}">Help</a>
-                <a href="{{ url_for('download') }}">Download</a>
-                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('games') }}">Games</a>
                 <a href="{{ url_for('contact') }}">Contact</a>
                 <a href="{{ url_for('community') }}">Community</a>
                 <a href="{{ url_for('log_out') }}">Log Out</a>
@@ -41,8 +40,8 @@
             <div class="post">
                 <div class="row">
                     <div class="img-container">
-                        <a href="{{ url_for('user_profile', profile=post[2]) }}" class="no-bg no-margin">
-                            <img src="{{ get_img(post[2]) }}" height="20", width="20">
+                        <a href="{{ url_for('user_profile', profile=post[2]) }}" class="no-bg no-margin no-padding">
+                            <img src="{{ get_pfp(post[2]) }}" height="20", width="20">
                         </a>
                     </div>
                     <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
@@ -59,8 +58,8 @@
                         <div class="comment">
                             <div class="row">
                                 <div class="img-container">
-                                    <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">
-                                        <img src="{{ get_img(comment[3]) }}" height="20", width="20">
+                                    <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin no-padding">
+                                        <img src="{{ get_pfp(comment[3]) }}" height="20", width="20">
                                     </a>
                                 </div>
                                 <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">{{ comment[3] }}</a>

@@ -19,7 +19,6 @@ header {
     padding: 1em 0;
     display: flex;
     align-items: center;
-    background-color: #ffffff;
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
     position: fixed;
@@ -41,16 +40,17 @@ footer {
 }
 
 main {
-    margin-left: 5em;
-    margin-right: 5em;
+    padding-top: 5em;
+    padding-left: 5em;
+    padding-right: 5em;
     color: #ffffff;
-    margin-top: 5em;
     flex: 1;
+    margin-bottom: 1em;
 }
 
 h1, h2, nav a {
     letter-spacing: 0.5px;
-    font-weight: lighter;
+    font-weight: 900;
 }
 
 hr {

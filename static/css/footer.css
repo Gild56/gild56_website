@@ -13,6 +13,18 @@ address {
     margin: 0;
 }
 
+.columns-space-between {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.persistent-columns {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+}
+
 footer .columns {
     display: flex;
     justify-content: space-between;

@@ -14,6 +14,6 @@ We built a special docker image for running with special embeded python.
 
 ## Website
 
-The current version of the Quizmaster Website is hosted [here](https://misha.devatlant.com).
+The current version of the Gild56 Website is hosted [here](https://misha.devatlant.com).
 
 Feel free to make a post :3

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Quiz Master | Home Page</title>
+        <title>Gild56 | Home Page</title>
         <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
@@ -12,22 +12,20 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
 
-        <meta name="description" content="Quiz Master is an open-source cross-platform quiz game. It's fully personnalisable and customizable.">
+        <meta name="description" content="Gild56's personal website. Welcome! :D">
         <meta name="author" content="Gild56">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:title" content="Quiz Master">
-        <meta property="og:description" content="Ever wanted to create quizes to play with friends? It's the opportunity to have an open-source cross-platform project. It's fully customizable, personnalisable and very easy to use. Try it now!">
+        <meta property="og:title" content="Gild56">
+        <meta property="og:description" content="Gild56's personal website. Welcome! :D">
         <meta property="og:image" content="{{ url_for('static', filename='images/banner.ico') }}">
-        <meta property="og:url" content="https://quizmaster.devatlant.com">
+        <meta property="og:url" content="https://misha.devatlant.com">
     </head>
     <body>
         <header>
             <nav>
                 <a href="{{ url_for('index') }}" class="current">Home</a>
-                <a href="{{ url_for('help') }}">Help</a>
-                <a href="{{ url_for('download') }}">Download</a>
-                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('games') }}">Games</a>
                 <a href="{{ url_for('contact') }}">Contact</a>
                 <a href="{{ url_for('community') }}">Community</a>
                 {% if logged_in %}
@@ -39,18 +37,18 @@
             </nav>
         </header>
         <main>
-            <div class="columns">
-                <div>
-                    <h1 class="big">Quiz Master</h1>
-                    <h2 class="medium">by Gild56</h2>
-                    <p>
-                        Quiz Master is a <b>cross-platform</b> <i>(for iOS, Android & Windows)</i> project. You can <b>complete tests</b>, <b>collect points</b>, <b>presonalize all</b> for your taste, listen your <b>favorite music</b> and much <i>more</i>!
-                    </p>
+            <div class="persistent-columns small-margin-top">
+                <div class="column">
+                    <h1 class="big no-margin">Gild56</h1>
+                    <h2 class="medium">Mykhailo Pankin</h2>
                 </div>
-                <div id="screenshot">
-                    <img src="{{ url_for('static', filename='images/screenshot.png') }}">
+                <div class="column" id="drawing-container">
+                    <img height="100px" id="drawing" src=" {{ url_for('static', filename='images/drawing.jpg') }} ">
                 </div>
             </div>
+            <p class="no-margin">
+                My name is Mykhailo Pankin. I'm a Python coder and a Geometry Dash player from Ukraine living in France. That's my personal website. Have fun!
+            </p>
         </main>
         <footer>
             <div class="columns">

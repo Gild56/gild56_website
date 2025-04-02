@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Quiz Master | Page not found</title>
+        <title>Gild56 | Page not found</title>
         <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
@@ -19,9 +19,7 @@
         <header>
             <nav>
                 <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('help') }}">Help</a>
-                <a href="{{ url_for('download') }}">Download</a>
-                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('games') }}">Games</a>
                 <a href="{{ url_for('contact') }}">Contact</a>
                 <a href="{{ url_for('community') }}">Community</a>
                 {% if logged_in %}
@@ -32,12 +30,13 @@
                 {% endif %}
             </nav>
         </header>
-        <main align="center">
-            <p><img src="{{ url_for('static', filename='images/404error.png') }}" heigt="200" width="200"></p>
-            <h2>
-                This is not the page you are looking for.<br>
-                <a href="{{ url_for('index') }}">Return to the home page.</a>
-            </h2>
+        <main align="center" class="no-margin">
+            <div class="bigger-container">
+                <h1 class="big margin-top">404 Error</h1>
+                <h2 class="medium">Page Not Found</h2>
+                <h2 class="no-bold">This is not the page you are looking for.</h2>
+                <h2 class="no-bold"><a href="{{ url_for('index') }}">Return to the home page.</a></h2>
+            </div>
         </main>
         <footer>
             <div class="columns">

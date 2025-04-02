@@ -20,6 +20,7 @@
 .post h3 {
     margin-top: 0.5em;
     margin-bottom: 0;
+    font-weight: normal;
 }
 
 .comment {
@@ -57,6 +58,7 @@
 .post .row .name {
     margin-bottom: 0;
     font-size: large;
+    font-weight: 900;
 }
 
 summary {
@@ -107,19 +109,7 @@ details {
 }
 
 .big-img-container {
-    margin-left: 2em;
-}
-
-.big-img-container img {
-    border-radius: 65px;
-}
-
-.img-container {
-    margin-right: 0.5em;
-}
-
-.img-container img {
-    border-radius: 10px;
+    margin-right: 2em;
 }
 
 .no-margin-bottom {
@@ -142,6 +132,6 @@ details {
     background-color: transparent !important;
 }
 
-.medium {
-    font-size: larger;
+.no-padding {
+    padding: 0 !important;
 }

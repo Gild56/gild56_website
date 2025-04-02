@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Quiz Master | {{ profile }}</title>
+        <title>Gild56 | {{ profile }}</title>
         <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
@@ -22,9 +22,7 @@
         <header>
             <nav>
                 <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('help') }}">Help</a>
-                <a href="{{ url_for('download') }}">Download</a>
-                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('games') }}">Games</a>
                 <a href="{{ url_for('contact') }}">Contact</a>
                 <a href="{{ url_for('community') }}">Community</a>
                 {% if my_profile and logged_in %}
@@ -38,8 +36,13 @@
                 {% endif %}
             </nav>
         </header>
-        <main>
+        <main class="margin-top">
             <div class="columns">
+                <div>
+                    <div class="big-img-container">
+                        <img src="{{ get_pfp(profile) }}" height="130", width="130">
+                    </div>
+                </div>
                 <div>
                     <div class="row">
                         <h1 class="big no-margin">{{ profile }}</h1>
@@ -54,11 +57,6 @@
                         {% endif %}
                     </div>
                     <p class="post bio">{{ bio }}</p>
-                </div>
-                <div>
-                    <div class="big-img-container">
-                        <img src="{{ get_img(profile) }}" height="130", width="130">
-                    </div>
                 </div>
             </div>
 
@@ -89,7 +87,9 @@
                         <div class="post">
                             <div class="row">
                                 <div class="img-container">
-                                    <img src="{{ get_img(post[2]) }}" height="20", width="20">
+                                    <a href="{{ url_for('user_profile', profile=post[2]) }}" class="no-bg no-margin no-padding">
+                                        <img src="{{ get_pfp(post[2]) }}" height="20", width="20">
+                                    </a>
                                 </div>
                                 <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
                                 <a class="link" href="{{ url_for('copy_link', post_id=post[0]) }}">Copy Link</a>
@@ -109,9 +109,11 @@
                                     <div class="comment">
                                         <div class="row">
                                             <div class="img-container">
-                                                <img src="{{ get_img(comment[3]) }}" height="20", width="20">
+                                                <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">
+                                                    <img src="{{ get_pfp(comment[3]) }}" height="20", width="20">
+                                                </a>
                                             </div>
-                                            <h1 class="small">{{ comment[3] }}</h1>
+                                            <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">{{ comment[3] }}</a>
                                             {% if role == "admin" or username == comment[3] %}
                                                 <a class="red link" href="{{ url_for('delete_comment',comment_id=comment[0]) }}">Delete</a>
                                             {% endif %}

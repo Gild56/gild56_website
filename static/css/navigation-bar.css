@@ -9,7 +9,7 @@ nav {
 }
 
 nav a {
-    font-weight: bolder;
+    font-weight: 900;
     font-size: 200%;
     background-color: #ffffff;
     border-bottom: 5px solid transparent;
@@ -33,4 +33,5 @@ nav a:hover {
 .current {
     color: #00064b;
     border-color: #00064b;
+    border-width: 7px;
 }

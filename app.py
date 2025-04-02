@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 
 import pyperclip
@@ -45,10 +46,10 @@ def contact():
     )
 
 
-@app.route("/download")
-def download():
+@app.route("/games")
+def games():
     return render_template(
-        "download.html", logged_in=logged_in(),
+        "games.html", logged_in=logged_in(),
         username=get_username()
     )
 
@@ -86,11 +87,19 @@ def get_username() -> str | None:
     return session.get("account_login", None)
 
 
-def get_role() -> str | None:
+def get_role() -> str:
     try:
         return g.db.get_role(get_username())
     except Exception:
-        return None
+        return "user"
+
+
+def get_all_pfps() -> list:
+    all_pfps = os.listdir("static/images/cubes")
+    sorted_pfps = []
+    for pfp in all_pfps:
+        sorted_pfps.append(pfp.replace(".png", ""))
+    return sorted_pfps
 
 
 # Database functions
@@ -100,6 +109,7 @@ def before_request() -> None:
     if not hasattr(g, 'db'):
         g.db = DBScripts(db_name="site.db")
         g.db.connect()
+        g.db.create_tables()
 
 
 @app.teardown_appcontext
@@ -219,6 +229,8 @@ def sign_up():
         repeat_password = request.form["repeat_password"]
         email = request.form["email"]
 
+        ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+
         if g.db.user_exists(login):
             error_message = "User with this login already exists."
             return render_template(
@@ -233,7 +245,7 @@ def sign_up():
                 error_message=error_message
             )
 
-        g.db.add_user(login, password, email)
+        g.db.add_user(login, password, email, ip)
         session["account_login"] = login
         return redirect(url_for('community'))
 
@@ -262,8 +274,8 @@ def community():
     posts_and_comments_count = posts_count + comments_count
 
     @lru_cache(maxsize=None)
-    def get_img(user):
-        return url_for('static', filename=g.db.get_img(user))
+    def get_pfp(user):
+        return url_for('static', filename=g.db.get_pfp(user))
 
     comments_post_ids = []
     for comment in comments:
@@ -276,7 +288,7 @@ def community():
         username=get_username(),
         posts_and_comments_count=posts_and_comments_count,
         users_count=users_count, role=get_role(), comments=comments,
-        comments_post_ids=comments_post_ids, get_img=get_img,
+        comments_post_ids=comments_post_ids, get_pfp=get_pfp,
         get_comment_author=g.db.get_comment_author,
         get_post_author=g.db.get_post_author
     )
@@ -296,13 +308,13 @@ def post(post_id):
         return redirect(url_for('post', post_id=post_id))
 
     @lru_cache(maxsize=None)
-    def get_img(user):
-        return url_for('static', filename=g.db.get_img(user))
+    def get_pfp(user):
+        return url_for('static', filename=g.db.get_pfp(user))
 
     return render_template(
         "post.html", post=g.db.get_post(post_id), logged_in=logged_in(),
         username=get_username(), role=get_role(), comments=g.db.get_comments(),
-        get_img=get_img, get_comment_author=g.db.get_comment_author,
+        get_pfp=get_pfp, get_comment_author=g.db.get_comment_author,
         get_post_author=g.db.get_post_author
     )
 
@@ -320,8 +332,8 @@ def user_profile(profile):
     bio = g.db.get_bio(profile)
 
     @lru_cache(maxsize=None)
-    def get_img(user):
-        return url_for('static', filename=g.db.get_img(user))
+    def get_pfp(user):
+        return url_for('static', filename=g.db.get_pfp(user))
 
     posts_count = 0
     for post in posts:
@@ -355,13 +367,13 @@ def user_profile(profile):
         'profile.html', username=get_username(),
         logged_in=logged_in(), my_profile=my_profile,
         posts=posts, comments=comments, profile=profile,
-        comments_post_ids=comments_post_ids, bio=bio, get_img=get_img,
+        comments_post_ids=comments_post_ids, bio=bio,
+        get_pfp=get_pfp, profile_role=g.db.get_role(profile),
         theres_posts=theres_posts, posts_count=posts_count,
         get_role=g.db.get_role, role=get_role(),
         get_comment_author=g.db.get_comment_author,
-        get_post_author=g.db.get_post_author,
-        profile_role=g.db.get_role(profile)
+        get_post_author=g.db.get_post_author
     )
 
 
-app.run(host="0.0.0.0")
+app.run(debug=True)  # ! host="0.0.0.0"

@@ -1,6 +1,5 @@
 import hashlib
 from typing import final
-from unidecode import unidecode
 from core.database import DataBase
 
 
@@ -30,12 +29,14 @@ class DBScripts(DataBase):
     - `get_comments()`
     - `get_post_author()`
     - `get_comment_author()`
+    - `get_pfp()`
     - `check_userdata()`
     - `user_exists()`
 
     Change data in the db:
     - `set_role()`
     - `set_bio()`
+    - `set_pfp()`
 
     Delete data from the db:
     - `delete_user()`
@@ -45,7 +46,6 @@ class DBScripts(DataBase):
     Static methods:
     - `hash_password()`
     - `verify_password()`
-    - `get_img()`
     """
 
     def __init__(self, **kwargs):
@@ -79,15 +79,6 @@ class DBScripts(DataBase):
             hashlib.sha256(provided_password.encode()).hexdigest()
         )
 
-    @staticmethod
-    def get_img(login: str) -> str:
-        """Returns image path with the first letter of the login."""
-        word = unidecode(login).lower()
-        word = word[0]
-        image_path = f"images/letters/{word}.png"
-
-        return image_path
-
     # DB scripts
 
     def check_userdata(self, login: str, password: str) -> bool:
@@ -101,11 +92,11 @@ class DBScripts(DataBase):
 
         return self.verify_password(hashed_password, password)
 
-    def add_user(self, login: str, password: str, email: str) -> None:
+    def add_user(self, login: str, password: str, email: str, ip: str) -> None:
         """Adds a user with parameters and hashes his password."""
         hashed_password = self.hash_password(password)
 
-        self.execute("add_user", [login, hashed_password, email])
+        self.execute("add_user", [login, hashed_password, email, ip])
         self.connection.commit()
 
     def add_post(self, content: str, author_name: str) -> None:
@@ -158,15 +149,22 @@ class DBScripts(DataBase):
         """Returns all the users from oldest to newest."""
         return self.execute("get_users")
 
-    def get_user(self, login) -> str | None:
+    def get_user(self, login: str) -> str | None:
         """Returns user's data by login."""
         return self.execute("get_user", [login], 1)
 
-    def get_bio(self, login) -> str | None:
+    def get_bio(self, login: str) -> str | None:
         """Returns user's bio by login."""
         data = self.execute("get_bio", [login], 1)
         if data is not None:
             return data[0]
+
+    def get_pfp(self, login: str) -> str:
+        """Returns image path with the first letter of the login."""
+        data = self.execute("get_user", [login], 1)
+        if data is not None:
+            return f"images/cubes/{data[6]}.png"
+        return "images/cubes/michigun.png"
 
     def get_post_author(self, post_id: int) -> str | None:
         """Returns post's author by id."""
@@ -184,9 +182,13 @@ class DBScripts(DataBase):
         """Sets role by login."""
         self.execute("set_role", [role, login])
 
-    def set_bio(self, login, bio: str) -> None:
+    def set_bio(self, login: str, bio: str) -> None:
         """Sets bio by login."""
         self.execute("set_bio", [bio, login])
+
+    def set_pfp(self, login: str, pfp: str) -> None:
+        """Sets pfp by login."""
+        self.execute("set_pfp", [pfp, login])
 
     def delete_post(self, post_id: int) -> None:
         """Deletes post by id."""
