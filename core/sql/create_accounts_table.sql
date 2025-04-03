@@ -6,6 +6,5 @@ CREATE TABLE IF NOT EXISTS accounts (
     role TEXT DEFAULT "user",
     bio TEXT DEFAULT "There's not yet bio...",
     pfp TEXT DEFAULT "default",
-    ip TEXT NOT NULL,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 )

@@ -1,113 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Gild56 | Games Page</title>
-        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+{% extends 'base.html' %}
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+{% block title %}Games{% endblock %}
 
-        <meta name="author" content="Gild56">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <header>
-            <nav>
-                <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('games') }}" class="current">Games</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
-                <a href="{{ url_for('community') }}">Community</a>
-                {% if logged_in %}
-                    <a href="{{ url_for('log_out') }}">Log Out</a>
-                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
-                {% else %}
-                    <a href="{{ url_for('log_in') }}">Log In</a>
-                {% endif %}
-            </nav>
-        </header>
-        <main>
-            <div class="columns-space-between">
-                <div class="column">
-                    <h1>Quiz Master</h1>
-                    <p class="small-margin-top">
-                        Quiz Master is a simple Kivy quiz app. You can collect points, presonalize all for your taste, listen your favorite music and much more!
-                    </p>
-                    <p class="small-margin-top">
-                        <a href="https://github.com/Gild56/quizmaster/releases/download/v1.0.0/Quiz.Master.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
-                        <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
-                    </p>
-                    <p class="small-margin-top">
-                        <a href="https://github.com/Gild56/quizmaster/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
-                        <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and run the <span class="path">quizmaster/command/play.vbs</span> file.
-                    </p>
-                </div>
-                <div class="column">
-                    <img class="screenshot" height="200px" src=" {{ url_for('static', filename='images/quizmaster.png') }} ">
-                </div>
-            </div>
-            <hr>
-            <div class="columns-space-between">
-                <div class="column">
-                    <h1>Valorant Randomizer</h1>
-                    <p class="small-margin-top">
-                        Valorant Randomizer is a custom fanmade program on Kivy to use while playing Valorant for randomize your character and weapons.
-                    </p>
-                    <p class="small-margin-top">
-                        <a href="https://github.com/Gild56/valorant_randomizer/releases/download/v1.0.0/Valorant.Randomizer.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
-                        <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
-                    </p>
-                    <p class="small-margin-top">
-                        <a href="https://github.com/Gild56/valorant_randomizer/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
-                        <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">valorant_randomizer/app.py</span> file.
-                    </p>
-                </div>
-                <div class="column">
-                    <img class="screenshot" height="200px" src=" {{ url_for('static', filename='images/valorant_randomizer.png') }} ">
-                </div>
-            </div>
-            <hr>
-            <div class="columns-space-between">
-                <div class="column">
-                    <h1>Gild56 Website</h1>
-                    <p class="small-margin-top">
-                        The Gild56's personal website is the one you are reading right now! :P
-                    </p>
-                    <p class="small-margin-top">
-                        <a href="https://github.com/Gild56/gild56_website/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
-                        <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">gild56_website/app.py</span> file.
-                    </p>
-                </div>
-                <div class="column">
-                    <img class="screenshot" height="200px" src=" {{ url_for('static', filename='images/valorant_randomizer.png') }} ">
-                </div>
-            </div>
-        </main>
-        <footer>
-            <div class="columns">
-                <address>
-                    <p><strong>Author:</strong> Gild56</p>
-                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
-                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
-                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
-                </address>
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('games') }}" class="current">Games</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        {% if logged_in %}
+            <a href="{{ url_for('log_out') }}">Log Out</a>
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
 
-                <section class="right column">
-                    <p class="big-margin-bottom">
-                        All rights reserved. &copy Gild56<br>To ask for permissions, please write me an email.
-                    </p>
-                    <p>
-                        <strong>Follow me:</strong>
-                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
-                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
-                    </p>
-                </section>
-            </div>
-        </footer>
-    </body>
-</html>
+<main>
+    <div class="columns-space-between">
+        <div class="column">
+            <h1>Quiz Master</h1>
+            <p class="small-margin-top">
+                Quiz Master is a simple Kivy quiz app. You can collect points, presonalize all for your taste, listen your favorite music and much more!
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/quizmaster/releases/download/v1.0.0/Quiz.Master.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
+                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/quizmaster/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
+                <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and run the <span class="path">quizmaster/command/play.vbs</span> file.
+            </p>
+        </div>
+        <div class="column">
+            <img class="screenshot" height="200px" src=" {{ url_for('static', filename='images/quizmaster.png') }} ">
+        </div>
+    </div>
+    <hr>
+    <div class="columns-space-between">
+        <div class="column">
+            <h1>Valorant Randomizer</h1>
+            <p class="small-margin-top">
+                Valorant Randomizer is a custom fanmade program on Kivy to use while playing Valorant for randomize your character and weapons.
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/valorant_randomizer/releases/download/v1.0.0/Valorant.Randomizer.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
+                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/valorant_randomizer/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
+                <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">valorant_randomizer/app.py</span> file.
+            </p>
+        </div>
+        <div class="column">
+            <img class="screenshot" height="200px" src=" {{ url_for('static', filename='images/valorant_randomizer.png') }} ">
+        </div>
+    </div>
+    <hr>
+    <div class="columns-space-between">
+        <div class="column">
+            <h1>Gild56 Website</h1>
+            <p class="small-margin-top">
+                The Gild56's personal website is the one you are reading right now! :P
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/gild56_website/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
+                <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">gild56_website/app.py</span> file.
+            </p>
+        </div>
+        <div class="column">
+            <img class="screenshot" height="200px" src=" {{ url_for('static', filename='images/valorant_randomizer.png') }} ">
+        </div>
+    </div>
+</main>
+{% endblock %}

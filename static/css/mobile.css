@@ -87,4 +87,8 @@
     .screenshot {
         margin: 0;
     }
+
+    .notification {
+        left: 8.8em;
+    }
 }

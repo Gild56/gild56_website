@@ -1,7 +1,6 @@
 import os
 from functools import lru_cache
 
-import pyperclip
 from flask import Flask, render_template, redirect, url_for, g
 from flask import session, request
 
@@ -122,12 +121,6 @@ def teardown_request(exception=None) -> None:
 
 # Function pages
 
-@app.route("/copy_link/<post_id>")
-def copy_link(post_id):
-    link = f"{__sitename__}/posts/{post_id}"
-    pyperclip.copy(link)
-    return redirect(request.referrer)
-
 
 @app.route("/delete_post/<post_id>")
 def delete_post(post_id):
@@ -229,8 +222,6 @@ def sign_up():
         repeat_password = request.form["repeat_password"]
         email = request.form["email"]
 
-        ip = request.headers.get('X-Forwarded-For', request.remote_addr)
-
         if g.db.user_exists(login):
             error_message = "User with this login already exists."
             return render_template(
@@ -245,7 +236,7 @@ def sign_up():
                 error_message=error_message
             )
 
-        g.db.add_user(login, password, email, ip)
+        g.db.add_user(login, password, email)
         session["account_login"] = login
         return redirect(url_for('community'))
 
@@ -285,9 +276,9 @@ def community():
 
     return render_template(
         "community.html", posts=posts, logged_in=logged_in(),
-        username=get_username(),
+        username=get_username(), role=get_role(),
         posts_and_comments_count=posts_and_comments_count,
-        users_count=users_count, role=get_role(), comments=comments,
+        users_count=users_count, comments=comments,
         comments_post_ids=comments_post_ids, get_pfp=get_pfp,
         get_comment_author=g.db.get_comment_author,
         get_post_author=g.db.get_post_author

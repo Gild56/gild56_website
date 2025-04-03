@@ -1,75 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Gild56 | Home Page</title>
-        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+{% extends 'base.html' %}
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+{% block title %}Home Page{% endblock %}
 
-        <meta name="description" content="Gild56's personal website. Welcome! :D">
-        <meta name="author" content="Gild56">
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}" class="current">Home</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        {% if logged_in %}
+            <a href="{{ url_for('log_out') }}">Log Out</a>
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:title" content="Gild56">
-        <meta property="og:description" content="Gild56's personal website. Welcome! :D">
-        <meta property="og:image" content="{{ url_for('static', filename='images/banner.ico') }}">
-        <meta property="og:url" content="https://misha.devatlant.com">
-    </head>
-    <body>
-        <header>
-            <nav>
-                <a href="{{ url_for('index') }}" class="current">Home</a>
-                <a href="{{ url_for('games') }}">Games</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
-                <a href="{{ url_for('community') }}">Community</a>
-                {% if logged_in %}
-                    <a href="{{ url_for('log_out') }}">Log Out</a>
-                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
-                {% else %}
-                    <a href="{{ url_for('log_in') }}">Log In</a>
-                {% endif %}
-            </nav>
-        </header>
-        <main>
-            <div class="persistent-columns small-margin-top">
-                <div class="column">
-                    <h1 class="big no-margin">Gild56</h1>
-                    <h2 class="medium">Mykhailo Pankin</h2>
-                </div>
-                <div class="column" id="drawing-container">
-                    <img height="100px" id="drawing" src=" {{ url_for('static', filename='images/drawing.jpg') }} ">
-                </div>
-            </div>
-            <p class="no-margin">
-                My name is Mykhailo Pankin. I'm a Python coder and a Geometry Dash player from Ukraine living in France. That's my personal website. Have fun!
-            </p>
-        </main>
-        <footer>
-            <div class="columns">
-                <address>
-                    <p><strong>Author:</strong> Gild56</p>
-                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
-                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
-                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
-                </address>
-
-                <section class="right column">
-                    <p class="big-margin-bottom">
-                        All rights reserved. &copy Gild56 <br>To ask for permissions, please write me an email.
-                    </p>
-                    <p>
-                        <strong>Follow me:</strong>
-                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
-                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
-                    </p>
-                </section>
-            </div>
-        </footer>
-    </body>
-</html>
+<main>
+    <div class="persistent-columns small-margin-top">
+        <div class="column">
+            <h1 class="big no-margin">Gild56</h1>
+            <h2 class="medium">Mykhailo Pankin</h2>
+        </div>
+        <div class="column" id="drawing-container">
+            <img height="100px" id="drawing" src=" {{ url_for('static', filename='images/drawing.jpg') }} ">
+        </div>
+    </div>
+    <p class="no-margin">
+        My name is Mykhailo Pankin. I'm a Python coder and a Geometry Dash player from Ukraine living in France. That's my personal website. Have fun!
+    </p>
+</main>
+{% endblock %}

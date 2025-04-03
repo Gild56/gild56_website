@@ -1,1 +1,1 @@
-INSERT INTO accounts (login, password, email, ip, timestamp) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+INSERT INTO accounts (login, password, email, timestamp) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)

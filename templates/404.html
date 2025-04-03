@@ -1,63 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Gild56 | Page not found</title>
-        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/logo.ico') }}">
+{% extends 'base.html' %}
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/selections.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/links.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation-bar.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+{% block title %}Page not found{% endblock %}
 
-        <meta name="author" content="Gild56">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <header>
-            <nav>
-                <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('games') }}">Games</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
-                <a href="{{ url_for('community') }}">Community</a>
-                {% if logged_in %}
-                    <a href="{{ url_for('log_out') }}">Log Out</a>
-                    <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
-                {% else %}
-                    <a href="{{ url_for('log_in') }}">Log In</a>
-                {% endif %}
-            </nav>
-        </header>
-        <main align="center" class="no-margin">
-            <div class="bigger-container">
-                <h1 class="big margin-top">404 Error</h1>
-                <h2 class="medium">Page Not Found</h2>
-                <h2 class="no-bold">This is not the page you are looking for.</h2>
-                <h2 class="no-bold"><a href="{{ url_for('index') }}">Return to the home page.</a></h2>
-            </div>
-        </main>
-        <footer>
-            <div class="columns">
-                <address>
-                    <p><strong>Author:</strong> Gild56</p>
-                    <p><strong>Email:</strong> <a href="mailto:gild56gmd@gmail.com">gild56gmd@gmail.com</a></p>
-                    <p><strong>Phone:</strong> <a href="tel:+1234567890">+12 34 56 78 90</a></p>
-                    <p><strong>Address:</strong> Main street, New York, NY, USA</p>
-                </address>
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        {% if logged_in %}
+            <a href="{{ url_for('log_out') }}">Log Out</a>
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
 
-                <section class="right column">
-                    <p class="big-margin-bottom">
-                        All rights reserved. &copy Gild56 <br>To ask for permissions, please write me an email.
-                    </p>
-                    <p>
-                        <strong>Follow me:</strong>
-                        <a href="https://github.com/Gild56" target="_blank">GitHub</a> |
-                        <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a>
-                    </p>
-                </section>
-            </div>
-        </footer>
-    </body>
-</html>
+<main class="no-margin align-center">
+    <div class="bigger-container">
+        <h1 class="big">404 Error</h1>
+        <h2 class="medium">Page Not Found</h2>
+        <h2 class="no-bold">This is not the page you are looking for.</h2>
+        <h2 class="no-bold"><a href="{{ url_for('index') }}">Return to the home page.</a></h2>
+    </div>
+</main>
+{% endblock %}
