@@ -6,8 +6,6 @@ from flask import session, request
 
 from core.dbscripts import DBScripts
 
-__sitename__ = "https://misha.devatlant.com"
-
 app = Flask(
     __name__, static_folder="static",
     template_folder="templates"
@@ -45,6 +43,14 @@ def contact():
     )
 
 
+@app.route("/hall_of_fame")
+def hall_of_fame():
+    return render_template(
+        "hall_of_fame.html", logged_in=logged_in(),
+        username=get_username()
+    )
+
+
 @app.route("/games")
 def games():
     return render_template(
@@ -77,6 +83,12 @@ def handle_404(error):
 
 
 # Functions
+
+
+@lru_cache(maxsize=None)
+def get_pfp(user) -> str:
+    return url_for('static', filename=g.db.get_pfp(user))
+
 
 def logged_in() -> bool:
     return session.get("account_login", None) is not None
@@ -322,10 +334,6 @@ def user_profile(profile):
     comments = g.db.get_comments()
     bio = g.db.get_bio(profile)
 
-    @lru_cache(maxsize=None)
-    def get_pfp(user):
-        return url_for('static', filename=g.db.get_pfp(user))
-
     posts_count = 0
     for post in posts:
         if post[2] == profile:
@@ -361,7 +369,8 @@ def user_profile(profile):
         theres_posts=theres_posts, posts_count=posts_count,
         get_role=g.db.get_role, role=get_role(),
         get_comment_author=g.db.get_comment_author,
-        get_post_author=g.db.get_post_author
+        get_post_author=g.db.get_post_author,
+        all_pfps=get_all_pfps()
     )
 
 

@@ -20,6 +20,8 @@ class DBScripts(DataBase):
     - `add_comment()`
 
     Get data from the db:
+    - `check_userdata()`
+    - `user_exists()`
     - `get_user()`
     - `get_users()`
     - `get_role()`
@@ -30,8 +32,6 @@ class DBScripts(DataBase):
     - `get_post_author()`
     - `get_comment_author()`
     - `get_pfp()`
-    - `check_userdata()`
-    - `user_exists()`
 
     Change data in the db:
     - `set_role()`
@@ -92,6 +92,10 @@ class DBScripts(DataBase):
 
         return self.verify_password(hashed_password, password)
 
+    def user_exists(self, login: str) -> bool:
+        """Checks if a user exists."""
+        return self.get_user(login) is not None
+
     def add_user(self, login: str, password: str, email: str, ip: str) -> None:
         """Adds a user with parameters and hashes his password."""
         hashed_password = self.hash_password(password)
@@ -110,10 +114,6 @@ class DBScripts(DataBase):
             ) -> None:
         """Adds a comment with parameters."""
         self.execute("add_comment", [content, post_id, author_name])
-
-    def user_exists(self, login: str) -> bool:
-        """Checks if a user exists."""
-        return self.get_user(login) is not None
 
     def get_role(self, login: str) -> str | None:
         """Returns user's role."""
@@ -153,30 +153,33 @@ class DBScripts(DataBase):
         """Returns user's data by login."""
         return self.execute("get_user", [login], 1)
 
-    def get_bio(self, login: str) -> str | None:
+    def get_bio(self, login: str) -> str:
         """Returns user's bio by login."""
         data = self.execute("get_bio", [login], 1)
         if data is not None:
             return data[0]
+        return "Error: Bio not found"
 
     def get_pfp(self, login: str) -> str:
         """Returns image path with the first letter of the login."""
         data = self.execute("get_user", [login], 1)
         if data is not None:
             return f"images/cubes/{data[6]}.png"
-        return "images/cubes/michigun.png"
+        return "images/cubes/default.png"
 
-    def get_post_author(self, post_id: int) -> str | None:
+    def get_post_author(self, post_id: int) -> str:
         """Returns post's author by id."""
         data = self.execute("get_post_author", [post_id], 1)
         if data is not None:
             return data[0]
+        return "Error: Author not found"
 
-    def get_comment_author(self, comment_id: int) -> str | None:
+    def get_comment_author(self, comment_id: int) -> str:
         """Returns comment's author by id."""
         data = self.execute("get_comment_author", [comment_id], 1)
         if data is not None:
             return data[0]
+        return "Error: Author not found"
 
     def set_role(self, login: str, role: str) -> None:
         """Sets role by login."""

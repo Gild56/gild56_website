@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Hall of Fame{% endblock %}
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('hall_of_fame') }}" class="current">Hall of Fame</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        {% if logged_in %}
+            <a href="{{ url_for('log_out') }}">Log Out</a>
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <h1>Hall of fame</h1>
+    <p>
+        <ul>
+            <li>Yevgen</li>
+            <li>One / Valentin</li>
+            <li>Rex / Diego</li>
+            <li>Ylissen</li>
+            <li>Kikouizz / Enoah</li>
+            <li>Jaō / Gabriel</li>
+            <li>Arthur</li>
+            <li>Adamorocco</li>
+            <li>Sword / Evan</li>
+            <li>Clover / Roméo</li>
+            <li>Viktor Lukyanov</li>
+            <li>Every user of this site!</li>
+        </ul>
+    </p>
+</main>
+{% endblock %}

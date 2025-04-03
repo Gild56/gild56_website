@@ -8,6 +8,7 @@
         <a href="{{ url_for('index') }}">Home</a>
         <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
         <a href="{{ url_for('community') }}">Community</a>
         {% if my_profile and logged_in %}
             <a href="{{ url_for('log_out') }}">Log Out</a>
@@ -78,6 +79,9 @@
                         </div>
                         <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
                         <a class="link" onclick="copyLink('{{ post[0] }}')">Copy Link</a>
+                        {% if logged_in %}
+                            <a class="link" href="{{ url_for('post', post_id=post[0]) }}">Answer</a>
+                        {% endif %}
                         {% if role == "admin" or username == post[2] %}
                             <a class="red link" href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
                         {% endif %}
