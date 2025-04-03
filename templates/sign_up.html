@@ -32,14 +32,8 @@
                     <form method="post" action="{{ url_for('sign_up') }}" class="margin-bottom">
                         <h1>Sign Up:</h1>
                         <p><input type="text" id="login" name="input_login" placeholder="Login" required></p>
-                        <p>
-                            <input type="password" id="password" name="input_password" placeholder="Password" minlength="5" required>
-                            <button type="button" id="togglePassword">👁️</button>
-                        </p>
-                        <p>
-                            <input type="password" id="repeat-password" name="repeat_password" placeholder="Repeat Password" minlength="5" required>
-                            <button type="button" id="toggleRepeatPassword">👁️</button>
-                        </p>
+                        <p><input type="password" id="password" name="input_password" placeholder="Password" minlength="5" required></p>
+                        <p><input type="password" id="repeat-password" name="repeat_password" placeholder="Repeat Password" minlength="5" required></p>
                         <p><input type="email" id="email" name="email" placeholder="Email" required></p>
                         {% if error_message %}
                             <p class="red">{{ error_message }}</p>

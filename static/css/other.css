@@ -41,9 +41,9 @@
 }
 
 .fit {
-    width: 30px !important;
-    height: 30px !important;
-    transform: translateY(15px);
+    width: 40px !important;
+    height: 40px !important;
+    margin-top: 5px !important;
 }
 
 .no-bold {

@@ -342,15 +342,13 @@ def user_profile(profile):
 
     comments_post_ids = []
     for comment in comments:
-        if comment[2] in comments_post_ids:
-            continue
-        comments_post_ids.append(comment[2])
+        if comment[2] not in comments_post_ids:
+            comments_post_ids.append(comment[2])
 
     posts_authors = []
     for post in posts:
-        if post[2] in posts_authors:
-            continue
-        posts_authors.append(post[2])
+        if post[2] not in posts_authors:
+            posts_authors.append(post[2])
 
     theres_posts = False
     if profile in posts_authors:
@@ -376,4 +374,4 @@ def user_profile(profile):
     )
 
 
-app.run(debug=True)  # ! host="0.0.0.0"
+app.run(debug=True)  # ! host="0.0.0.0", port=5000
