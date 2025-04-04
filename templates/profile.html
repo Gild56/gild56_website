@@ -58,12 +58,15 @@
     <hr>
 
     {% if my_profile %}
+        <h1>Configure your profile:</h1>
+        <p><a href="{{ url_for('change_pfp') }}" class="link no-margin">Change profile picture</a></p>
+        <hr>
         <form method="post" action="{{ url_for('user_profile', profile=profile) }}" class="margin-bottom">
             <h1>Edit bio:</h1>
             <p><textarea id="input-bio" name="input_bio" placeholder="Write your bio here..."></textarea></p>
             <button type="submit">Publish</button>
-            <hr>
         </form>
+        <hr>
     {% endif %}
 
     {% if theres_posts %}
@@ -78,12 +81,12 @@
                             </a>
                         </div>
                         <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
-                        <a class="link" onclick="copyLink('{{ post[0] }}')">Copy Link</a>
+                        <a class="link smaller-padding" onclick="copyLink('{{ post[0] }}')">Copy Link</a>
                         {% if logged_in %}
-                            <a class="link" href="{{ url_for('post', post_id=post[0]) }}">Answer</a>
+                            <a class="link smaller-padding small-margin-left" href="{{ url_for('post', post_id=post[0]) }}">Answer</a>
                         {% endif %}
                         {% if role == "admin" or username == post[2] %}
-                            <a class="red link" href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
+                            <a class="red link smaller-padding small-margin-left" href="{{ url_for('delete_post', post_id=post[0]) }}">Delete</a>
                         {% endif %}
                     </div>
 
@@ -104,7 +107,7 @@
                                     </div>
                                     <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">{{ comment[3] }}</a>
                                     {% if role == "admin" or username == comment[3] %}
-                                        <a class="red link" href="{{ url_for('delete_comment',comment_id=comment[0]) }}">Delete</a>
+                                        <a class="red link smaller-padding" href="{{ url_for('delete_comment',comment_id=comment[0]) }}">Delete</a>
                                     {% endif %}
                                 </div>
                                 <h3>{{ comment[1] }}</h3>

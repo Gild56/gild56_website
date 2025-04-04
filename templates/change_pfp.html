@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Change Profile Photo{% endblock %}
+{% block title %}Change Profile Picture{% endblock %}
 
 {% block content %}
 <header>
@@ -16,19 +16,21 @@
 </header>
 
 <main>
-    <h1>Choose your profile photo:</h1>
+    <h1>Choose your profile picture:</h1>
     <hr>
-    <form method="POST" action="/select_pfp">
+    <form method="POST" action="{{ url_for('change_pfp') }}">
         <div class="pfp-selection">
             {% for pfp in all_pfps %}
             <label class="pfp-container">
                 <input type="radio" name="selected_pfp" value="{{ pfp }}" required>
-                <img src="{{ url_for('static', filename='images/' + pfp.lower() + '.png') }}">
-                <h3>{{ pfp }}</h3>
+                <img src="{{ url_for('static', filename='images/cubes/' + pfp.lower() + '.png') }}">
+                <p>{{ pfp }}</p>
             </label>
             {% endfor %}
         </div>
-        <button type="submit">Submit</button>
+        <div class="align-center">
+            <button type="submit" class="big-link">Submit</button>
+        </div>
     </form>
 </main>
 {% endblock %}

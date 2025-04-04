@@ -50,6 +50,8 @@ button {
     border: none;
     cursor: pointer;
     margin-bottom: 5px;
+    font-size: large !important;
+    font-weight: bold;
 }
 
 button:hover {

@@ -26,6 +26,10 @@
         font-size: 100%;
     }
 
+    address {
+        margin-bottom: 1em;
+    }
+
     .columns {
         flex-direction: column;
         gap: 10px;
@@ -90,5 +94,9 @@
 
     .notification {
         left: 8.8em;
+    }
+
+    .smaller-padding {
+        font-size: 75% !important;
     }
 }

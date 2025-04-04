@@ -59,6 +59,7 @@
     margin-bottom: 0;
     font-size: large;
     font-weight: 900;
+    white-space: nowrap;
 }
 
 summary {
@@ -75,17 +76,19 @@ details {
 
 .link {
     display: inline-block !important;
-    margin: 0 !important;
-    margin-left: 1em !important;
-    padding: 5px !important;
+    margin: 0;
+    margin-left: 1em;
+    padding: 0.5em 1em;
     background-color: #000089 !important;
     color: #ffffff !important;
     text-decoration: none !important;
     border-radius: 5px !important;
     transition: background-color 0.3s ease, transform 0.3s ease !important;
     border: none !important;
-    cursor: pointer !important;
+    cursor: pointer;
     height: fit-content;
+    font-size: large !important;
+    font-weight: bold;
 }
 
 .link:hover {
@@ -100,6 +103,20 @@ details {
 .link.red:hover {
     background-color: #4b0000 !important;
     transform: scale(1.1) !important;
+}
+
+.smaller-padding {
+    padding: 5px !important;
+    white-space: nowrap;
+}
+
+.small-margin-left {
+    margin-left: 5px !important;
+}
+
+.big-link {
+    font-size: 250% !important;
+    margin: 1em;
 }
 
 .bio {

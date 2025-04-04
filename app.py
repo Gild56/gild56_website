@@ -1,5 +1,4 @@
 import os
-from functools import lru_cache
 
 from flask import Flask, render_template, redirect, url_for, g
 from flask import session, request
@@ -85,7 +84,6 @@ def handle_404(error):
 # Functions
 
 
-@lru_cache(maxsize=None)
 def get_pfp(user) -> str:
     return url_for('static', filename=g.db.get_pfp(user))
 
@@ -276,10 +274,6 @@ def community():
     comments_count = len(comments)
     posts_and_comments_count = posts_count + comments_count
 
-    @lru_cache(maxsize=None)
-    def get_pfp(user):
-        return url_for('static', filename=g.db.get_pfp(user))
-
     comments_post_ids = []
     for comment in comments:
         if comment[2] in comments_post_ids:
@@ -309,10 +303,6 @@ def post(post_id):
             g.db.add_comment(textarea_content, post_id, get_username())
 
         return redirect(url_for('post', post_id=post_id))
-
-    @lru_cache(maxsize=None)
-    def get_pfp(user):
-        return url_for('static', filename=g.db.get_pfp(user))
 
     return render_template(
         "post.html", post=g.db.get_post(post_id), logged_in=logged_in(),
@@ -374,14 +364,14 @@ def user_profile(profile):
     )
 
 
-
 @app.route('/change_pfp', methods=['GET', 'POST'])
 def change_pfp():
     if request.method == "POST":
         selected_pfp = request.form.get('selected_pfp')
+        print(selected_pfp)
         g.db.set_pfp(get_username(), selected_pfp)
-    
-        return redirect(url_for('user_profile', profile=get_username())
+
+        return redirect(url_for('user_profile', profile=get_username()))
 
     elif logged_in():
         return render_template(
