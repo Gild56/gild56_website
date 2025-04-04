@@ -4,6 +4,7 @@
     padding: 2em;
     background-color: #0000b9;
     max-width: 20em;
+    width: max-content;
     text-align: center;
     margin-bottom: 1em;
     margin-top: 2em;

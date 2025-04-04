@@ -73,6 +73,11 @@
     margin-left: 1em;
     margin-top: 2em;
     margin-bottom: 2em;
+    border: 5px solid #00064b;
+    border-radius: 20px;
+    max-width: 20em;
+    height: auto;
+    width: auto;
 }
 
 .small-margin-top {
@@ -101,6 +106,10 @@
 
 .align-center {
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    place-items: center;
 }
 
 .pfp-selection {
@@ -117,7 +126,7 @@
     cursor: pointer;
     border: 2px solid transparent;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 20px;
     transition: border-color 0.2s;
 }
 
@@ -140,6 +149,6 @@
 
 .pfp-container:hover img,
 .pfp-container input[type="radio"]:checked + img {
-    border-color: #000061;
+    border-color: #000024;
 }
 

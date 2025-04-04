@@ -17,7 +17,7 @@
 <main>
     <div class="align-center">
         <div class="form">
-            <form method="post" action="{{ url_for('sign_up') }}" class="margin-bottom">
+            <form method="post" action="{{ url_for('sign_up') }}">
                 <h1>Sign Up:</h1>
                 <p><input type="text" id="login" name="input_login" placeholder="Login" required></p>
                 <p><input type="password" id="password" name="input_password" placeholder="Password" minlength="5" required></p>
@@ -26,7 +26,7 @@
                 {% if error_message %}
                     <p class="red">{{ error_message }}</p>
                 {% endif %}
-                <button type="submit" class="subimt big">Create Account</button>
+                <button type="submit" class="subimt medium">Create Account</button>
             </form>
 
             <a href="{{ url_for('log_in') }}">I already have an account...</a>

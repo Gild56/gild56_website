@@ -87,7 +87,7 @@ details {
     border: none !important;
     cursor: pointer;
     height: fit-content;
-    font-size: large !important;
+    font-size: small !important;
     font-weight: bold;
 }
 
