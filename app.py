@@ -187,14 +187,6 @@ def change_role(profile):
     return redirect(url_for('user_profile', profile=profile))
 
 
-@app.route('/select_pfp', methods=['POST'])
-def select_pfp():
-    selected_pfp = request.form.get('selected_pfp')
-    g.db.set_pfp(get_username(), selected_pfp)
-
-    return redirect(url_for('user_profile', profile=get_username())
-
-
 # Connextion pages
 
 @app.route("/log_out")
@@ -380,6 +372,25 @@ def user_profile(profile):
         get_post_author=g.db.get_post_author,
         all_pfps=get_all_pfps()
     )
+
+
+
+@app.route('/change_pfp', methods=['GET', 'POST'])
+def change_pfp():
+    if request.method == "POST":
+        selected_pfp = request.form.get('selected_pfp')
+        g.db.set_pfp(get_username(), selected_pfp)
+    
+        return redirect(url_for('user_profile', profile=get_username())
+
+    elif logged_in():
+        return render_template(
+            'change_pfp.html', username=get_username(),
+            logged_in=logged_in(), all_pfps=get_all_pfps()
+        )
+
+    else:
+        return redirect(url_for('log_in'))
 
 
 app.run(debug=True)  # ! host="0.0.0.0", port=5000
