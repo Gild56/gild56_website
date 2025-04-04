@@ -187,6 +187,14 @@ def change_role(profile):
     return redirect(url_for('user_profile', profile=profile))
 
 
+@app.route('/select_pfp', methods=['POST'])
+def select_pfp():
+    selected_pfp = request.form.get('selected_pfp')
+    g.db.set_pfp(get_username(), selected_pfp)
+
+    return redirect(url_for('user_profile', profile=get_username())
+
+
 # Connextion pages
 
 @app.route("/log_out")
