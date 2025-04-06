@@ -108,6 +108,7 @@ def get_all_pfps() -> list:
     sorted_pfps = []
     for pfp in all_pfps:
         sorted_pfps.append(pfp.replace(".png", ""))
+    print("\n\n=============\n\n")
     return sorted_pfps
 
 
@@ -368,15 +369,19 @@ def user_profile(profile):
 def change_pfp():
     if request.method == "POST":
         selected_pfp = request.form.get('selected_pfp')
-        print(selected_pfp)
         g.db.set_pfp(get_username(), selected_pfp)
 
         return redirect(url_for('user_profile', profile=get_username()))
 
     elif logged_in():
+        all_pfps = get_all_pfps()
+
+        all_pfps_lower = [item.lower() for item in all_pfps]
+
         return render_template(
             'change_pfp.html', username=get_username(),
-            logged_in=logged_in(), all_pfps=get_all_pfps()
+            logged_in=logged_in(), all_pfps=all_pfps,
+            all_pfps_lower=all_pfps_lower, pfps_count=len(all_pfps)
         )
 
     else:

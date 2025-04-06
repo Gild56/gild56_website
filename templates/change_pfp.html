@@ -20,11 +20,11 @@
     <hr>
     <form method="POST" action="{{ url_for('change_pfp') }}">
         <div class="pfp-selection">
-            {% for pfp in all_pfps %}
+            {% for i in range(pfps_count) %}
             <label class="pfp-container">
-                <input type="radio" name="selected_pfp" value="{{ pfp }}" required>
-                <img src="{{ url_for('static', filename='images/cubes/' + pfp + '.png') }}">
-                <p>{{ pfp }}</p>
+                <input type="radio" name="selected_pfp" value="{{ all_pfps_lower[i] }}" required>
+                <img src="{{ url_for('static', filename='images/cubes/' + all_pfps_lower[i] + '.png') }}">
+                <p>{{ all_pfps[i] }}</p>
             </label>
             {% endfor %}
         </div>
