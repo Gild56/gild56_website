@@ -1,6 +1,16 @@
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1500px) {
     nav a {
         font-size: 125% !important;
+    }
+
+    nav {
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    nav a {
+        font-size: 100% !important;
     }
 }
 
@@ -23,6 +33,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0px;
+        padding-left: 2em;
     }
 
     nav a {
