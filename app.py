@@ -104,11 +104,10 @@ def get_role() -> str:
 
 
 def get_all_pfps() -> list:
-    all_pfps = os.listdir("static/images/cubes")
+    all_pfps = os.listdir("/static/images/cubes")
     sorted_pfps = []
     for pfp in all_pfps:
         sorted_pfps.append(pfp.replace(".png", ""))
-    print("\n\n=============\n\n")
     return sorted_pfps
 
 
