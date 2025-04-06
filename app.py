@@ -104,11 +104,12 @@ def get_role() -> str:
 
 
 def get_all_pfps() -> list:
-    all_pfps = os.listdir("/static/images/cubes")
-    sorted_pfps = []
-    for pfp in all_pfps:
-        sorted_pfps.append(pfp.replace(".png", ""))
-    return sorted_pfps
+    # all_pfps = os.listdir("static/images/cubes")
+    # sorted_pfps = []
+    # for pfp in all_pfps:
+    #     sorted_pfps.append(pfp.replace(".png", ""))
+    # return sorted_pfps
+    return ['3000Dan', 'Adamorocco', 'AeonAir', 'Androxma', 'Bli', 'Bulkin', 'CarryTheBall', 'Colon', 'Cursed', 'DavJT', 'DeCody', 'Default', 'Doggie', 'Dolphy', 'Dorami', 'Eireley', 'EVW', 'Fiepsy', 'Gild56', 'IcEDCave', 'Juniper', 'Litox', 'Loliklee', 'MaFFaKa', 'Maxdash', 'Maximal', 'Michigun', 'Minay', 'MrSpaghetti', 'Mulpan', 'NeigeFeu', 'Neiro', 'Nelis', 'Nexus', 'Nyyct', 'Partition', 'Paultam', 'Pennutoh', 'RobTop', 'Serponge', 'SerVax', 'Smiffy777', 'Sosiska17', 'TitanChannel', 'triAxis', 'Trick', 'Viprin', 'Vortrox', 'wPopoff', 'Wulzy', 'XCreatorGoal', 'Ylissen', 'Zoink']
 
 
 # Database functions
