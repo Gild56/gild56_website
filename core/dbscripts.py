@@ -51,12 +51,6 @@ class DBScripts(DataBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        """
-        self.connect()
-        self.create_tables()
-        self.disconnect()
-        """
-
     # Create tables
 
     def create_tables(self) -> None:
@@ -96,11 +90,11 @@ class DBScripts(DataBase):
         """Checks if a user exists."""
         return self.get_user(login) is not None
 
-    def add_user(self, login: str, password: str, email: str, ip: str) -> None:
+    def add_user(self, login: str, password: str, email: str) -> None:
         """Adds a user with parameters and hashes his password."""
         hashed_password = self.hash_password(password)
 
-        self.execute("add_user", [login, hashed_password, email, ip])
+        self.execute("add_user", [login, hashed_password, email])
         self.connection.commit()
 
     def add_post(self, content: str, author_name: str) -> None:

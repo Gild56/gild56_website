@@ -23,7 +23,7 @@
             {% for pfp in all_pfps %}
             <label class="pfp-container">
                 <input type="radio" name="selected_pfp" value="{{ pfp }}" required>
-                <img src="{{ url_for('static', filename='images/cubes/' + pfp.lower() + '.png') }}">
+                <img src="{{ url_for('static', filename='images/cubes/' + pfp + '.png') }}">
                 <p>{{ pfp }}</p>
             </label>
             {% endfor %}
