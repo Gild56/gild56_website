@@ -104,12 +104,7 @@ def get_role() -> str:
 
 
 def get_all_pfps() -> list:
-    # all_pfps = os.listdir("static/images/cubes")
-    # sorted_pfps = []
-    # for pfp in all_pfps:
-    #     sorted_pfps.append(pfp.replace(".png", ""))
-    # return sorted_pfps
-    return ['3000Dan', 'Adamorocco', 'AeonAir', 'Androxma', 'Bli', 'Bulkin', 'CarryTheBall', 'Colon', 'Cursed', 'DavJT', 'DeCody', 'Default', 'Doggie', 'Dolphy', 'Dorami', 'Eireley', 'EVW', 'Fiepsy', 'Gild56', 'IcEDCave', 'Juniper', 'Litox', 'Loliklee', 'MaFFaKa', 'Maxdash', 'Maximal', 'Michigun', 'Minay', 'MrSpaghetti', 'Mulpan', 'NeigeFeu', 'Neiro', 'Nelis', 'Nexus', 'Nyyct', 'Partition', 'Paultam', 'Pennutoh', 'RobTop', 'Serponge', 'SerVax', 'Smiffy777', 'Sosiska17', 'TitanChannel', 'triAxis', 'Trick', 'Viprin', 'Vortrox', 'wPopoff', 'Wulzy', 'XCreatorGoal', 'Ylissen', 'Zoink']
+    return os.listdir("static/images/cubes")
 
 
 # Database functions
@@ -361,7 +356,7 @@ def user_profile(profile):
         get_role=g.db.get_role, role=get_role(),
         get_comment_author=g.db.get_comment_author,
         get_post_author=g.db.get_post_author,
-        all_pfps=get_all_pfps()
+        pfps=get_all_pfps()
     )
 
 
@@ -374,19 +369,17 @@ def change_pfp():
         return redirect(url_for('user_profile', profile=get_username()))
 
     elif logged_in():
-        all_pfps = get_all_pfps()
-
-        all_pfps_lower = [item.lower() for item in all_pfps]
+        pfps = get_all_pfps()
 
         return render_template(
             'change_pfp.html', username=get_username(),
-            logged_in=logged_in(), all_pfps=all_pfps,
-            all_pfps_lower=all_pfps_lower, pfps_count=len(all_pfps)
+            logged_in=logged_in(), pfps=pfps,
+            pfps_count=len(pfps)
         )
 
     else:
         return redirect(url_for('log_in'))
 
 
-# app.run(debug=True)
-app.run(host="0.0.0.0", port=5000)
+app.run(debug=True)
+# app.run(host="0.0.0.0", port=5000)

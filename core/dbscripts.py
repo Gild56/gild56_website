@@ -158,8 +158,8 @@ class DBScripts(DataBase):
         """Returns image path with the first letter of the login."""
         data = self.execute("get_user", [login], 1)
         if data is not None:
-            return f"images/cubes/{data[6].lower()}.png"
-        return "images/cubes/default.png"
+            return f"images/cubes/{data[6]}"
+        return "images/cubes/Default.png"
 
     def get_post_author(self, post_id: int) -> str:
         """Returns post's author by id."""
