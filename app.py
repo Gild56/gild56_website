@@ -85,7 +85,7 @@ def handle_404(error):
 
 
 def get_pfp(user) -> str:
-    return url_for('static', filename=g.db.get_pfp(user))
+    return g.db.get_pfp(user)
 
 
 def logged_in() -> bool:
@@ -275,6 +275,8 @@ def community():
         if comment[2] in comments_post_ids:
             continue
         comments_post_ids.append(comment[2])
+
+    print(get_pfp("sosiska17"))
 
     return render_template(
         "community.html", posts=posts, logged_in=logged_in(),
