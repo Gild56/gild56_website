@@ -26,11 +26,16 @@
             <h2 class="medium">Mykhailo Pankin</h2>
         </div>
         <div class="column" id="drawing-container">
-            <img height="100px" id="drawing" src=" {{ url_for('static', filename='images/drawing.jpg') }} ">
+            <img height="100px" id="drawing" src="{{ url_for('static', filename='images/drawing.jpg') }}">
         </div>
     </div>
     <p class="no-margin">
         My name is Mykhailo Pankin. I'm a Python coder and a Geometry Dash player from Ukraine living in France. That's my personal website. Have fun!
     </p>
+    <hr class="small-margin-top">
+    <p>
+        Go chat in the <a href="{{ url_for('community') }}"> community tab</a> !
+    </p>
+    <p><i>Valentrain</i> ➔ <a href="{{ url_for('jaime_les_ours') }}" target="_blank" class="no-bg no-padding circle-image"><img src="{{ url_for('static', filename='images/bear.jpg') }}" height="30px" style="border-radius: 50%; vertical-align: middle;"></a></p>
 </main>
 {% endblock %}

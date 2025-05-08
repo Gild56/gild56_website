@@ -66,6 +66,13 @@ def help():
     )
 
 
+@app.route("/jaime_les_ours")
+def jaime_les_ours():
+    return render_template("jaime_les_ours.html")
+
+
+# Error page
+
 @app.route("/404")
 def error404():
     return render_template(
@@ -73,8 +80,6 @@ def error404():
         username=get_username()
     )
 
-
-# Error page
 
 @app.errorhandler(404)
 def handle_404(error):
@@ -104,7 +109,7 @@ def get_role() -> str:
 
 
 def get_all_pfps() -> list:
-    return os.listdir("static/images/cubes")
+    return sorted(os.listdir("static/images/cubes"))
 
 
 # Database functions
@@ -383,5 +388,5 @@ def change_pfp():
         return redirect(url_for('log_in'))
 
 
-# app.run(debug=True)
-app.run(host="0.0.0.0", port=5000)
+app.run(debug=True)
+# app.run(host="0.0.0.0", port=5000)

@@ -48,11 +48,20 @@
 
     <h1 class="no-margin-bottom">Statistics:</h1>
     <p>
-        {{ profile }} wrote {{ posts_count }} posts.<br>
-        {% if get_role(profile) == "user" %}
-            He is a user.
+        {% if posts_count > 1 %}
+            {{ profile }} wrote <b>{{ posts_count }}</b> posts.
+        {% elif posts_count == 1 %}
+            {{ profile }} wrote <b>1</b> post.
         {% else %}
-            He is an admin.
+            {{ profile }} didn't wrote any posts.<br>
+        {% endif %}
+
+        <br>
+
+        {% if get_role(profile) == "user" %}
+            Role: <b>user</b>
+        {% else %}
+            Role: admin
         {% endif %}
     </p>
     <hr>
@@ -70,7 +79,7 @@
     {% endif %}
 
     {% if theres_posts %}
-        <h1>Posts:</h1>
+        <h1>Posts written by {{ profile }}:</h1>
         {% for post in posts %}
             {% if post[2] == profile %}
                 <div class="post">

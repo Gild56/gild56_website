@@ -27,12 +27,8 @@
                 <button type="submit" class="subimt medium">Log In</button>
             </form>
 
-            <a href="{{ url_for('sign_up') }}">I haven't an account...</a>
+            <a href="{{ url_for('sign_up') }}">I don't have an account...</a>
         </div>
     </div>
 </main>
-{% endblock %}
-
-{% block script %}
-<script src="{{ url_for('static', filename='js/placeHolder.js') }}"></script>
 {% endblock %}

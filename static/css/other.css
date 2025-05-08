@@ -62,11 +62,11 @@
 #drawing-container {
     width: fit-content;
     margin-right: 3em;
+    margin-left: 1em;
 }
 
 #drawing {
-    border-radius: 100px;
-    margin-left: 2em;
+    border-radius: 50%;
 }
 
 .screenshot {
@@ -150,4 +150,9 @@
 .pfp-container:hover img,
 .pfp-container input[type="radio"]:checked + img {
     border-color: #000024;
+}
+
+.icon {
+    vertical-align: middle;
+    height: 18px;
 }
