@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if top == "levels" %}
+        Levels list
+    {% else %}
+        Challenges list
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('levels_list') }}" class="current">Lists</a>
+        {% if logged_in %}
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    {% if top == "levels" %}
+        <p><a href="{{ url_for('leaderboard') }}">Leaderboard</a></p>
+        <p><a href="{{ url_for('challenges_list') }}">Challenges list</a></p>
+    {% else %}
+        <p><a href="{{ url_for('challenges_leaderboard') }}">Leaderboard</a></p>
+        <p><a href="{{ url_for('levels_list') }}">Levels list</a></p>
+    {% endif %}
+    <p><a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a></p>
+    <h1>Levels made by Gild56:</h1>
+    {% for level in levels %}
+        <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
+            <div class="row">
+                <div>
+                    {% if level[3] != "" %}
+                        <a href="https://www.youtube.com/watch?v={{ level[3] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                    {% endif %}
+                        <img src="{{ url_for('static', filename=('images/previews/' + level[0] + '.png' )) }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()">
+                    </a>
+                </div>
+                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level[0] }}</h1>
+            </div>
+        </div>
+    {% endfor %}
+    <div id="copyNotification" class="notification">
+        ID copied to clipboard!
+    </div>
+</main>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/copyLink.js') }}"></script>
+<script src="{{ url_for('static', filename='js/copyLevelID.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lockRefreshButton.js') }}"></script>
+{% endblock %}

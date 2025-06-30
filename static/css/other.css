@@ -154,5 +154,75 @@
 
 .icon {
     vertical-align: middle;
-    height: 18px;
+    height: 17px;
+}
+
+.copyable-heading {
+    cursor: pointer;
+}
+
+.level-container {
+    cursor: pointer;
+    left: 20px;
+    padding: 10px;
+    border: 3px solid #ffffff;
+    border-radius: 15px;
+    background-color: #000089 !important;
+    overflow-y: auto;
+    resize: none;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 2em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.level-container:hover {
+    background-color: #000655 !important;
+    transform: scale(1.03);
+}
+
+.level-container:focus {
+    outline: none;
+}
+
+.left-margin {
+    margin-left: 1em;
+}
+
+.preview {
+    border-radius: 10px;
+    margin-top: 7px;
+    margin-bottom: 3px;
+    border: 1px solid #ffffff;
+}
+
+.level-page-container {
+    left: 20px;
+    padding: 10px;
+    border: 3px solid #ffffff;
+    border-radius: 15px;
+    background-color: #000089 !important;
+    overflow-y: auto;
+    resize: none;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-top: 3em;
+    margin-bottom: 2em;
+    text-align: center;
+    padding: 2em;
+    width: 800px;
+}
+
+.level-page-container h1 {
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+.player-cube {
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+
+.points {
+    color: #6767ff
 }

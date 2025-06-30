@@ -10,8 +10,8 @@
         <a href="{{ url_for('contact') }}">Contact</a>
         <a href="{{ url_for('hall_of_fame') }}" class="current">Hall of Fame</a>
         <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('levels_list') }}">Lists</a>
         {% if logged_in %}
-            <a href="{{ url_for('log_out') }}">Log Out</a>
             <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
         {% else %}
             <a href="{{ url_for('log_in') }}">Log In</a>
@@ -25,11 +25,13 @@
         <ul>
             <li>Yevgen (friend / server guy!)</li>
             <li>One / Valentin (friend)</li>
-            <li>Rex / Diego (friend)</li>
+            <li>Rex / Diego <img src="{{ url_for('static', filename='images/cubes/Rex.png') }}" class="icon" alt="Adamorocco's icon"> (friend)</li></li>
             <li>Ylissen <img src="{{ url_for('static', filename='images/cubes/Ylissen.png') }}" class="icon" alt="Ylissen's icon"> <i>(la dash orbe noire)</i></li>
-            <li>Kikouizz / Enoah <img src="{{ url_for('static', filename='images/cubes/IcEDCave.png') }}" class="icon" alt="IcEDCave's icon"> (friend)</li>
-            <li>Adamorocco <img src="{{ url_for('static', filename='images/cubes/Adamorocco.png') }}" class="icon" alt="Adamorocco's icon"> (first user)</li>
+            <li>Kikouizz / Enoah <img src="{{ url_for('static', filename='images/cubes/Kikouiez.png') }}" class="icon" alt="IcEDCave's icon"> (friend / birds' friend)</li>
+            <li>Adamorocco <img src="{{ url_for('static', filename='images/cubes/Adamorocco.png') }}" class="icon" alt="Adamorocco's icon"> (first user & friend)</li>
             <li>Sword / Evan (friend)</li>
+            <li>kevino (friend)</li>
+            <li>MysticNull <img src="{{ url_for('static', filename='images/cubes/MysticNull.png') }}" class="icon" alt="CarryTheBall"> (friend)</li>
             <li>Viktor Lukyanov (best teacher ever)</li>
             <li>Every user of this site! <img src="{{ url_for('static', filename='images/cubes/CarryTheBall.png') }}" class="icon" alt="CarryTheBall"></li>
         </ul>

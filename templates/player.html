@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ player[0] }}{% endblock %}
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('levels_list') }}">Lists</a>
+        {% if logged_in %}
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <div style="display: flex; justify-content: center;"><div class="level-page-container">
+        <h1 class="big no-margin">{{ player[0] }}</h1>
+        <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg">
+            <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
+        </a>
+        <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
+        <p>#{{ challenges_position }} Challenge player ({{ challenges_points }} points)</p>
+        <p><a href="https://youtube.com/{{ player[1] }}" target="_blank">YouTube Channel</a></p>
+        <h2>Levels completed:</h2>
+        {% if player[2] == [] %}
+            <p>No levels completed</p>
+        {% else %}
+            <p>
+                {% for level in player[2] %}
+                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;">{{ level }} (#{{ get_level_rank(level, levels_list_top) }})</a>
+                {% endfor %}
+            </p>
+        {% endif %}
+        <h2>Challenges completed:</h2>
+        {% if player[3] == [] %}
+            <p>No challenges completed</p>
+        {% else %}
+            <p>
+                {% for challenge in player[3] %}
+                    <a href="{{ url_for('challenge_page', challenge=challenge) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ challenge }} (#{{ get_level_rank(challenge, challenges_list_top) }})</a>
+                {% endfor %}
+            </p>
+        {% endif %}
+    </div></div>
+</main>
+{% endblock %}

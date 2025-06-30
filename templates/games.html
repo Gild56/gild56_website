@@ -10,8 +10,8 @@
         <a href="{{ url_for('contact') }}">Contact</a>
         <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
         <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('levels_list') }}">Lists</a>
         {% if logged_in %}
-            <a href="{{ url_for('log_out') }}">Log Out</a>
             <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
         {% else %}
             <a href="{{ url_for('log_in') }}">Log In</a>
@@ -28,11 +28,15 @@
             </p>
             <p class="small-margin-top">
                 <a href="https://github.com/Gild56/quizmaster/releases/download/v1.0.0/Quiz.Master.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
-                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
+                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can open just by clicking on it.
             </p>
             <p class="small-margin-top">
                 <a href="https://github.com/Gild56/quizmaster/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
                 <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and run the <span class="path">quizmaster/command/play.vbs</span> file.
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/quizmaster" target="_blank" class="no-bg"><button><b>GitHub</b> Page</button></a>
+                <b>GitHub</b> is a website where people store and share code to work on projects together.
             </p>
         </div>
         <div class="column">
@@ -48,11 +52,15 @@
             </p>
             <p class="small-margin-top">
                 <a href="https://github.com/Gild56/valorant_randomizer/releases/download/v1.0.0/Valorant.Randomizer.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
-                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
+                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can open by just clicking on it.
             </p>
             <p class="small-margin-top">
                 <a href="https://github.com/Gild56/valorant_randomizer/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
                 <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">valorant_randomizer/app.py</span> file.
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/valorant_randomizer" target="_blank" class="no-bg"><button><b>GitHub</b> Page</button></a>
+                <b>GitHub</b> is a website where people store and share code to work on projects together.
             </p>
         </div>
         <div class="column">
@@ -70,6 +78,10 @@
                 <a href="https://github.com/Gild56/gild56_website/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
                 <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">gild56_website/app.py</span> file.
             </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/gild56_website" target="_blank" class="no-bg"><button><b>GitHub</b> Page</button></a>
+                <b>GitHub</b> is a website where people store and share code to work on projects together.
+            </p>
         </div>
         <div class="column">
             <img class="screenshot" height="200px" src="{{ url_for('static', filename='images/gild56_website.png') }}" alt="Gild56 Website Screenshot">
@@ -83,12 +95,16 @@
                 Would you have survived on the Titanic? Fill out the questionnaire and find out with up to 80% accuracy!
             </p>
             <p class="small-margin-top">
-                <a href="https://github.com/Gild56/titanic_ai/releases/download/1.0.0/TitanicAI.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
-                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can just open by clicking on it.
+                <a href="https://github.com/Gild56/titanic_ai_app/releases/download/v1.0.0/Titanic.AI.exe" class="no-bg"><button>Download a <b>.EXE</b></button></a>
+                <b>EXE</b> is a Windows executable format easy to use. You have only one file that you can open by just clicking on it.
             </p>
             <p class="small-margin-top">
-                <a href="https://github.com/Gild56/titanic_ai/archive/refs/heads/main.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
+                <a href="https://github.com/Gild56/titanic_ai_app/archive/refs/tags/v1.0.0.zip" class="no-bg"><button>Download a <b>.ZIP</b></button></a>
                 <b>ZIP</b> is a compressed archive. First, you need to "unzip" the file. Then, you need to install python and libs used in the project and run the <span class="path">titanic_ai/main.py</span> file.
+            </p>
+            <p class="small-margin-top">
+                <a href="https://github.com/Gild56/titanic_ai" target="_blank" class="no-bg"><button><b>GitHub</b> Page</button></a>
+                <b>GitHub</b> is a website where people store and share code to work on projects together.
             </p>
         </div>
         <div class="column">

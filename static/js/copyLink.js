@@ -1,13 +1,12 @@
 let notificationVisible = false;
 
-function copyLink(postId) {
-    const link = `/posts/${postId}`;
-    const fullLink = window.location.origin + link;
-
+function copyText(textToCopy) {
     if (notificationVisible) return;
 
-    navigator.clipboard.writeText(fullLink).then(() => {
+    navigator.clipboard.writeText(textToCopy).then(() => {
         const notification = document.getElementById('copyNotification');
+
+        if (!notification) return;
 
         notification.style.display = 'block';
         notification.style.opacity = 1;
@@ -22,6 +21,15 @@ function copyLink(postId) {
             notificationVisible = false;
         }, 4000);
     }).catch(err => {
-        console.error("Failed to copy: ", err);
+        console.error("Failed to copy:", err);
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copyable-heading').forEach(heading => {
+        heading.addEventListener('click', () => {
+            const text = heading.getAttribute('data-copy-text');
+            if (text) copyText(text);
+        });
+    });
+});
