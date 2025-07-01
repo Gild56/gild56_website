@@ -27,25 +27,34 @@
 
 <main>
     {% if top == "levels" %}
+        <p class="bigger-line-height">
+            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a> |
+            <a href="{{ url_for('challenges_leaderboard') }}">Challenges leaderboard</a> |
+            <a href="{{ url_for('levels_list') }}">Levels list</a>
+        </p>
         <h1>Leaderboard:</h1>
-        <p><a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a></p>
-        <a href="{{ url_for('challenges_leaderboard') }}">Challenges leaderboard</a></p>
     {% else %}
+        <p class="bigger-line-height">
+            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a> |
+            <a href="{{ url_for('leaderboard') }}">Classic leaderboard</a> |
+            <a href="{{ url_for('challenges_list') }}">Challenges list</a>
+        </p>
         <h1>Challenges leaderboard:</h1>
-        <p><a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a></p>
-        <a href="{{ url_for('leaderboard') }}">Classic leaderboard</a></p>
     {% endif %}
-    {% for player in players %}
-        <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player[0]) }}'">
-            <div class="row">
-                <div>
-                    <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
-                        <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
-                    </a>
+
+    <div class="align-on-mobile">
+        {% for player in players %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player[0]) }}'">
+                <div class="row">
+                    <div>
+                        <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                            <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
+                        </a>
+                    </div>
+                    <h1 class="left-margin">#{{ loop.index0 + 1 }} - {{ player[0] }} <span class="points"> ({{ player[4] }} points)</span></h1>
                 </div>
-                <h1 class="left-margin">#{{ loop.index0 + 1 }} - {{ player[0] }} <span class="points"> ({{ player[4] }} points)</span></h1>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </main>
 {% endblock %}

@@ -23,13 +23,14 @@
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
         <h1 class="copyable-heading big" data-copy-text="{{ level[1] }}">#{{level_position}} - {{ level[0] }}</h1>
         {% if level[3] == "" %}
-            <img src="{{ url_for('static', filename=('images/previews/' + level[0] + '.png' )) }}" height="300" alt="{{ level[0] }}'s preview" class="">
+            <img src="{{ url_for('static', filename=('images/previews/' + level[0] + '.png' )) }}" height="300" alt="{{ level[0] }}'s preview" class="levels-page-preview">
         {% else %}
             <iframe width="533.33" height="300"
                     src="https://www.youtube.com/embed/{{ level[3] }}"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
+                    allowfullscreen
+                    class="levels-page-preview">
             </iframe>
         {% endif %}
         <p>{{ level[2] }}</p>

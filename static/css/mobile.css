@@ -73,6 +73,7 @@
 
     footer p {
         margin: 2px;
+        margin-top: 10px;
     }
 
     .big-img-container {
@@ -90,10 +91,6 @@
 
     .current {
         border-width: 5px;
-    }
-
-    footer p {
-        margin-top: 10px;
     }
 
     #drawing {
@@ -115,5 +112,31 @@
 
     .smaller-padding {
         font-size: 75% !important;
+    }
+
+    .level-container .row {
+        flex-direction: column;
+    }
+
+    .level-container {
+        width: auto;
+    }
+
+    footer {
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .align-on-mobile {
+        text-align: center;
+    }
+
+    .levels-page-preview {
+        height: 100px;
+    }
+
+    .level-page-container .big {
+        font-size: 100% !important;
     }
 }

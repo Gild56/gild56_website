@@ -27,14 +27,20 @@
 
 <main>
     {% if top == "levels" %}
-        <p><a href="{{ url_for('leaderboard') }}">Leaderboard</a></p>
-        <p><a href="{{ url_for('challenges_list') }}">Challenges list</a></p>
+        <p class="bigger-line-height">
+            <a href="{{ url_for('leaderboard') }}">Leaderboard</a> |
+            <a href="{{ url_for('challenges_list') }}">Challenges list</a> |
+            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+        </p>
+        <h1>Levels made by Gild56:</h1>
     {% else %}
-        <p><a href="{{ url_for('challenges_leaderboard') }}">Leaderboard</a></p>
-        <p><a href="{{ url_for('levels_list') }}">Levels list</a></p>
+        <p class="bigger-line-height">
+            <a href="{{ url_for('challenges_leaderboard') }}">Leaderboard</a> |
+            <a href="{{ url_for('levels_list') }}">Levels list</a> |
+            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+        </p>
+        <h1>Challenges made by Gild56:</h1>
     {% endif %}
-    <p><a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a></p>
-    <h1>Levels made by Gild56:</h1>
     {% for level in levels %}
         <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
             <div class="row">

@@ -66,8 +66,9 @@ players = [
             "Shitty Kyouki",
             "Zetsubo",
             "Psychedelique",
+            "Hell",
             "The Ghost",
-            "Hell"
+            "A R K A D"
         ],
         []
     ),

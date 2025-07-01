@@ -226,3 +226,7 @@
 .points {
     color: #6767ff
 }
+
+.bigger-line-height {
+    line-height: 1.6;
+}
