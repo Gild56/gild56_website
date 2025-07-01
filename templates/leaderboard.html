@@ -28,16 +28,16 @@
 <main>
     {% if top == "levels" %}
         <p class="bigger-line-height">
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a> |
             <a href="{{ url_for('challenges_leaderboard') }}">Challenges leaderboard</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a>
+            <a href="{{ url_for('levels_list') }}">Levels list</a> |
+            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
         </p>
         <h1>Leaderboard:</h1>
     {% else %}
         <p class="bigger-line-height">
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a> |
             <a href="{{ url_for('leaderboard') }}">Classic leaderboard</a> |
-            <a href="{{ url_for('challenges_list') }}">Challenges list</a>
+            <a href="{{ url_for('challenges_list') }}">Challenges list</a> |
+            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
         </p>
         <h1>Challenges leaderboard:</h1>
     {% endif %}
