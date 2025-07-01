@@ -60,10 +60,14 @@ players = [
     (
         "Uranium", "@UraniumGMD",
         [
+            "Shitty Andromeda",
             "Shitty Amethyst",
             "Shitty Acheron",
             "Shitty Kyouki",
-            "Zetsubo"
+            "Zetsubo",
+            "Psychedelique",
+            "The Ghost",
+            "Hell"
         ],
         []
     ),
