@@ -72,7 +72,8 @@ players = [
             "A R K A D",
             "Hell",
             "Game",
-            "Machinas Error"
+            "Machinas Error",
+            "Shmyak"
         ],
         []
     ),

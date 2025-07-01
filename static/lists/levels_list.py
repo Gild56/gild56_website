@@ -23,7 +23,7 @@ levels_list_top = [
     ),
     ("Obsolete", "114906890", "It was supposed to be a layout so i'm happy with that, it represents depression and stuff so yeah.", "PmA-K0BVJf8", {"Uranium": "ev4LtifbEgc"}),
     ("La Longue Attente", "111681924", "It's a remake of Muy Larga Espera, my Larga Espera's unfficial sequel about the 2.2 waiting. Took me a long time to make but I'm happy with the result, except some little details.", "gnJuXF-4evI"),
-    ("Shmyak", "95464632", "The bossfight of this level is unfinished, it was supposed to be decorated.", ""),
+    ("Shmyak", "95464632", "The bossfight of this level is unfinished, it was supposed to be decorated.", "", {"Uranium": ""}),
     ("The Ghost", "120506430", "This level was started for the NCS Gauntlet Contest. I'm building a sequel to it: The Ghost II", "MYGc6EVA6_s", {"Uranium": "6HdDrd-_DIo"}),
     ("Deadly", "92834018", "It was my first level ever.", "Wk6y5i2J4fc", {"Uranium": ""}),
     ("A R K A D", "117224480", "I'm still decorating this level, by best deco ever i think, experimental level.", "CTnt37z8EyI", {"Uranium": "8wmMrd4LuZ0"}),
