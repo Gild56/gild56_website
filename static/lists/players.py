@@ -78,7 +78,12 @@ players = [
             "Rainbow",
             "MG"
         ],
-        []
+        [
+            "SpaM VI",
+            "LegendOfConsistensy",
+            "RI Wave x2",
+            "Pushing On"
+        ]
     ),
     (
         "Itwabosballss", "@Picklehi27GD",
