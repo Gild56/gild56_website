@@ -67,13 +67,16 @@ players = [
             "Zetsubo",
             "Psychedelique",
             "Obsolete",
+            "La Longue Attente",
+            "Shmyak",
             "The Ghost",
             "Deadly",
             "A R K A D",
             "Hell",
             "Game",
             "Machinas Error",
-            "Shmyak"
+            "Rainbow",
+            "MG"
         ],
         []
     ),
