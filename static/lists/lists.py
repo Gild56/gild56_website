@@ -1,5 +1,6 @@
 import requests
 
+
 def load_list_from_py(url, variable_name):
     code = requests.get(url).text
     namespace = {}
@@ -12,15 +13,36 @@ def get_levels_list_top():
     levels_list_top = load_list_from_py(levels_url, "levels_list_top")
     return levels_list_top
 
+
 def get_challenges_list_top():
     challenges_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/challenges_list.py"
     challenges_list_top = load_list_from_py(challenges_url, "challenges_list_top")
     return challenges_list_top
 
+
 def get_players():
     players_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/players.py"
     players = load_list_from_py(players_url, "players")
-    return players
+
+    levels_list_top = get_levels_list_top()
+    challenges_list_top = get_challenges_list_top()
+
+    updated_players = []
+
+    for name, tag, passed_levels_1, passed_levels_2 in players:
+        if not passed_levels_1:
+            passed_levels_1 = [
+                level[0] for level in levels_list_top if name in level[2]
+            ]
+
+        if not passed_levels_2:
+            passed_levels_2 = [
+                challenge[0] for challenge in challenges_list_top if name in challenge[2]
+            ]
+
+        updated_players.append((name, tag, passed_levels_1, passed_levels_2))
+
+    return updated_players
 
 
 def get_top_players():

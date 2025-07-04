@@ -25,16 +25,16 @@
         <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
         </a>
-        <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
+        <p>#{{ levels_position }} Player {{ player[1][1] }} ({{ player[4] }} points)</p>
         <p>#{{ challenges_position }} Challenge player ({{ challenges_points }} points)</p>
-        <p><a href="https://youtube.com/{{ player[1] }}" target="_blank">YouTube Channel</a></p>
+        <p><a href="https://youtube.com/{{ player[1][0] }}" target="_blank">YouTube Channel</a></p>
         <h2>Levels completed:</h2>
         {% if player[2] == [] %}
             <p>No levels completed</p>
         {% else %}
             <p>
                 {% for level in player[2] %}
-                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;">{{ level }} (#{{ get_level_rank(level, levels_list_top) }})</a>
+                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ level }} (#{{ get_level_rank(level, levels_list_top) }})</a>
                 {% endfor %}
             </p>
         {% endif %}
