@@ -1,6 +1,3 @@
-from static.lists.levels_list import levels_list_top
-from static.lists.challenges_list import challenges_list_top
-
 players = [
     (
         "Gild56", "@gild56gmd",
@@ -119,29 +116,3 @@ players = [
         []
     )
 ]
-
-
-level_points = {
-    level[0]: (len(levels_list_top) - i) * 10
-    for i, level in enumerate(levels_list_top)
-}
-
-top_players = []
-for name, tag, passed_levels_1, passed_levels_2 in players:
-    total_points = sum(level_points.get(lvl, 0) for lvl in passed_levels_1)
-    top_players.append((name, tag, passed_levels_1, passed_levels_2, total_points))
-
-top_players.sort(key=lambda x: x[4], reverse=True)
-
-
-challenge_points = {
-    challenge[0]: (len(challenges_list_top) - i) * 10
-    for i, challenge in enumerate(challenges_list_top)
-}
-
-top_challenge_players = []
-for name, tag, passed_levels_1, passed_levels_2 in players:
-    challenge_score = sum(challenge_points.get(lvl, 0) for lvl in passed_levels_2)
-    top_challenge_players.append((name, tag, passed_levels_1, passed_levels_2, challenge_score))
-
-top_challenge_players.sort(key=lambda x: x[4], reverse=True)
