@@ -428,7 +428,7 @@ def challenge_page(challenge):
             level=level_info,
             level_position=index + 1
         )
-    except KeyboardInterrupt:
+    except StopIteration:
         return redirect(url_for('error404'))
 
 
