@@ -417,6 +417,7 @@ def challenges_list():
 def challenge_page(challenge):
     try:
         challenges_list_top = get_challenges_list_top()
+        print(challenges_list_top)
         index = next(i for i, item in enumerate(challenges_list_top) if item[0] == challenge)
         level_info = challenges_list_top[index]
 
@@ -427,7 +428,7 @@ def challenge_page(challenge):
             level=level_info,
             level_position=index + 1
         )
-    except Exception:
+    except KeyboardInterrupt:
         return redirect(url_for('error404'))
 
 
