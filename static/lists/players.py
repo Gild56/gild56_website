@@ -76,10 +76,10 @@ players = [
             "MG"
         ],
         [
-            "SpaM VI",
             "LegendOfConsistensy",
+            "Pushing On",
             "RI Wave x2",
-            "Pushing On"
+            "SpaM VI"
         ]
     ),
     (

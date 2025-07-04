@@ -5,9 +5,8 @@ from flask import session, request
 
 from core.dbscripts import DBScripts
 
-from static.lists.levels_list import levels_list_top
-from static.lists.challenges_list import challenges_list_top
-from static.lists.players import players, top_players, top_challenge_players
+from static.lists.lists import get_levels_list_top, get_challenges_list_top
+from static.lists.lists import get_players, get_top_players, get_top_challenge_players
 
 app = Flask(
     __name__, static_folder="static",
@@ -52,111 +51,6 @@ def games():
         "games.html", logged_in=logged_in(),
         username=get_username()
     )
-
-
-@app.route("/lists/levels")
-def levels_list():
-    return render_template(
-        "list.html", logged_in=logged_in(),
-        username=get_username(), levels=levels_list_top,
-        top="levels"
-    )
-
-
-@app.route("/lists/levels/<level>")
-def level_page(level):
-    try:
-        index = next(i for i, item in enumerate(levels_list_top) if item[0] == level)
-        level_info = levels_list_top[index]
-
-        return render_template(
-            "level.html",
-            logged_in=logged_in(),
-            username=get_username(),
-            level=level_info,
-            level_position=index + 1
-        )
-    except Exception:
-        return redirect(url_for('error404'))
-
-
-@app.route("/lists/challenges")
-def challenges_list():
-    return render_template(
-        "list.html", logged_in=logged_in(),
-        username=get_username(), levels=challenges_list_top,
-        top="challenges"
-    )
-
-
-@app.route("/lists/challenges/<challenge>")
-def challenge_page(challenge):
-    try:
-        index = next(i for i, item in enumerate(challenges_list_top) if item[0] == challenge)
-        level_info = challenges_list_top[index]
-
-        return render_template(
-            "level.html",
-            logged_in=logged_in(),
-            username=get_username(),
-            level=level_info,
-            level_position=index + 1
-        )
-    except Exception:
-        return redirect(url_for('error404'))
-
-
-@app.route("/lists/leaderboard")
-def leaderboard():
-    return render_template(
-        "leaderboard.html",
-        logged_in=logged_in(),
-        username=get_username(),
-        players=top_players,
-        top="levels"
-    )
-
-
-@app.route("/lists/challenges_leaderboards")
-def challenges_leaderboard():
-    return render_template(
-        "leaderboard.html",
-        logged_in=logged_in(),
-        username=get_username(),
-        players=top_challenge_players,
-        top="challenges"
-    )
-
-
-@app.route("/players/<player>")
-def player_page(player):
-    try:
-        def get_level_rank(level_name, top_list):
-            level_name = level_name.strip().lower()
-            for i, level_data in enumerate(top_list):
-                name = level_data[0].strip().lower()
-                if name == level_name:
-                    return i + 1
-
-        levels_top_place = next(i for i, item in enumerate(top_players) if item[0] == player)
-        challenges_top_place = next(i for i, item in enumerate(top_challenge_players) if item[0] == player)
-        player = top_players[levels_top_place]
-        challenges_profile = top_challenge_players[challenges_top_place]
-        challenges_points = challenges_profile[4]
-
-        return render_template(
-            "player.html",
-            logged_in=logged_in(),
-            username=get_username(),
-            player=player,
-            challenges_points=challenges_points,
-            levels_position=levels_top_place+1,
-            challenges_position=challenges_top_place+1,
-            challenges_list_top=challenges_list_top, levels_list_top=levels_list_top,
-            get_level_rank=get_level_rank
-        )
-    except KeyboardInterrupt:
-        return redirect(url_for('error404'))
 
 
 @app.route("/jaime_les_ours")
@@ -481,5 +375,118 @@ def change_pfp():
         return redirect(url_for('log_in'))
 
 
-# app.run(debug=True)
-app.run(host="0.0.0.0", port=5000)
+# Lists
+
+@app.route("/lists/levels")
+def levels_list():
+    return render_template(
+        "list.html", logged_in=logged_in(),
+        username=get_username(), levels=get_levels_list_top(),
+        top="levels"
+    )
+
+
+@app.route("/lists/levels/<level>")
+def level_page(level):
+    try:
+        levels_list_top = get_levels_list_top()
+        index = next(i for i, item in enumerate(levels_list_top) if item[0] == level)
+        level_info = levels_list_top[index]
+
+        return render_template(
+            "level.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            level=level_info,
+            level_position=index + 1
+        )
+    except StopIteration:
+        return redirect(url_for('error404'))
+
+
+@app.route("/lists/challenges")
+def challenges_list():
+    return render_template(
+        "list.html", logged_in=logged_in(),
+        username=get_username(), levels=get_challenges_list_top(),
+        top="challenges"
+    )
+
+
+@app.route("/lists/challenges/<challenge>")
+def challenge_page(challenge):
+    try:
+        challenges_list_top = get_challenges_list_top()
+        index = next(i for i, item in enumerate(challenges_list_top) if item[0] == challenge)
+        level_info = challenges_list_top[index]
+
+        return render_template(
+            "level.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            level=level_info,
+            level_position=index + 1
+        )
+    except Exception:
+        return redirect(url_for('error404'))
+
+
+@app.route("/lists/leaderboard")
+def leaderboard():
+    return render_template(
+        "leaderboard.html",
+        logged_in=logged_in(),
+        username=get_username(),
+        players=get_top_players(),
+        top="levels"
+    )
+
+
+@app.route("/lists/challenges_leaderboards")
+def challenges_leaderboard():
+    return render_template(
+        "leaderboard.html",
+        logged_in=logged_in(),
+        username=get_username(),
+        players=get_top_challenge_players(),
+        top="challenges"
+    )
+
+
+@app.route("/players/<player>")
+def player_page(player):
+    try:
+        def get_level_rank(level_name, top_list):
+            level_name = level_name.strip().lower()
+            for i, level_data in enumerate(top_list):
+                name = level_data[0].strip().lower()
+                if name == level_name:
+                    return i + 1
+
+        top_players = get_top_players()
+        top_challenge_players = get_top_challenge_players()
+
+        levels_top_place = next(i for i, item in enumerate(top_players) if item[0] == player)
+        challenges_top_place = next(i for i, item in enumerate(top_challenge_players) if item[0] == player)
+        player = top_players[levels_top_place]
+        challenges_profile = top_challenge_players[challenges_top_place]
+        challenges_points = challenges_profile[4]
+
+        return render_template(
+            "player.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            player=player,
+            challenges_points=challenges_points,
+            levels_position=levels_top_place+1,
+            challenges_position=challenges_top_place+1,
+            challenges_list_top=get_challenges_list_top(),
+            levels_list_top=get_levels_list_top(),
+            get_level_rank=get_level_rank
+        )
+    except StopIteration:
+        return redirect(url_for('error404'))
+
+
+app.run(debug=True)
+# app.run(host="0.0.0.0", port=5000)
