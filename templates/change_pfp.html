@@ -18,7 +18,7 @@
 <main>
     <h1>Choose your profile picture:</h1>
     <hr>
-    <form method="POST" action="{{ url_for('change_pfp') }}">
+    <form method="POST" action="{{ url_for('change_pfp') }}" name="change-pfp">
         <div class="pfp-selection">
             {% for pfp in pfps %}
             <label class="pfp-container">

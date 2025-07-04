@@ -6,7 +6,7 @@ from flask import session, request
 from core.dbscripts import DBScripts
 
 from static.lists.lists import get_levels_list_top, get_challenges_list_top
-from static.lists.lists import get_players, get_top_players, get_top_challenge_players
+from static.lists.lists import get_top_players, get_top_challenge_players
 
 app = Flask(
     __name__, static_folder="static",
@@ -122,7 +122,6 @@ def teardown_request(exception=None) -> None:
 
 @app.route("/delete_post/<post_id>")
 def delete_post(post_id):
-    print(f"delete_post({post_id})")
     if (
         get_role() == "admin"
         or get_username() == g.db.get_post_author(post_id)
@@ -268,8 +267,6 @@ def community():
             continue
         comments_post_ids.append(comment[2])
 
-    print(get_pfp("sosiska17"))
-
     return render_template(
         "community.html", posts=posts, logged_in=logged_in(),
         username=get_username(), role=get_role(),
@@ -289,7 +286,6 @@ def post(post_id):
     if request.method == "POST":
         textarea_content = request.form.get("input_comment_text", None)
         if textarea_content is not None:
-            print(textarea_content)
             g.db.add_comment(textarea_content, post_id, get_username())
 
         return redirect(url_for('post', post_id=post_id))
@@ -390,7 +386,8 @@ def levels_list():
 def level_page(level):
     try:
         levels_list_top = get_levels_list_top()
-        index = next(i for i, item in enumerate(levels_list_top) if item[0] == level)
+        index = next(
+            i for i, item in enumerate(levels_list_top) if item[0] == level)
         level_info = levels_list_top[index]
 
         return render_template(
@@ -417,8 +414,9 @@ def challenges_list():
 def challenge_page(challenge):
     try:
         challenges_list_top = get_challenges_list_top()
-        print(challenges_list_top)
-        index = next(i for i, item in enumerate(challenges_list_top) if item[0] == challenge)
+        index = next(
+            i for i, item in enumerate(
+                challenges_list_top) if item[0] == challenge)
         level_info = challenges_list_top[index]
 
         return render_template(
@@ -467,8 +465,11 @@ def player_page(player):
         top_players = get_top_players()
         top_challenge_players = get_top_challenge_players()
 
-        levels_top_place = next(i for i, item in enumerate(top_players) if item[0] == player)
-        challenges_top_place = next(i for i, item in enumerate(top_challenge_players) if item[0] == player)
+        levels_top_place = next(
+            i for i, item in enumerate(top_players) if item[0] == player)
+        challenges_top_place = next(
+            i for i, item in enumerate(
+                top_challenge_players) if item[0] == player)
         player = top_players[levels_top_place]
         challenges_profile = top_challenge_players[challenges_top_place]
         challenges_points = challenges_profile[4]
@@ -489,5 +490,5 @@ def player_page(player):
         return redirect(url_for('error404'))
 
 
-# app.run(debug=True)
-app.run(host="0.0.0.0", port=5000)
+app.run(debug=True)
+# app.run(host="0.0.0.0", port=5000)

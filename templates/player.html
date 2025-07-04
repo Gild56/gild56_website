@@ -21,13 +21,17 @@
 
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
-        <h1 class="big no-margin">{{ player[0] }}</h1>
+        <h1 class="big no-margin">{{ player[0] }} {{ player[1][1] }}</h1>
         <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
         </a>
-        <p>#{{ levels_position }} Player {{ player[1][1] }} ({{ player[4] }} points)</p>
+        <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
         <p>#{{ challenges_position }} Challenge player ({{ challenges_points }} points)</p>
+        <p class="player-description">{{ player[1][3] }}</p>
         <p><a href="https://youtube.com/{{ player[1][0] }}" target="_blank">YouTube Channel</a></p>
+        {% if player[1][2] != "" %}
+            <p><a href="{{ url_for('user_profile', profile=player[1][2]) }}" target="_blank">Community Account</a></p>
+        {% endif %}
         <h2>Levels completed:</h2>
         {% if player[2] == [] %}
             <p>No levels completed</p>

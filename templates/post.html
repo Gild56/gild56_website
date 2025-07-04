@@ -17,7 +17,7 @@
 
 <main>
     <h1>Add a comment to this post:</h1>
-    <form method="post" action="{{ url_for('post', post_id=post[0]) }}" class="margin-bottom">
+    <form method="post" action="{{ url_for('post', post_id=post[0]) }}" class="margin-bottom" name="comment">
         <p><textarea id="input-comment-text" name="input_comment_text" placeholder="Write your comment here..."></textarea></p>
         <button type="submit">Publish</button>
     </form>

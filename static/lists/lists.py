@@ -1,5 +1,9 @@
 import requests
 
+from static.lists.gild56_website_lists.challenges_list import challenges_list_top as challenges_list_top_offline
+from static.lists.gild56_website_lists.levels_list import levels_list_top as levels_list_top_offline
+from static.lists.gild56_website_lists.players import players as players_offline
+
 
 def load_list_from_py(url, variable_name):
     code = requests.get(url).text
@@ -10,19 +14,22 @@ def load_list_from_py(url, variable_name):
 
 def get_levels_list_top():
     levels_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/levels_list.py"
-    levels_list_top = load_list_from_py(levels_url, "levels_list_top")
+    # levels_list_top = load_list_from_py(levels_url, "levels_list_top")
+    levels_list_top = levels_list_top_offline
     return levels_list_top
 
 
 def get_challenges_list_top():
     challenges_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/challenges_list.py"
-    challenges_list_top = load_list_from_py(challenges_url, "challenges_list_top")
+    # challenges_list_top = load_list_from_py(challenges_url, "challenges_list_top")
+    challenges_list_top = challenges_list_top_offline
     return challenges_list_top
 
 
 def get_players():
     players_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/players.py"
-    players = load_list_from_py(players_url, "players")
+    # players = load_list_from_py(players_url, "players")
+    players = players_offline
 
     levels_list_top = get_levels_list_top()
     challenges_list_top = get_challenges_list_top()
@@ -30,14 +37,22 @@ def get_players():
     updated_players = []
 
     for name, tag, passed_levels_1, passed_levels_2 in players:
-        if not passed_levels_1:
+        if name == "Gild56":
             passed_levels_1 = [
-                level[0] for level in levels_list_top if name in level[2]
+                level[0] for level in levels_list_top if level[3] != ""
+            ]
+        else:
+            passed_levels_1 = [
+                level[0] for level in levels_list_top if name in level[4]
             ]
 
-        if not passed_levels_2:
+        if name == "Gild56":
             passed_levels_2 = [
-                challenge[0] for challenge in challenges_list_top if name in challenge[2]
+                challenge[0] for challenge in challenges_list_top if challenge[3] != ""
+            ]
+        else:
+            passed_levels_2 = [
+                challenge[0] for challenge in challenges_list_top if name in challenge[4]
             ]
 
         updated_players.append((name, tag, passed_levels_1, passed_levels_2))
@@ -47,7 +62,6 @@ def get_players():
 
 def get_top_players():
     levels_list_top = get_levels_list_top()
-    challenges_list_top = get_challenges_list_top()
     players = get_players()
 
     level_points = {
@@ -58,7 +72,9 @@ def get_top_players():
     top_players = []
     for name, tag, passed_levels_1, passed_levels_2 in players:
         total_points = sum(level_points.get(lvl, 0) for lvl in passed_levels_1)
-        top_players.append((name, tag, passed_levels_1, passed_levels_2, total_points))
+        top_players.append(
+            (name, tag, passed_levels_1, passed_levels_2, total_points)
+        )
 
     top_players.sort(key=lambda x: x[4], reverse=True)
 
@@ -66,7 +82,6 @@ def get_top_players():
 
 
 def get_top_challenge_players():
-    levels_list_top = get_levels_list_top()
     challenges_list_top = get_challenges_list_top()
     players = get_players()
 
@@ -77,8 +92,13 @@ def get_top_challenge_players():
 
     top_challenge_players = []
     for name, tag, passed_levels_1, passed_levels_2 in players:
-        challenge_score = sum(challenge_points.get(lvl, 0) for lvl in passed_levels_2)
-        top_challenge_players.append((name, tag, passed_levels_1, passed_levels_2, challenge_score))
+        challenge_score = sum(
+            challenge_points.get(lvl, 0) for lvl in passed_levels_2
+        )
+
+        top_challenge_players.append(
+            (name, tag, passed_levels_1, passed_levels_2, challenge_score)
+        )
 
     top_challenge_players.sort(key=lambda x: x[4], reverse=True)
 

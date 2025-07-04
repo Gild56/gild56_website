@@ -72,7 +72,7 @@
         <h1>Configure your profile:</h1>
         <p><a href="{{ url_for('change_pfp') }}" class="link no-margin">Change profile picture</a></p>
         <hr>
-        <form method="post" action="{{ url_for('user_profile', profile=profile) }}" class="margin-bottom">
+        <form method="post" action="{{ url_for('user_profile', profile=profile) }}" class="margin-bottom" name="bio">
             <h1>Edit bio:</h1>
             <p><textarea id="input-bio" name="input_bio" placeholder="Write your bio here..."></textarea></p>
             <button type="submit">Publish</button>

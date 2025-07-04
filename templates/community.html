@@ -35,7 +35,7 @@
         </p>
         <hr>
         <h1>Create a post:</h1>
-        <form method="post" action="{{ url_for('community') }}" class="margin-bottom">
+        <form method="post" action="{{ url_for('community') }}" class="margin-bottom" name="post">
             <p><textarea id="input-post-text" name="input_post_text" placeholder="Write your post here..."></textarea></p>
             <button type="submit">Publish</button>
         </form>
