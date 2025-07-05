@@ -6,9 +6,9 @@
 <header>
     <nav>
         <a href="{{ url_for('index') }}" class="current">Home</a>
-        <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('contact') }}">Contact</a>
         <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
+        <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('community') }}">Community</a>
         <a href="{{ url_for('levels_list') }}">Lists</a>
         {% if logged_in %}

@@ -12,9 +12,9 @@
 <header>
     <nav>
         <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('contact') }}">Contact</a>
         <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
+        <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('community') }}">Community</a>
         <a href="{{ url_for('levels_list') }}" class="current">Lists</a>
         {% if logged_in %}
@@ -51,7 +51,7 @@
                             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
                         </a>
                     </div>
-                    <h1 class="left-margin">#{{ loop.index0 + 1 }} - {{ player[0] }} {{ player[1][1] }} <span class="points"> ({{ player[4] }} points)</span></h1>
+                    <h1 class="left-margin">#{{ loop.index0 + 1 }} - {{ player[0] }} <span class="emoji">{{ player[1][1] }}</span> <span class="points"> ({{ player[4] }} points)</span></h1>
                 </div>
             </div>
         {% endfor %}
