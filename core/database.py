@@ -1,6 +1,6 @@
 import sqlite3 as sql
 import os
-from typing import Any
+from typing import Any, Literal
 
 
 class DataBase():
@@ -25,7 +25,7 @@ class DataBase():
 
         self.ROLES = ["admin", "user"]
 
-        self.sql_dict = {}
+        self.sql_dict: dict[str, str] = {}
         self.files_to_dict()
 
     def connect(self) -> None:
@@ -53,42 +53,49 @@ class DataBase():
             with open(file_path, 'r', encoding='utf-8') as file:
                 self.sql_dict[filename] = file.read()
 
-    def get_sql(self, filename: str) -> dict:
+    def get_sql(self, filename: str) -> str | Literal["error"]:
         """Gets the SQL code from the dict."""
         file = f"{filename}.sql"
         return self.sql_dict.get(file, "error")
 
     def execute(
-            self,
-            input_query: str,
-            args: list | None = [],
-            fetch_count: int | None = -1
-            ) -> Any:
-
+        self,
+        input_query: str,
+        args: list[Any] | None = None,
+        fetch_count: int | None = -1
+    ) -> Any:
         """Executes a query from the input file and returns data."""
 
-        if input_query is None:
-            return
+        if not input_query:
+            return None
+
         result = None
         query = self.get_sql(input_query)
 
         try:
-            self.cursor.execute(str(query), args)
+            if not self.cursor or not self.connection:
+                return None
+
+            self.cursor.execute(str(query), args or [])
 
             match fetch_count:
-                case 1:     result = self.cursor.fetchone()
-                case -1:    result = self.cursor.fetchall()
-                case _:     result = self.cursor.fetchmany(fetch_count)
+                case 1:
+                    result = self.cursor.fetchone()
+                case -1:
+                    result = self.cursor.fetchall()
+                case _:
+                    result = self.cursor.fetchmany(fetch_count)
 
             self.connection.commit()
 
         except Exception as e:
             print(f"\n\nError: {e}")
             print(
-                f"Completed query:\n\n{query}\n",
+                f"Completed query:\n\n{query}\n"
                 f"With args {args} (get {fetch_count} rows)"
             )
-            self.connection.rollback()
+            if self.connection:
+                self.connection.rollback()
 
         finally:
             return result

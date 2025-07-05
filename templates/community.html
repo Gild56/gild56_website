@@ -21,18 +21,17 @@
 
 <main>
     <a id="refresh" href="{{ url_for('community') }}" class="link">
-        <img src="{{ url_for('static', filename='images/reload.png') }}" width="50" alt="refresh">
+        <img src="{{ url_for('static', filename='images/other/reload.png') }}" width="50" alt="refresh">
     </a>
-    {% if logged_in %}
-        <h1 class="no-margin-bottom">Statistics:</h1>
-        <p>
-            There are <b>{{ users_count }}</b> users registered and <b>{{ posts_and_comments_count }}</b> posts and comments published.<br>
+    <h1 class="no-margin-bottom">Statistics:</h1>
+    <p>There are <b>{{ users_count }}</b> users registered and <b>{{ posts_and_comments_count }}</b> posts and comments published.
+        {% if logged_in %}
+        <br>
             {% if role == "user" %}
-                You are a user.
+                You are <b>a user</b>.
             {% else %}
-                You are an admin.
+                You are <b>an admin</b>.
             {% endif %}
-        </p>
         <hr>
         <h1>Create a post:</h1>
         <form method="post" action="{{ url_for('community') }}" class="margin-bottom" name="post">
@@ -40,6 +39,7 @@
             <button type="submit">Publish</button>
         </form>
     {% else %}
+    </p>
         <h1>You need to <a href="{{ url_for('log_in') }}">log in</a> to create a post.</h1>
     {% endif %}
 

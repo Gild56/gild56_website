@@ -21,7 +21,7 @@
 
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
-        <h1 class="big no-margin">{{ player[0] }} <span class="emoji">{{ player[1][1] }}</span></h1>
+        <h1 class="big no-margin">{{ player[0] }} <img class="emoji" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.png') }}"></h1>
         <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
         </a>

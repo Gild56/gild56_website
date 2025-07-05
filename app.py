@@ -1,4 +1,6 @@
 import os
+from builtins import BaseException
+from werkzeug.exceptions import HTTPException
 
 from flask import Flask, render_template, redirect, url_for, g
 from flask import session, request
@@ -69,14 +71,13 @@ def error404():
 
 
 @app.errorhandler(404)
-def handle_404(error):
+def handle_404(_error: HTTPException):
     return redirect(url_for('error404'))
-
 
 # Functions
 
 
-def get_pfp(user) -> str:
+def get_pfp(user: str) -> str:
     return g.db.get_pfp(user)
 
 
@@ -95,7 +96,7 @@ def get_role() -> str:
         return "user"
 
 
-def get_all_pfps() -> list:
+def get_all_pfps() -> list[str]:
     return sorted(os.listdir("static/images/cubes"))
 
 
@@ -110,7 +111,7 @@ def before_request() -> None:
 
 
 @app.teardown_appcontext
-def teardown_request(exception=None) -> None:
+def teardown_request(exception: BaseException | None = None) -> None:
     db = getattr(g, 'db', None)
     if db is not None:
         db.disconnect()
@@ -121,7 +122,7 @@ def teardown_request(exception=None) -> None:
 
 
 @app.route("/delete_post/<post_id>")
-def delete_post(post_id):
+def delete_post(post_id: str):
     if (
         get_role() == "admin"
         or get_username() == g.db.get_post_author(post_id)
@@ -133,7 +134,7 @@ def delete_post(post_id):
 
 
 @app.route("/delete_comment/<comment_id>")
-def delete_comment(comment_id):
+def delete_comment(comment_id: str):
     if (
         get_role() == "admin"
         or get_username() == g.db.get_comment_author(comment_id)
@@ -145,7 +146,7 @@ def delete_comment(comment_id):
 
 
 @app.route("/delete_user/<profile>")
-def delete_user(profile):
+def delete_user(profile: str):
     if (
         get_role() == "admin"
         or get_username() == g.db.get_comment_author(profile)
@@ -160,9 +161,9 @@ def delete_user(profile):
 
 
 @app.route("/change_role/<profile>")
-def change_role(profile):
+def change_role(profile: str):
     if not get_role() == "admin":
-        return
+        return redirect(url_for("community"))
 
     if g.db.get_role(profile) == "admin":
         g.db.set_role(profile, "user")
@@ -261,6 +262,8 @@ def community():
     comments_count = len(comments)
     posts_and_comments_count = posts_count + comments_count
 
+    comments_post_ids: list[int] = []
+
     comments_post_ids = []
     for comment in comments:
         if comment[2] in comments_post_ids:
@@ -279,7 +282,7 @@ def community():
 
 
 @app.route("/posts/<post_id>", methods=["GET", "POST"])
-def post(post_id):
+def post(post_id: str):
     if not logged_in():
         return redirect(request.referrer)
 
@@ -299,10 +302,10 @@ def post(post_id):
 
 
 @app.route('/users/<profile>', methods=["GET", "POST"])
-def user_profile(profile):
+def user_profile(profile: str):
     if request.method == "POST":
         content = request.form["input_bio"]
-        if content is not None:
+        if content:
             g.db.set_bio(get_username(), content)
         return redirect(url_for('user_profile', profile=profile))
 
@@ -315,12 +318,12 @@ def user_profile(profile):
         if post[2] == profile:
             posts_count += 1
 
-    comments_post_ids = []
+    comments_post_ids: list[str] = []
     for comment in comments:
         if comment[2] not in comments_post_ids:
             comments_post_ids.append(comment[2])
 
-    posts_authors = []
+    posts_authors: list[str] = []
     for post in posts:
         if post[2] not in posts_authors:
             posts_authors.append(post[2])
@@ -383,7 +386,7 @@ def levels_list():
 
 
 @app.route("/lists/levels/<level>")
-def level_page(level):
+def level_page(level: str):
     try:
         levels_list_top = get_levels_list_top()
         index = next(
@@ -411,7 +414,7 @@ def challenges_list():
 
 
 @app.route("/lists/challenges/<challenge>")
-def challenge_page(challenge):
+def challenge_page(challenge: str):
     try:
         challenges_list_top = get_challenges_list_top()
         index = next(
@@ -453,24 +456,24 @@ def challenges_leaderboard():
 
 
 @app.route("/players/<player>")
-def player_page(player):
+def player_page(player: str):
     try:
-        def get_level_rank(level_name, top_list):
+        def get_level_rank(level_name: str, top_list: list[tuple[str, str, str, str, dict[str, str]]]):
             level_name = level_name.strip().lower()
             for i, level_data in enumerate(top_list):
                 name = level_data[0].strip().lower()
                 if name == level_name:
                     return i + 1
 
-        top_players = get_top_players()
-        top_challenge_players = get_top_challenge_players()
+        top_players: list[tuple[str, list[str], list[str], list[str], int]] = get_top_players()
+        top_challenge_players: list[tuple[str, list[str], list[str], list[str], int]] = get_top_challenge_players()
 
         levels_top_place = next(
             i for i, item in enumerate(top_players) if item[0] == player)
         challenges_top_place = next(
             i for i, item in enumerate(
                 top_challenge_players) if item[0] == player)
-        player = top_players[levels_top_place]
+        player_data = top_players[levels_top_place]
         challenges_profile = top_challenge_players[challenges_top_place]
         challenges_points = challenges_profile[4]
 
@@ -478,7 +481,7 @@ def player_page(player):
             "player.html",
             logged_in=logged_in(),
             username=get_username(),
-            player=player,
+            player=player_data,
             challenges_points=challenges_points,
             levels_position=levels_top_place+1,
             challenges_position=challenges_top_place+1,

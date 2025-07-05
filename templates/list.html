@@ -53,7 +53,7 @@
                     {% if level[3] != "" %}
                         <a href="https://www.youtube.com/watch?v={{ level[3] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
                     {% endif %}
-                        <img src="{{ url_for('static', filename=('images/previews/' + level[0] + '.png' )) }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()">
+                        <img src="{{ url_for('static', filename=('images/thumbnails/' + level[0] + '.png' )) }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()">
                     </a>
                 </div>
                 <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level[0] }}</h1>

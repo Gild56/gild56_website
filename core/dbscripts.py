@@ -48,8 +48,8 @@ class DBScripts(DataBase):
     - `verify_password()`
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, db_name: str):
+        super().__init__(db_name=db_name)
 
     # Create tables
 
@@ -95,6 +95,9 @@ class DBScripts(DataBase):
         hashed_password = self.hash_password(password)
 
         self.execute("add_user", [login, hashed_password, email])
+
+        if self.connection is None:
+            raise RuntimeError("Database connection is not initialized")
         self.connection.commit()
 
     def add_post(self, content: str, author_name: str) -> None:
@@ -112,14 +115,18 @@ class DBScripts(DataBase):
     def get_role(self, login: str) -> str | None:
         """Returns user's role."""
         data = self.get_user(login)
-        try:
-            role = data[4]
-        except Exception:
+
+        if data is None:
             return None
+
+        if len(data) <= 4:
+            return None
+
+        role = data[4]
 
         if role not in self.ROLES:
             role = "user"
-            self.set_role(login, "user")
+            self.set_role(login, role)
 
         return role
 
@@ -129,7 +136,7 @@ class DBScripts(DataBase):
         if data is not None:
             return data[::-1]
 
-    def get_post(self, post_id) -> str | None:
+    def get_post(self, post_id: int) -> str | None:
         """Returns a post by id."""
         data = self.execute("get_post", [post_id])
         if data is not None:

@@ -149,8 +149,8 @@ v.path {
 }
 
 .icon {
-    vertical-align: middle;
-    height: 17px;
+    vertical-align: text-bottom;
+    height: 1.2em;
 }
 
 .copyable-heading {
@@ -245,5 +245,6 @@ v.path {
 }
 
 .emoji {
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif;
+    vertical-align: text-bottom;
+    height: 1.2em;
 }

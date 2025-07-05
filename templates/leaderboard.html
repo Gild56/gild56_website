@@ -51,7 +51,7 @@
                             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
                         </a>
                     </div>
-                    <h1 class="left-margin">#{{ loop.index0 + 1 }} - {{ player[0] }} <span class="emoji">{{ player[1][1] }}</span> <span class="points"> ({{ player[4] }} points)</span></h1>
+                    <h1 class="left-margin">#{{ loop.index0 + 1 }} - {{ player[0] }} <img class="emoji" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.png') }}"> <span class="points"> ({{ player[4] }} points)</span></h1>
                 </div>
             </div>
         {% endfor %}

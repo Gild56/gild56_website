@@ -1,33 +1,34 @@
 import requests
+from typing import Any
 
 
-def load_list_from_py(url, variable_name):
+def load_list_from_py(url: str, variable_name: str) -> Any:
     code = requests.get(url).text
-    namespace = {}
+    namespace: dict[str, Any] = {}
     exec(code, namespace)
     return namespace[variable_name]
 
 
-def get_levels_list_top():
+def get_levels_list_top() -> list[tuple[str, str, str, str, dict[str, str]]]:
     levels_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/levels_list.py"
     levels_list_top = load_list_from_py(levels_url, "levels_list_top")
     return levels_list_top
 
 
-def get_challenges_list_top():
+def get_challenges_list_top() -> list[tuple[str, str, str, str, dict[str, str]]]:
     challenges_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/challenges_list.py"
     challenges_list_top = load_list_from_py(challenges_url, "challenges_list_top")
     return challenges_list_top
 
 
-def get_players():
+def get_players() -> list[tuple[str, list[str], list[str], list[str]]]:
     players_url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/players.py"
     players = load_list_from_py(players_url, "players")
 
     levels_list_top = get_levels_list_top()
     challenges_list_top = get_challenges_list_top()
 
-    updated_players = []
+    updated_players: list[tuple[str, list[str], list[str], list[str]]] = []
 
     for name, tag, passed_levels_1, passed_levels_2 in players:
         if name == "Gild56":
@@ -53,7 +54,7 @@ def get_players():
     return updated_players
 
 
-def get_top_players():
+def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
     levels_list_top = get_levels_list_top()
     players = get_players()
 
@@ -62,7 +63,8 @@ def get_top_players():
         for i, level in enumerate(levels_list_top)
     }
 
-    top_players = []
+    top_players: list[tuple[str, list[str], list[str], list[str], int]] = []
+
     for name, tag, passed_levels_1, passed_levels_2 in players:
         total_points = sum(level_points.get(lvl, 0) for lvl in passed_levels_1)
         top_players.append(
@@ -74,7 +76,7 @@ def get_top_players():
     return top_players
 
 
-def get_top_challenge_players():
+def get_top_challenge_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
     challenges_list_top = get_challenges_list_top()
     players = get_players()
 
@@ -83,7 +85,8 @@ def get_top_challenge_players():
         for i, challenge in enumerate(challenges_list_top)
     }
 
-    top_challenge_players = []
+    top_challenge_players: list[tuple[str, list[str], list[str], list[str], int]] = []
+
     for name, tag, passed_levels_1, passed_levels_2 in players:
         challenge_score = sum(
             challenge_points.get(lvl, 0) for lvl in passed_levels_2
