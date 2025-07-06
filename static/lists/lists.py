@@ -1,9 +1,9 @@
-import requests
+import urllib.request
 from typing import Any
 
-
 def load_list_from_py(url: str, variable_name: str) -> Any:
-    code = requests.get(url).text
+    with urllib.request.urlopen(url) as response:
+        code = response.read().decode('utf-8')
     namespace: dict[str, Any] = {}
     exec(code, namespace)
     return namespace[variable_name]
