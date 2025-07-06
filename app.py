@@ -376,6 +376,11 @@ def change_pfp():
 
 # Lists
 
+@app.route("/lists")
+def lists():
+    return redirect(url_for('levels_list'))
+
+
 @app.route("/lists/levels")
 def levels_list():
     return render_template(
@@ -458,15 +463,22 @@ def challenges_leaderboard():
 @app.route("/players/<player>")
 def player_page(player: str):
     try:
-        def get_level_rank(level_name: str, top_list: list[tuple[str, str, str, str, dict[str, str]]]):
+        def get_level_rank(
+            level_name: str,
+            top_list: list[tuple[str, str, str, str, dict[str, str]]]
+        ):
             level_name = level_name.strip().lower()
             for i, level_data in enumerate(top_list):
                 name = level_data[0].strip().lower()
                 if name == level_name:
                     return i + 1
 
-        top_players: list[tuple[str, list[str], list[str], list[str], int]] = get_top_players()
-        top_challenge_players: list[tuple[str, list[str], list[str], list[str], int]] = get_top_challenge_players()
+        top_players: list[
+            tuple[str, list[str], list[str], list[str], int]
+        ] = get_top_players()
+        top_challenge_players: list[
+            tuple[str, list[str], list[str], list[str], int]
+        ] = get_top_challenge_players()
 
         levels_top_place = next(
             i for i, item in enumerate(top_players) if item[0] == player)
