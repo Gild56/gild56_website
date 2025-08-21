@@ -77,6 +77,13 @@ def handle_404(_error: HTTPException):
 # Functions
 
 
+def flag_exists(code):
+    path = os.path.join(app.static_folder, "images", "flags", f"{code}.png")
+    return os.path.exists(path)
+
+app.jinja_env.globals.update(flag_exists=flag_exists)
+
+
 def get_pfp(user: str) -> str:
     return g.db.get_pfp(user)
 
