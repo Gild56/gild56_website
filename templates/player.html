@@ -29,7 +29,7 @@
                 <i>{{ player[1][1] }}</i>
             {% endif %}
         </h1>
-        <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg">
+        <a href="https://www.youtube.com/{{ player[1][0] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
         </a>
         <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
