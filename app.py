@@ -19,6 +19,7 @@ with open("secret.key", "rb") as key_file:
     key = key_file.read()
 
 app.secret_key = key
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 
 
 # Static pages
