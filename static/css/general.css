@@ -57,3 +57,7 @@ hr {
     border: #ffffff 2px solid;
     color: #ffffff;
 }
+
+.level-container a:hover {
+    color: white !important;
+}

@@ -47,7 +47,7 @@
             <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player[0]) }}'">
                 <div class="row">
                     <div>
-                        <a href="https://www.youtube.com/{{ player[1] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                        <a href="https://www.youtube.com/{{ player[1][0] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
                             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
                         </a>
                     </div>
