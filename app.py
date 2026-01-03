@@ -512,6 +512,7 @@ def player_page(player: str):
     except StopIteration:
         return redirect(url_for('error404'))
 
+
 if __name__ == "__main__":
-    #app.run(debug=True)
+    #app.run(debug=True)  # test (don't forget to comment that line)
     app.run(host="0.0.0.0", port=5000)
