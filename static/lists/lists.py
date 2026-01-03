@@ -54,12 +54,25 @@ def get_players() -> list[tuple[str, list[str], list[str], list[str]]]:
     return updated_players
 
 
+def get_points_by_rank(rank: int) -> int:
+    if rank == 1:
+        return 60
+    elif 2 <= rank <= 4:
+        return 50
+    elif 5 <= rank <= 10:
+        return 30
+    elif 11 <= rank <= 20:
+        return 20
+    else:
+        return 10
+
+
 def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
     levels_list_top = get_levels_list_top()
     players = get_players()
 
     level_points = {
-        level[0]: (len(levels_list_top) - i) * 10
+        level[0]: get_points_by_rank(i + 1)
         for i, level in enumerate(levels_list_top)
     }
 
@@ -81,7 +94,7 @@ def get_top_challenge_players() -> list[tuple[str, list[str], list[str], list[st
     players = get_players()
 
     challenge_points = {
-        challenge[0]: (len(challenges_list_top) - i) * 10
+        challenge[0]: get_points_by_rank(i + 1)
         for i, challenge in enumerate(challenges_list_top)
     }
 
