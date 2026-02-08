@@ -22,6 +22,9 @@
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
         <h1 class="big no-margin">
+            {% if player[1][4] %}
+                <span class="tag"> [{{ player[1][4] }}] </span>
+            {% endif %}
             {{ player[0] }}
             {% if flag_exists(player[1][1]) %}
                 <img class="emoji" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.png') }}" alt="Flag of {{ player[1][1] }}">

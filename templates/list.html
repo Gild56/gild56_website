@@ -56,7 +56,7 @@
                         <img src="{{ url_for('static', filename=('images/thumbnails/' + level[0] + '.png' )) }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()">
                     </a>
                 </div>
-                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level[0] }}</h1>
+                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level[0] }} <span class="points">({{ get_points_by_place(loop.index0 + 1) }} pts)</span></h1>
             </div>
         </div>
     {% endfor %}

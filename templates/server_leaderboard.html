@@ -1,12 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    {% if top == "levels" %}
-        Leaderboard
-    {% else %}
-        Challenges leaderboard
-    {% endif %}
-{% endblock %}
+{% block title %}Discord Server's Leaderboard{% endblock %}
 
 {% block content %}
 <header>
@@ -26,24 +20,29 @@
 </header>
 
 <main class="big-margin-left-right">
-    {% if top == "levels" %}
+
+    {% if top_type == "by_hardest" %}
         <p class="bigger-line-height">
-            <a href="{{ url_for('challenges_leaderboard') }}">Challenges leaderboard</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Sort by points</a> |
+            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a>
         </p>
-        <h1>Leaderboard:</h1>
+        <h1>Leaderboard (by hardest):</h1>
+    {% elif top_type == "by_list_points" %}
+        <p class="bigger-line-height">
+            <a href="{{ url_for('server_leaderboard_by_hardest') }}">Sort by hardest</a> |
+            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a>
+        </p>
+        <h1>Leaderboard (by list points):</h1>
     {% else %}
         <p class="bigger-line-height">
-            <a href="{{ url_for('leaderboard') }}">Classic leaderboard</a> |
-            <a href="{{ url_for('challenges_list') }}">Challenges list</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+            <a href="{{ url_for('server_leaderboard_by_hardest') }}">Sort by hardest</a> |
+            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Sort by points</a>
         </p>
-        <h1>Challenges leaderboard:</h1>
+        <h1>Leaderboard (by 5 hardests):</h1>
     {% endif %}
 
     <div class="align-on-mobile">
-        {% for player in players %}{% if player[4] > 0 %}
+        {% for player in players %}{%if player[2] and (top_type != "by_5_hardests" or get_len(player[2]) > 4) %}
             <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player[0]) }}'">
                 <div class="row">
                     <div>
@@ -62,7 +61,13 @@
                         {% else %}
                             <i>{{ player[1][1] }}</i>
                         {% endif %}
-                        <span class="points"> ({{ player[4] }} pts)</span>
+                        {% if top_type == "by_hardest" %}
+                            <span class="points"> ({{ player[2][0] }} - #{{ get_pos(player[2][0]) }})</span>
+                        {% elif top_type == "by_list_points" %}
+                            <span class="points"> ({{ player[3] }} pts)</span>
+                        {% else %}
+                            <span class="hardests"> ({% for i in range(5) %}{{ player[2][i] }} #{{ get_pos(player[2][i]) }}{% if i != 4 %}, {% endif %}{% endfor %})</span>
+                        {% endif %}
                     </h1>
                 </div>
             </div>

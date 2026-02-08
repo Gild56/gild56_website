@@ -223,6 +223,15 @@ v.path {
     color: #6767ff
 }
 
+.hardests {
+    color: #6767ff;
+    font-size: 0.7em;
+}
+
+.tag {
+    color: #ababff
+}
+
 .bigger-line-height {
     line-height: 1.6;
 }

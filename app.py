@@ -7,8 +7,9 @@ from flask import session, request
 
 from core.dbscripts import DBScripts
 
-from static.lists.lists import get_levels_list_top, get_challenges_list_top
-from static.lists.lists import get_top_players, get_top_challenge_players
+from core.lists import get_levels_list_top, get_challenges_list_top
+from core.lists import get_top_players, get_top_challenge_players
+from core.lists import get_points_by_place, get_top_server_players, get_pos
 
 app = Flask(
     __name__, static_folder="static",
@@ -78,7 +79,7 @@ def handle_404(_error: HTTPException):
 # Functions
 
 
-def flag_exists(code):
+def flag_exists(code: str):
     path = os.path.join(app.static_folder, "images", "flags", f"{code}.png")
     return os.path.exists(path)
 
@@ -93,19 +94,20 @@ def logged_in() -> bool:
     return session.get("account_login", None) is not None
 
 
-def get_username() -> str | None:
-    return session.get("account_login", None)
+def get_username() -> str:
+    return session.get("account_login", "user")
 
 
 def get_role() -> str:
-    try:
-        return g.db.get_role(get_username())
-    except Exception:
-        return "user"
+    return g.db.get_role(get_username())
 
 
 def get_all_pfps() -> list[str]:
     return sorted(os.listdir("static/images/cubes"))
+
+
+def get_len(item: list | dict | tuple) -> int:
+    return len(item)
 
 
 # Database functions
@@ -394,7 +396,7 @@ def levels_list():
     return render_template(
         "list.html", logged_in=logged_in(),
         username=get_username(), levels=get_levels_list_top(),
-        top="levels"
+        top="levels", get_points_by_place=get_points_by_place
     )
 
 
@@ -422,7 +424,7 @@ def challenges_list():
     return render_template(
         "list.html", logged_in=logged_in(),
         username=get_username(), levels=get_challenges_list_top(),
-        top="challenges"
+        top="challenges", get_points_by_place=get_points_by_place
     )
 
 
@@ -444,6 +446,39 @@ def challenge_page(challenge: str):
         )
     except StopIteration:
         return redirect(url_for('error404'))
+
+
+@app.route("/lists/server_leaderboard/by_hardest")
+def server_leaderboard_by_hardest():
+    return render_template(
+        "server_leaderboard.html",
+        logged_in=logged_in(),
+        username=get_username(),
+        players=get_top_server_players("by_hardest"),
+        top_type="by_hardest", get_pos=get_pos, get_len=get_len
+    )
+
+
+@app.route("/lists/server_leaderboard/by_list_points")
+def server_leaderboard_by_list_points():
+    return render_template(
+        "server_leaderboard.html",
+        logged_in=logged_in(),
+        username=get_username(),
+        players=get_top_server_players("by_list_points"),
+        top_type="by_list_points", get_len=get_len, get_pos=get_pos
+    )
+
+
+@app.route("/lists/server_leaderboard/by_5_hardests")
+def server_leaderboard_by_5_hardests():
+    return render_template(
+        "server_leaderboard.html",
+        logged_in=logged_in(),
+        username=get_username(),
+        players=get_top_server_players("by_5_hardests"),
+        top_type="by_5_hardests", get_len=get_len, get_pos=get_pos
+    )
 
 
 @app.route("/lists/leaderboard")
@@ -514,5 +549,5 @@ def player_page(player: str):
 
 
 if __name__ == "__main__":
-    #app.run(debug=True)  # test (don't forget to comment that line)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)  #! test (don't forget to comment that line)
+    #app.run(host="0.0.0.0", port=5000)
