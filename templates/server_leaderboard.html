@@ -53,7 +53,7 @@
                         </a>
                     </div>
                     <h1 class="left-margin">
-                        #{{ loop.index0 + 1 }} - 
+                        #{{ loop.index0 + 1 }} -
                         {% if player[1][4] %}
                             <span class="tag"> [{{ player[1][4] }}] </span>
                         {% endif %}
@@ -68,7 +68,7 @@
                         {% elif top_type == "by_list_points" %}
                             <span class="points"> ({{ player[3] }} pts)</span>
                         {% else %}
-                            <span class="hardests"> ({% for i in range(5) %}{{ player[2][i] }} #{{ get_pos(player[2][i]) }}{% if i != 4 %}, {% endif %}{% endfor %})</span>
+                            <span class="hardests"> Mean position: {{ get_mean([get_pos(player[2][0]), get_pos(player[2][1]), get_pos(player[2][2]), get_pos(player[2][3]), get_pos(player[2][4])]) }} ({% for i in range(5) %}{{ player[2][i] }} #{{ get_pos(player[2][i]) }}{% if i != 4 %}, {% endif %}{% endfor %})</span>
                         {% endif %}
                     </h1>
                 </div>

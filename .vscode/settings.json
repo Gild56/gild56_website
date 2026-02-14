@@ -10,6 +10,7 @@
         "reportUnknownVariableType": "none",
         "reportCallIssue": "none",
         "reportArgumentType": "none",
-        "reportRedeclaration": "none"
+        "reportRedeclaration": "none",
+        "reportOptionalIterable": "none"
     }
 }

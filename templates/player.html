@@ -66,6 +66,20 @@
                 {% endfor %}
             </p>
         {% endif %}
+        <h2>Extremes completed:</h2>
+        {% if extremes == [] %}
+            <p>No extremes completed</p>
+        {% else %}
+            <p>
+                {% for extreme in extremes %}
+                    {% if get_len(extremes) != loop.index0 + 1 %}
+                        {{ extreme }} (#{{ get_pos(extreme) }}),
+                    {% else %}
+                        {{ extreme }} (#{{ get_pos(extreme) }})
+                    {% endif %}
+                {% endfor %}
+            </p>
+        {% endif %}
     </div></div>
 </main>
 {% endblock %}

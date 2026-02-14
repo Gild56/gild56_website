@@ -1,26 +1,17 @@
 import urllib.request
 from typing import Any
+import threading
 import requests
 import json
+import time
 import os
 from functools import lru_cache
 
 
-def load_list_from_py(variable_name: str, file_name: str) -> Any:
-    try:
-        with open(f"..\\gild56_website_lists\\{file_name}", "r", encoding="utf-8") as f:
-            code = f.read()
-    except:
-        with urllib.request.urlopen(f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/{file_name}") as response:
-            code = response.read().decode('utf-8')
-    namespace: dict[str, Any] = {}
-    exec(code, namespace)
-    return namespace[variable_name]
-
-
-def get_leaderboard_db() -> Any:
-    local_path = "..\\gild56_website_lists\\leaderboard.json"
-    url = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/leaderboard.json"
+@lru_cache
+def load_file(file_name: str) -> Any:
+    local_path = f"..\\gild56_website_lists\\{file_name}.json"
+    url = f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/{file_name}.json"
 
     if os.path.exists(local_path):
         with open(local_path, "r", encoding="utf-8") as f:
@@ -44,3 +35,32 @@ def get_demonlist() -> list[dict[str, Any]]:
     # It removes Azurite by Royen by its id in the database
     # to keep Azurite by Sillow, that everybody beats (костыли)
     return [lvl for lvl in all_levels if lvl.get("id") != 2299]
+
+
+@lru_cache
+def get_pos(level_name: str) -> int:
+    all_levels = get_demonlist()
+    level_pos = {
+        lvl["name"].lower(): lvl["placement"]
+        for lvl in all_levels
+    }
+    try:
+        return level_pos[level_name.lower()]
+    except KeyError:
+        raise ValueError(f"Level doesn't exist: {level_name}")
+
+
+def clear_cache():
+    while True:
+        time.sleep(24 * 60 * 60)  # 24h
+
+        get_demonlist.cache_clear()
+        get_pos.cache_clear()
+        load_file.cache_clear()
+
+        print("Cache nettoyé")
+
+threading.Thread(
+    target=clear_cache,
+    daemon=True
+).start()

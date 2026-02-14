@@ -8,9 +8,10 @@ from flask import session, request
 
 from core.dbscripts import DBScripts
 
-from core.players import get_levels_list_top, get_challenges_list_top
+from core.players import get_levels_list, get_challenges_list
 from core.ranking import get_top_players, get_top_challenge_players, get_points_by_place
-from core.server_ranking import get_top_server_players, get_pos
+from core.server_ranking import get_top_server_players
+from core.data_loader import get_pos
 
 app = Flask(
     __name__, static_folder="static",
@@ -83,32 +84,28 @@ def handle_404(_error: HTTPException):
 def flag_exists(code: str):
     path = os.path.join(app.static_folder, "images", "flags", f"{code}.png")
     return os.path.exists(path)
-
 app.jinja_env.globals.update(flag_exists=flag_exists)
-
 
 def get_pfp(user: str) -> str:
     return g.db.get_pfp(user)
 
-
 def logged_in() -> bool:
     return session.get("account_login", None) is not None
-
 
 def get_username() -> str:
     return session.get("account_login", "user")
 
-
 def get_role() -> str:
     return g.db.get_role(get_username())
-
 
 def get_all_pfps() -> list[str]:
     return sorted(os.listdir("static/images/cubes"))
 
-
 def get_len(item: list[Any] | dict[Any, Any] | tuple[Any]) -> int:
     return len(item)
+
+def get_mean(numbers: int) -> int:
+    return sum(numbers) / len(numbers)
 
 
 # Database functions
@@ -396,7 +393,7 @@ def lists():
 def levels_list():
     return render_template(
         "list.html", logged_in=logged_in(),
-        username=get_username(), levels=get_levels_list_top(),
+        username=get_username(), levels=get_levels_list(),
         top="levels", get_points_by_place=get_points_by_place
     )
 
@@ -404,7 +401,7 @@ def levels_list():
 @app.route("/lists/levels/<level>")
 def level_page(level: str):
     try:
-        levels_list_top = get_levels_list_top()
+        levels_list_top = get_levels_list()
         index = next(
             i for i, item in enumerate(levels_list_top) if item[0] == level)
         level_info = levels_list_top[index]
@@ -424,7 +421,7 @@ def level_page(level: str):
 def challenges_list():
     return render_template(
         "list.html", logged_in=logged_in(),
-        username=get_username(), levels=get_challenges_list_top(),
+        username=get_username(), levels=get_challenges_list(),
         top="challenges", get_points_by_place=get_points_by_place
     )
 
@@ -432,7 +429,7 @@ def challenges_list():
 @app.route("/lists/challenges/<challenge>")
 def challenge_page(challenge: str):
     try:
-        challenges_list_top = get_challenges_list_top()
+        challenges_list_top = get_challenges_list()
         index = next(
             i for i, item in enumerate(
                 challenges_list_top) if item[0] == challenge)
@@ -478,7 +475,7 @@ def server_leaderboard_by_5_hardests():
         logged_in=logged_in(),
         username=get_username(),
         players=get_top_server_players("by_5_hardests"),
-        top_type="by_5_hardests", get_len=get_len, get_pos=get_pos
+        top_type="by_5_hardests", get_len=get_len, get_pos=get_pos, get_mean=get_mean
     )
 
 
@@ -517,12 +514,8 @@ def player_page(player: str):
                 if name == level_name:
                     return i + 1
 
-        top_players: list[
-            tuple[str, list[str], list[str], list[str], int]
-        ] = get_top_players()
-        top_challenge_players: list[
-            tuple[str, list[str], list[str], list[str], int]
-        ] = get_top_challenge_players()
+        top_players = get_top_players()
+        top_challenge_players = get_top_challenge_players()
 
         levels_top_place = next(
             i for i, item in enumerate(top_players) if item[0] == player)
@@ -533,6 +526,12 @@ def player_page(player: str):
         challenges_profile = top_challenge_players[challenges_top_place]
         challenges_points = challenges_profile[4]
 
+        extremes = []
+        top_server_players = get_top_server_players()
+        for p in top_server_players:
+            if p[0] == player:
+                extremes = p[2]
+
         return render_template(
             "player.html",
             logged_in=logged_in(),
@@ -541,9 +540,10 @@ def player_page(player: str):
             challenges_points=challenges_points,
             levels_position=levels_top_place+1,
             challenges_position=challenges_top_place+1,
-            challenges_list_top=get_challenges_list_top(),
-            levels_list_top=get_levels_list_top(),
-            get_level_rank=get_level_rank
+            challenges_list_top=get_challenges_list(),
+            levels_list_top=get_levels_list(),
+            get_level_rank=get_level_rank,
+            extremes=extremes, get_len=get_len, get_pos=get_pos
         )
     except StopIteration:
         return redirect(url_for('error404'))

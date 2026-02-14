@@ -1,10 +1,8 @@
 import time
 import threading
 from typing import Any
-from functools import lru_cache
-from core.data_loader import get_leaderboard_db, get_demonlist
+from core.data_loader import get_demonlist, load_file
 from core.players import get_players
-
 
 
 def normalize_levels(data: Any) -> list[str]:
@@ -21,20 +19,8 @@ def normalize_levels(data: Any) -> list[str]:
 
     return []
 
-@lru_cache
-def get_pos(level_name: str) -> int:
-    all_levels = get_demonlist()
-    level_pos = {
-        lvl["name"].lower(): lvl["placement"]
-        for lvl in all_levels
-    }
-    try:
-        return level_pos[level_name.lower()]
-    except KeyError:
-        raise ValueError(f"Level doesn't exist: {level_name}")
 
-
-def get_top_server_players(top_type: str | None = "by_hardest") -> list[Any] | None:
+def get_top_server_players(top_type: str | None = "players") -> list[Any] | None:
     all_levels = get_demonlist()
 
     level_pos = {
@@ -69,7 +55,7 @@ def get_top_server_players(top_type: str | None = "by_hardest") -> list[Any] | N
 
     players = [(name, info) for (name, info, _, _) in players]
 
-    leaderboard_db = get_leaderboard_db()
+    leaderboard_db = load_file("leaderboard")
 
     discord_players = []
 
@@ -83,12 +69,16 @@ def get_top_server_players(top_type: str | None = "by_hardest") -> list[Any] | N
             key=lambda lvl: get_pos(lvl) if get_pos(lvl) is not None else float("inf")
         )
 
-        points = sum(get_level_points(p) for p in get_positions(levels))
+        points = round(sum(get_level_points(p) for p in get_positions(levels)), 2)
 
         discord_players.append((name, info, levels, points))
 
 
-    if top_type == "by_hardest":
+    if top_type == "players":
+        return discord_players
+
+
+    elif top_type == "by_hardest":
 
         def sort_key(p: list[Any]):
             _, _, levels, _ = p

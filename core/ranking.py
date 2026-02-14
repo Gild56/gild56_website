@@ -1,4 +1,4 @@
-from core.players import get_levels_list_top, get_challenges_list_top, get_players
+from core.players import get_levels_list, get_challenges_list, get_players
 
 def get_points_by_place(rank: int) -> int:
     if rank == 1:
@@ -13,7 +13,7 @@ def get_points_by_place(rank: int) -> int:
 
 
 def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
-    levels_list_top = get_levels_list_top()
+    levels_list_top = get_levels_list()
     players = get_players()
 
     level_points = {
@@ -35,7 +35,7 @@ def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
 
 
 def get_top_challenge_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
-    challenges_list_top = get_challenges_list_top()
+    challenges_list_top = get_challenges_list()
     players = get_players()
 
     challenge_points = {
