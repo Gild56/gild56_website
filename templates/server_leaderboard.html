@@ -24,13 +24,15 @@
     {% if top_type == "by_hardest" %}
         <p class="bigger-line-height">
             <a href="{{ url_for('server_leaderboard_by_list_points') }}">Sort by points</a> |
-            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a>
+            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a> |
+            <a href="{{ url_for('levels_list') }}">Levels list</a>
         </p>
         <h1>Leaderboard (by hardest):</h1>
     {% elif top_type == "by_list_points" %}
         <p class="bigger-line-height">
             <a href="{{ url_for('server_leaderboard_by_hardest') }}">Sort by hardest</a> |
-            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a>
+            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a> |
+            <a href="{{ url_for('levels_list') }}">Levels list</a>
         </p>
         <h1>Leaderboard (by list points):</h1>
     {% else %}

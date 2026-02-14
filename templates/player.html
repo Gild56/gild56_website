@@ -35,8 +35,12 @@
         <a href="https://www.youtube.com/{{ player[1][0] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
         </a>
-        <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
-        <p>#{{ challenges_position }} Challenge player ({{ challenges_points }} points)</p>
+        {% if player[4] > 0 %}
+            <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
+        {% endif %}
+        {% if challenges_points > 0 %}
+            <p>#{{ challenges_position }} Challenge player ({{ challenges_points }} points)</p>
+        {% endif %}
         <p class="player-description">{{ player[1][3] }}</p>
         <p><a href="https://youtube.com/{{ player[1][0] }}" target="_blank">YouTube Channel</a></p>
         {% if player[1][2] != "" %}

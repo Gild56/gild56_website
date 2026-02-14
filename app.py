@@ -1,4 +1,5 @@
 import os
+from typing import Any
 from builtins import BaseException
 from werkzeug.exceptions import HTTPException
 
@@ -7,9 +8,9 @@ from flask import session, request
 
 from core.dbscripts import DBScripts
 
-from core.lists import get_levels_list_top, get_challenges_list_top
-from core.lists import get_top_players, get_top_challenge_players
-from core.lists import get_points_by_place, get_top_server_players, get_pos
+from core.players import get_levels_list_top, get_challenges_list_top
+from core.ranking import get_top_players, get_top_challenge_players, get_points_by_place
+from core.server_ranking import get_top_server_players, get_pos
 
 app = Flask(
     __name__, static_folder="static",
@@ -106,7 +107,7 @@ def get_all_pfps() -> list[str]:
     return sorted(os.listdir("static/images/cubes"))
 
 
-def get_len(item: list | dict | tuple) -> int:
+def get_len(item: list[Any] | dict[Any, Any] | tuple[Any]) -> int:
     return len(item)
 
 
