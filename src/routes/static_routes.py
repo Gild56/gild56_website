@@ -43,7 +43,7 @@ def register_static_routes(app: Flask):
 
 
     def flag_exists(code: str):
-        path = os.path.join(app.static_folder, "images", "flags", f"{code}.png")
+        path = os.path.join(app.static_folder, "images", "flags", f"{code}.svg")
         return os.path.exists(path)
     app.jinja_env.globals.update(flag_exists=flag_exists)
 

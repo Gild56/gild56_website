@@ -60,7 +60,7 @@
                         {% endif %}
                         {{ player[0] }}
                         {% if flag_exists(player[1][1]) %}
-                            <img class="emoji" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.png') }}" alt="Flag of {{ player[1][1] }}">
+                            <img class="emoji" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.svg') }}" alt="Flag of {{ player[1][1] }}">
                         {% else %}
                             <i>{{ player[1][1] }}</i>
                         {% endif %}
