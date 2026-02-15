@@ -26,23 +26,13 @@
 </header>
 
 <main class="big-margin-left-right">
-    {% if top == "levels" %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('leaderboard') }}">Leaderboard</a> |
-            <a href="{{ url_for('challenges_list') }}">Challenges list</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Discord Server's leaderboard</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
-        </p>
-        <h1>Levels made by Gild56:</h1>
-    {% else %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('challenges_leaderboard') }}">Leaderboard</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Discord Server's leaderboard</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
-        </p>
-        <h1>Top levels beaten on the Gild56's Community's server:</h1>
-    {% endif %}
+    <p class="bigger-line-height">
+        <a href="{{ url_for('server_leaderboard_by_hardest') }}">Sort by hardest</a> |
+        <a href="{{ url_for('server_leaderboard_by_list_points') }}">Sort by points</a> |
+        <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a> |
+        <a href="{{ url_for('levels_list') }}">Levels list</a>
+    </p>
+    <h1>Top levels beaten on the Gild56's Community's server:</h1>
 
     {% for level in top_completed_levels %}
         {% if top == "levels" %}
