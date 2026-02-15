@@ -1,8 +1,7 @@
-import time
-import threading
 from typing import Any
 from src.logic.data_loader import get_demonlist, load_file
 from src.logic.players import get_players
+from collections import Counter
 
 
 def normalize_levels(data: Any) -> list[str]:
@@ -113,11 +112,44 @@ def get_top_server_players(top_type: str | None = "players") -> list[Any] | None
         return sorted(discord_players, key=sort_key)
 
 
-def clear_cache_daily():
-    while True:
-        time.sleep(24 * 60 * 60)  # 24h
-        get_demonlist.cache_clear()
-        print("Cleared cache")
+def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int]]:
+    all_levels = get_demonlist()
 
+    # mapping nom -> placement
+    level_pos = {
+        lvl["name"].lower(): lvl["placement"]
+        for lvl in all_levels
+        if "name" in lvl and "placement" in lvl
+    }
 
-threading.Thread(target=clear_cache_daily, daemon=True).start()
+    def get_pos(level_name: str) -> int | None:
+        return level_pos.get(level_name.lower())
+
+    leaderboard_db = load_file("leaderboard")
+
+    all_finished_levels = []
+
+    # Parcours des joueurs
+    for _, data in leaderboard_db.items():
+
+        levels = normalize_levels(data)
+
+        for lvl in levels:
+            if get_pos(lvl) is not None:
+                all_finished_levels.append(lvl)
+
+    # Compte des niveaux
+    counter = Counter(all_finished_levels)
+
+    result = []
+
+    for lvl, count in counter.items():
+        pos = get_pos(lvl)
+
+        if pos is not None:
+            result.append((lvl, pos, count))
+
+    # Tri par difficulté (placement croissant)
+    result.sort(key=lambda x: x[1])
+
+    return result

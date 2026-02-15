@@ -2,8 +2,8 @@ from flask import Flask, render_template, redirect, url_for
 from src.routes.utils import get_username, logged_in, get_len, get_mean
 from src.logic.players import get_levels_list, get_challenges_list
 from src.logic.ranking import get_top_players, get_top_challenge_players, get_points_by_place
-from src.logic.server_ranking import get_top_server_players
-from src.logic.data_loader import get_pos
+from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
+from src.logic.data_loader import get_pos, get_id
 
 
 def register_list_routes(app: Flask):
@@ -67,6 +67,19 @@ def register_list_routes(app: Flask):
             )
         except StopIteration:
             return redirect(url_for('error404'))
+
+
+    @app.route("/lists/server_leaderboard/top_levels")
+    def server_leaderboard_top_levels():
+        def generate_link(level: str):
+            return f"https://thumbnails.demonlist.org/classic/{get_id(level)}.png"
+        return render_template(
+            "top_levels.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            top_completed_levels=get_top_completed_levels(),
+            generate_link=generate_link
+        )
 
 
     @app.route("/lists/server_leaderboard/by_hardest")

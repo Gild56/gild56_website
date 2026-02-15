@@ -2,6 +2,7 @@ from flask import g, session
 from typing import Any
 import os
 
+
 def get_pfp(user: str) -> str:
     return g.db.get_pfp(user)
 

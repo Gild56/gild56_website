@@ -51,6 +51,19 @@ def get_pos(level_name: str) -> int:
         raise ValueError(f"Level doesn't exist: {level_name}")
 
 
+@lru_cache
+def get_id(level_name: str) -> str:
+    all_levels = get_demonlist()
+    level_pos = {
+        lvl["name"].lower(): lvl["id"]
+        for lvl in all_levels
+    }
+    try:
+        return level_pos[level_name.lower()]
+    except KeyError:
+        raise ValueError(f"Level doesn't exist: {level_name}")
+
+
 def clear_cache():
     while True:
         time.sleep(24 * 60 * 60)  # 24h
