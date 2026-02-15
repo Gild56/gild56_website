@@ -12,6 +12,7 @@
         "reportArgumentType": "none",
         "reportRedeclaration": "none",
         "reportOptionalIterable": "none",
-        "reportUnusedFunction": "none"
+        "reportUnusedFunction": "none",
+        "reportUnknownLambdaType": "none"
     }
 }

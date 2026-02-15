@@ -112,10 +112,9 @@ def get_top_server_players(top_type: str | None = "players") -> list[Any] | None
         return sorted(discord_players, key=sort_key)
 
 
-def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int]]:
+def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int, int]]:
     all_levels = get_demonlist()
 
-    # mapping nom -> placement
     level_pos = {
         lvl["name"].lower(): lvl["placement"]
         for lvl in all_levels
@@ -129,7 +128,6 @@ def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int]]:
 
     all_finished_levels = []
 
-    # Parcours des joueurs
     for _, data in leaderboard_db.items():
 
         levels = normalize_levels(data)
@@ -138,7 +136,6 @@ def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int]]:
             if get_pos(lvl) is not None:
                 all_finished_levels.append(lvl)
 
-    # Compte des niveaux
     counter = Counter(all_finished_levels)
 
     result = []
@@ -149,7 +146,6 @@ def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int]]:
         if pos is not None:
             result.append((lvl, pos, count))
 
-    # Tri par difficulté (placement croissant)
     result.sort(key=lambda x: x[1])
 
     return result
