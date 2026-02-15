@@ -36,15 +36,13 @@
 
     {% for level in top_completed_levels %}
         {% if top == "levels" %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
+            <div class="level-container">
         {% else %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('challenge_page', challenge=level[0]) }}'">
+            <div class="level-container">
         {% endif %}
             <div class="row">
                 <div>
-                    <a href="https://www.youtube.com/watch?v={{ level }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
                     <img src="{{ generate_link(level[0]) }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()">
-                    </a>
                 </div>
                 <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ level[1] }} - {{ level[0] }}
                 {% if level[2] == 1 %}
@@ -55,9 +53,6 @@
             </div>
         </div>
     {% endfor %}
-    <div id="copyNotification" class="notification">
-        ID copied to clipboard!
-    </div>
 </main>
 {% endblock %}
 
