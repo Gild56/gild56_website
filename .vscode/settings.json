@@ -11,6 +11,7 @@
         "reportCallIssue": "none",
         "reportArgumentType": "none",
         "reportRedeclaration": "none",
-        "reportOptionalIterable": "none"
+        "reportOptionalIterable": "none",
+        "reportUnusedFunction": "none"
     }
 }

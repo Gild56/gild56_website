@@ -1,4 +1,4 @@
-from core.players import get_levels_list, get_challenges_list, get_players
+from src.logic.players import get_levels_list, get_challenges_list, get_players
 
 def get_points_by_place(rank: int) -> int:
     if rank == 1:

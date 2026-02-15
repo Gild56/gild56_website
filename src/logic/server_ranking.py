@@ -1,8 +1,8 @@
 import time
 import threading
 from typing import Any
-from core.data_loader import get_demonlist, load_file
-from core.players import get_players
+from src.logic.data_loader import get_demonlist, load_file
+from src.logic.players import get_players
 
 
 def normalize_levels(data: Any) -> list[str]:

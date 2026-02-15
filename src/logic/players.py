@@ -1,4 +1,4 @@
-from core.data_loader import load_file
+from src.logic.data_loader import load_file
 
 
 def get_levels_list() -> list[tuple[str, str, str, str, dict[str, str]]]:

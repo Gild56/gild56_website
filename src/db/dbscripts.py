@@ -1,6 +1,6 @@
 import hashlib
 from typing import final
-from core.database import DataBase
+from src.db.database import DataBase
 
 
 @final

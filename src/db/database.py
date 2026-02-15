@@ -41,8 +41,8 @@ class DataBase():
             self.connection.close()
 
     def files_to_dict(self) -> None:
-        """Saves SQL code from the `core/sql/` folder into a dict."""
-        directory_path = "core/sql"
+        """Saves SQL code from the `src/db/sql/` folder into a dict."""
+        directory_path = "src/db/sql"
 
         for filename in os.listdir(directory_path):
 

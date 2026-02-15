@@ -6,6 +6,7 @@ import json
 import time
 import os
 from functools import lru_cache
+from flask import Flask
 
 
 @lru_cache
@@ -58,9 +59,10 @@ def clear_cache():
         get_pos.cache_clear()
         load_file.cache_clear()
 
-        print("Cache nettoyé")
 
-threading.Thread(
-    target=clear_cache,
-    daemon=True
-).start()
+def clearing_cache(app: Flask):
+    if not app.debug:
+        threading.Thread(
+            target=clear_cache,
+            daemon=True
+        ).start()
