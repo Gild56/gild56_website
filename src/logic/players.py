@@ -1,14 +1,20 @@
 from src.logic.data_loader import load_file
+import threading
+from functools import lru_cache
+import time
 
 
+@lru_cache
 def get_levels_list() -> list[tuple[str, str, str, str, dict[str, str]]]:
     return load_file("levels_list")
 
 
+@lru_cache
 def get_challenges_list() -> list[tuple[str, str, str, str, dict[str, str]]]:
     return load_file("challenges_list")
 
 
+@lru_cache
 def get_players() -> list[tuple[str, list[str], list[str], list[str]]]:
     players = load_file("players")
 
@@ -39,3 +45,17 @@ def get_players() -> list[tuple[str, list[str], list[str], list[str]]]:
         updated_players.append((name, info, passed_levels_1, passed_levels_2))
 
     return updated_players
+
+
+def clear_cache():
+    while True:
+        time.sleep(24 * 60 * 60)  # 24h
+
+        get_levels_list.cache_clear()
+        get_challenges_list.cache_clear()
+        get_players.cache_clear()
+
+threading.Thread(
+    target=clear_cache,
+    daemon=True
+).start()

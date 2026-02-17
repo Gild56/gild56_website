@@ -2,8 +2,12 @@ from typing import Any
 from src.logic.data_loader import get_demonlist, load_file
 from src.logic.players import get_players
 from collections import Counter
+import threading
+from functools import lru_cache
+import time
 
 
+@lru_cache
 def normalize_levels(data: Any) -> list[str]:
     if not data or len(data) < 2:
         return []
@@ -19,6 +23,7 @@ def normalize_levels(data: Any) -> list[str]:
     return []
 
 
+@lru_cache
 def get_top_server_players(top_type: str | None = "players") -> list[Any] | None:
     all_levels = get_demonlist()
 
@@ -112,6 +117,7 @@ def get_top_server_players(top_type: str | None = "players") -> list[Any] | None
         return sorted(discord_players, key=sort_key)
 
 
+@lru_cache
 def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int, int]]:
     all_levels = get_demonlist()
 
@@ -149,3 +155,16 @@ def get_top_completed_levels(limit: int | None = 10) -> list[tuple[str, int, int
     result.sort(key=lambda x: x[1])
 
     return result
+
+
+def clear_cache():
+    while True:
+        time.sleep(24 * 60 * 60)  # 24h
+
+        normalize_levels.cache_clear()
+        get_top_completed_levels.cache_clear()
+
+threading.Thread(
+    target=clear_cache,
+    daemon=True
+).start()
