@@ -7,7 +7,6 @@ from functools import lru_cache
 import time
 
 
-@lru_cache
 def normalize_levels(data: Any) -> list[str]:
     if not data or len(data) < 2:
         return []
@@ -161,7 +160,6 @@ def clear_cache():
     while True:
         time.sleep(24 * 60 * 60)  # 24h
 
-        normalize_levels.cache_clear()
         get_top_completed_levels.cache_clear()
 
 threading.Thread(

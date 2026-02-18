@@ -1,7 +1,6 @@
 import urllib.request
 from typing import Any
 import threading
-import requests
 import json
 import time
 import os
@@ -25,8 +24,11 @@ def load_file(file_name: str) -> Any:
 
 @lru_cache
 def get_demonlist() -> list[dict[str, Any]]:
-    response = requests.get("https://api.demonlist.org/level/classic/list")
-    all_levels = response.json().get("data", {}).get("levels", [])
+    url = "https://api.demonlist.org/level/classic/list"
+    with urllib.request.urlopen(url) as response:
+        data = response.read().decode("utf-8")
+        json_data = json.loads(data)
+        all_levels = json_data.get("data", {}).get("levels", [])
 
     if not all_levels:
         print("Error: No levels found.")
