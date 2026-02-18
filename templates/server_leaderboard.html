@@ -66,7 +66,7 @@
                         {% if flag_exists(player[1][1]) %}
                             <img class="emoji" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.svg') }}" alt="Flag of {{ player[1][1] }}">
                         {% else %}
-                            <i>{{ player[1][1] }}</i>
+                            - <i>{{ player[1][1] }}</i>
                         {% endif %}
                         {% if top_type == "by_hardest" %}
                             <span class="points"> ({{ player[2][0] }} - #{{ get_pos(player[2][0]) }})</span>
