@@ -11,9 +11,9 @@ nav {
 nav a {
     font-weight: 900;
     font-size: 200%;
-    background-color: #ffffff;
+    background-color: transparent;
     border-bottom: 5px solid transparent;
-    color: #0000bc;
+    color: var(--mid-blue);
     padding: 8px;
     margin: 0;
     text-decoration: none;
@@ -26,12 +26,12 @@ nav a {
 }
 
 nav a:hover {
-    color: #00064b;
+    color: var(--black);
     transition: .15s;
 }
 
 .current {
-    color: #00064b;
-    border-color: #00064b;
+    color: var(--black);
+    border-color: var(--black);
     border-width: 7px;
 }

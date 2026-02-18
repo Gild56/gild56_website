@@ -11,6 +11,7 @@
         <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('community') }}" class="current">Community</a>
         <a href="{{ url_for('levels_list') }}">Lists</a>
+        <a class="change-theme-button" onclick="toggleDarkMode()">Change theme</a>
         {% if logged_in %}
             <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
         {% else %}

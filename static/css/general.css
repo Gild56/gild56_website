@@ -1,3 +1,37 @@
+.no-transition * {
+    transition: none !important;
+}
+
+:root {
+    --white: #ffffff;
+    --light-blue: #0037ff;
+    --mid-blue: #0000b9;
+    --dark-blue: #000089;
+    --very-dark-blue: #00004b;
+    --black: #000000;
+    --level-container: #000089;
+    --level-container-hover: #000655;
+    --points: #6767ff;
+    --tag: #ababff;
+    --red: #890000;
+    --dark-red: #4b0000;
+}
+
+.dark-mode {
+    --white: #000000;
+    --light-blue: #0000b9;
+    --mid-blue: #0000ff;
+    --dark-blue: #0037ff;
+    --very-dark-blue: #0037ff;
+    --black: #ffffff;
+    --level-container: #0037ff;
+    --level-container-hover: #000089;
+    --points: #00004b;
+    --tag: #000432;
+    --red: #cc0000;
+    --dark-red: #ff1616;
+}
+
 @font-face {
     font-family: "Kumbh Sans";
     src: url("../fonts/kumbh_sans_variable.ttf") format("truetype");
@@ -6,21 +40,20 @@
 body {
     font-family: "Kumbh Sans", sans-serif;
     margin: 0;
-    background-color: #0037ff;
+    background-color: var(--light-blue);
     min-height: 100vh;
     flex-direction: column;
     display: flex
 }
 
 header {
-    background-color: #ffffff;
-    color: #0037ff;
+    background-color: var(--white);
+    color: var(--light-blue);
     text-align: center;
     padding: 1em 0;
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
     position: fixed;
     top: 0;
     left: 0;
@@ -30,8 +63,8 @@ header {
 }
 
 footer {
-    background-color: #ffffff;
-    color: #0037ff;
+    background-color: var(--white);
+    color: var(--light-blue);
     padding: 1em;
     text-align: center;
     box-sizing: border-box;
@@ -43,7 +76,7 @@ main {
     padding-top: 5em;
     padding-left: 5em;
     padding-right: 5em;
-    color: #ffffff;
+    color: var(--white);
     flex: 1;
     margin-bottom: 1em;
 }
@@ -54,10 +87,10 @@ h1, h2, nav a {
 }
 
 hr {
-    border: #ffffff 2px solid;
-    color: #ffffff;
+    border: var(--white) 2px solid;
+    color: var(--white);
 }
 
 .level-container a:hover {
-    color: white !important;
+    color: var(--white) !important;
 }

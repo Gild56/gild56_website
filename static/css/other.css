@@ -1,4 +1,4 @@
-v.path {
+.path {
     background-color: #5454ff;
     padding-left: 5px;
     padding-right: 5px;
@@ -16,7 +16,7 @@ v.path {
 }
 
 .red {
-    color: #770000
+    color: var(--red)
 }
 
 .no-bg {
@@ -69,7 +69,7 @@ v.path {
     margin-left: 1em;
     margin-top: 2em;
     margin-bottom: 2em;
-    border: 5px solid #00064b;
+    border: 5px solid var(--very-dark-blue);
     border-radius: 20px;
     max-width: 20em;
     height: auto;
@@ -91,7 +91,7 @@ v.path {
     left: 11.3em;
     transform: translateX(-50%);
     background-color: #4CAF50;
-    color: white;
+    color: var(--white);
     padding: 10px;
     border-radius: 5px;
     font-size: 16px;
@@ -145,7 +145,7 @@ v.path {
 
 .pfp-container:hover img,
 .pfp-container input[type="radio"]:checked + img {
-    border-color: #000024;
+    border-color: var(--very-dark-blue);
 }
 
 .icon {
@@ -161,19 +161,19 @@ v.path {
     cursor: pointer;
     left: 20px;
     padding: 10px;
-    border: 3px solid #ffffff;
+    border: 3px solid var(--white);
     border-radius: 15px;
-    background-color: #000089 !important;
+    background-color: var(--level-container) !important;
     overflow-y: auto;
     resize: none;
     font-size: 1rem;
-    color: #ffffff;
+    color: var(--white);
     margin-bottom: 2em;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .level-container:hover {
-    background-color: #000655 !important;
+    background-color: var(--level-container-hover) !important;
     transform: scale(1.03);
 }
 
@@ -189,19 +189,19 @@ v.path {
     border-radius: 10px;
     margin-top: 7px;
     margin-bottom: 3px;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--white);
 }
 
 .level-page-container {
     left: 20px;
     padding: 10px;
-    border: 3px solid #ffffff;
+    border: 3px solid var(--white);
     border-radius: 15px;
-    background-color: #000089 !important;
+    background-color: var(--dark-blue) !important;
     overflow-y: auto;
     resize: none;
     font-size: 1rem;
-    color: #ffffff;
+    color: var(--white);
     margin-top: 3em;
     margin-bottom: 2em;
     text-align: center;
@@ -220,16 +220,16 @@ v.path {
 }
 
 .points {
-    color: #6767ff
+    color: var(--points)
 }
 
 .hardests {
-    color: #6767ff;
+    color: var(--points);
     font-size: 0.7em;
 }
 
 .tag {
-    color: #ababff
+    color: var(--tag)
 }
 
 .bigger-line-height {
@@ -256,4 +256,8 @@ v.path {
 .emoji {
     vertical-align: text-bottom;
     height: 1.2em;
+}
+
+.change-theme-button {
+    cursor: pointer;
 }

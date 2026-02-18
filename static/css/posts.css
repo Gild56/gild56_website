@@ -8,7 +8,7 @@
 
 .post {
     border-radius: 3px;
-    background-color: #0000c4;
+    background-color: var(--mid-blue);
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 10px;
@@ -25,7 +25,7 @@
 
 .comment {
     border-radius: 3px;
-    background-color: #000061;
+    background-color: var(--very-dark-blue);
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 10px;
@@ -79,8 +79,8 @@ details {
     margin: 0;
     margin-left: 1em;
     padding: 0.5em 1em;
-    background-color: #000089 !important;
-    color: #ffffff !important;
+    background-color: var(--very-dark-blue) !important;
+    color: var(--white) !important;
     text-decoration: none !important;
     border-radius: 5px !important;
     transition: background-color 0.3s ease, transform 0.3s ease !important;
@@ -92,16 +92,16 @@ details {
 }
 
 .link:hover {
-    background-color: #00064b !important;
+    background-color: var(--black) !important;
     transform: scale(1.1) !important;
 }
 
 .link.red {
-    background-color: #890000 !important;
+    background-color: var(--red) !important;
 }
 
 .link.red:hover {
-    background-color: #4b0000 !important;
+    background-color: var(--dark-red) !important;
     transform: scale(1.1) !important;
 }
 
