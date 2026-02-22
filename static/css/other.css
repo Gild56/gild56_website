@@ -261,3 +261,7 @@
 .change-theme-button {
     cursor: pointer;
 }
+
+.flag {
+    border-radius: 15px;
+}
