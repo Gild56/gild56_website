@@ -39,7 +39,10 @@
         <h2>Victors:</h2>
         {% if level[4] %}
             {% for player, video in level[4].items() %}
-                <p><a href="https://www.youtube.com/watch?v={{ video }}" target="_blank">{{ player }}</a></p>
+                 <p>
+                    <img src="{{ url_for('static', filename='images/cubes/' + player + '.png') }}" class="icon" alt="{{ player }}'s icon">
+                    <a href="{{ url_for('player_page', player=player) }}">{{ player }}</a> -
+                    <a href="https://www.youtube.com/watch?v={{ video }}" target="_blank">Video</a></p>
             {% endfor %}
         {% else %}
             <p>There are no victors yet</p>
