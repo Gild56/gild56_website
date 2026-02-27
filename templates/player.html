@@ -29,7 +29,7 @@
             {{ player[0] }}
             {% if flag_exists(player[1][1]) %}
                 <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.svg') }}" alt="Flag of {{ player[1][1] }}">
-            {% else %}
+            {% elif flag != Undefined %}
                 - <i>{{ player[1][1] }}</i>
             {% endif %}
         </h1>
