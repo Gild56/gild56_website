@@ -66,12 +66,17 @@
               ]
             }
         </script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-H1VSTDJXEC"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-H1VSTDJXEC');
+        </script>
     </head>
 
     <body>
-        {% block content %}
-            <!-- Page content could be there -->
-        {% endblock %}
+        {% block content %}<!-- Page content should be there -->{% endblock %}
         <footer>
             <div class="columns">
                 <address>
@@ -91,6 +96,6 @@
                 </section>
             </div>
         </footer>
-        {% block script %}{% endblock %}
+        {% block script %}<!-- Javascript for the page -->{% endblock %}
     </body>
 </html>
