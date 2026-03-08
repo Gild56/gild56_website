@@ -3,6 +3,7 @@ from src.routes.static_routes import register_static_routes
 from src.routes.function_routes import register_function_routes
 from src.routes.community_routes import register_community_routes
 from src.routes.lists_routes import register_list_routes
+from src.routes.radio_routes import register_radio_routes
 
 def create_app():
     app = Flask(
@@ -20,5 +21,6 @@ def create_app():
     register_function_routes(app)
     register_community_routes(app)
     register_list_routes(app)
+    register_radio_routes(app)
 
     return app

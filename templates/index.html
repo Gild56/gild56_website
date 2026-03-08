@@ -7,11 +7,11 @@
     <nav>
         <a href="{{ url_for('index') }}" class="current">Home</a>
         <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('hall_of_fame') }}">Hall of Fame</a>
         <a href="{{ url_for('games') }}">Games</a>
         <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('radio_page') }}">Radio</a>
         <a href="{{ url_for('levels_list') }}">Lists</a>
-        <a class="change-theme-button" onclick="toggleDarkMode()">Change theme</a>
+        <a class="change-theme-button" onclick="toggleDarkMode()">Theme</a>
         {% if logged_in %}
             <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
         {% else %}
@@ -42,6 +42,22 @@
     </p>
     <p>
         Join my <a href="https://discord.gg/D4mUZtkAMY">Discord Server</a>
+    </p>
+
+    <h1 style="margin-top: 50px;">Hall of fame</h1>
+    <p>
+        <ul>
+            <li>Yevgen (friend / server guy!)</li>
+            <li>Ihv2010 <img src="{{ url_for('static', filename='images/cubes/Ihv2010.png') }}" class="icon" alt="Ihv2010's icon"> (goat)</li>
+            <li>Roxy <img src="{{ url_for('static', filename='images/cubes/Roxy.png') }}" class="icon" alt="Roxy's icon"> (goat)</li>
+            <li>Ylissen <img src="{{ url_for('static', filename='images/cubes/Ylissen.png') }}" class="icon" alt="Ylissen's icon"> <i>(la dash orbe noire)</i></li>
+            <li>Kikouiz / Enoah <img src="{{ url_for('static', filename='images/cubes/Kikouiez.png') }}" class="icon" alt="IcEDCave's icon"> (friend / birds' friend)</li>
+            <li>Adamorocco <img src="{{ url_for('static', filename='images/cubes/Adamorocco.png') }}" class="icon" alt="Adamorocco's icon"> (first user & friend)</li>
+            <li>Sword / Evan (friend)</li>
+            <li>Kevino <img src="{{ url_for('static', filename='images/cubes/Kevino.png') }}" class="icon" alt="Kevino's's icon"> (friend)</li>
+            <li>Viktor Lukyanov (best teacher ever)</li>
+            <li>Every user of this site! <img src="{{ url_for('static', filename='images/cubes/CarryTheBall.png') }}" class="icon" alt="CarryTheBall"></li>
+        </ul>
     </p>
 </main>
 {% endblock %}
