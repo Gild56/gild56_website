@@ -265,3 +265,85 @@
 .flag {
     border-radius: 20%;
 }
+
+.play-button {
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.play-button:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* Base du slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 5px;
+    background: var(--white);
+    border-radius: 2.5px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+/* Track - Chrome/Safari */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: var(--white);
+    border-radius: 2.5px;
+    transition: background 0.2s;
+}
+
+/* Thumb - Chrome/Safari */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    background: var(--white);
+    border-radius: 50%;
+    margin-top: -5px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+/* Track - Firefox */
+input[type="range"]::-moz-range-track {
+    height: 5px;
+    background: white;
+    border-radius: 2.5px;
+    transition: background 0.2s;
+}
+
+/* Thumb - Firefox */
+input[type="range"]::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+/* Hover - Chrome/Safari */
+input[type="range"]:hover::-webkit-slider-runnable-track {
+    background: var(--black);
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    background: var(--black);
+}
+
+/* Hover - Firefox */
+input[type="range"]:hover::-moz-range-track {
+    background: var(--black);
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+    background: var(--black);
+}
