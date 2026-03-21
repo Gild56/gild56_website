@@ -10,7 +10,9 @@ music_dir = os.path.join(BASE_DIR, "music")
 podcast_dir = os.path.join(BASE_DIR, "podcasts")
 ads_dir = os.path.join(BASE_DIR, "ads")
 
-news_file = os.path.join(podcast_dir, "news.mp3")
+news_file = os.path.join(BASE_DIR, "music/Waterflame - Dash.mp3")
+
+# news_file = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/Gild56 - News.mp3"
 
 
 def get_duration(path: str):
@@ -38,7 +40,15 @@ class RadioScheduler:
         self.schedule = []
         self.generate_schedule()
 
-    def add(self, path: str, start: int):
+    def add(self, path: str | None, start: int, pause: float = 0):
+
+        if path is None:
+            self.schedule.append({
+                "file": None,
+                "start": start,
+                "duration": pause
+            })
+            return start + pause
 
         duration = get_duration(path)
 
@@ -69,21 +79,31 @@ class RadioScheduler:
 
                 last_music = music_file
                 start = self.add(music_file, start)
+                start = self.add(None, start, pause=5)
 
             start = self.add(news_file, next_hour)
+            start = self.add(None, start, pause=5)
 
             start = self.add(random.choice(ads), start)
+            start = self.add(None, start, pause=5)
 
             for _ in range(3):
                 start = self.add(random.choice(podcasts), start)
+                start = self.add(None, start, pause=5)
                 start = self.add(random.choice(ads), start)
+                start = self.add(None, start, pause=5)
 
             start = self.add(random.choice(ads), start)
+            start = self.add(None, start, pause=5)
             start = self.add(random.choice(ads), start)
+            start = self.add(None, start, pause=5)
 
             start = self.add(random.choice(music), start)
+            start = self.add(None, start, pause=5)
             start = self.add(random.choice(ads), start)
+            start = self.add(None, start, pause=5)
             start = self.add(random.choice(ads), start)
+            start = self.add(None, start, pause=5)
 
 
 radio = RadioScheduler()
