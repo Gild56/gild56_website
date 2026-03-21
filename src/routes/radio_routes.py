@@ -23,8 +23,7 @@ def register_radio_routes(app: Flask):
             end = start + track["duration"]
 
             if start <= now <= end:
-                # extraire titre et auteur depuis le nom de fichier
-                filename = track["file"].split("/")[-1]  # ex: "Author - Title.mp3"
+                filename = track["file"].split("/")[-1]
                 if " - " in filename:
                     author, title = filename.rsplit(" - ", 1)
                     title = title.replace(".mp3", "")
@@ -35,7 +34,7 @@ def register_radio_routes(app: Flask):
                 return jsonify({
                     "file": track["file"],
                     "start": start,
-                    "duration": track["duration"],  # <-- virgule ajoutée
+                    "duration": track["duration"],
                     "title": title,
                     "author": author
                 })
