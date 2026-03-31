@@ -3,6 +3,7 @@ import random
 import time
 from typing import Any
 from mutagen.mp3 import MP3
+import requests
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../static/radio"))
 
@@ -10,10 +11,23 @@ music_dir = os.path.join(BASE_DIR, "music")
 podcast_dir = os.path.join(BASE_DIR, "podcasts")
 ads_dir = os.path.join(BASE_DIR, "ads")
 
-news_file = os.path.join(BASE_DIR, "music/Waterflame - Dash.mp3")
+NEWS_URL = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/Gild56 - News.mp3"
+news_file = os.path.join(podcast_dir, "news.mp3")
 
-# news_file = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/Gild56 - News.mp3"
+def update_news():
+    try:
+        tmp_file = news_file + ".tmp"
 
+        r = requests.get(NEWS_URL, timeout=10)
+        r.raise_for_status()
+
+        with open(tmp_file, "wb") as f:
+            f.write(r.content)
+
+        os.replace(tmp_file, news_file)
+
+    except Exception as e:
+        print(f"[News] Update failed: {e}")
 
 def get_duration(path: str):
     return MP3(path).info.length
@@ -37,6 +51,10 @@ ads = list_mp3(ads_dir)
 class RadioScheduler:
 
     def __init__(self):
+        self.schedule = []
+        self.generate_schedule()
+
+    def reload(self):
         self.schedule = []
         self.generate_schedule()
 
@@ -106,4 +124,5 @@ class RadioScheduler:
             start = self.add(None, start, pause=5)
 
 
+update_news()
 radio = RadioScheduler()
