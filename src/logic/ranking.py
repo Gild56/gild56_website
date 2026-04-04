@@ -1,4 +1,5 @@
-from src.logic.players import get_levels_list, get_challenges_list, get_players
+from src.logic.players import get_players
+from src.logic.data_loader import load_file
 import threading
 from functools import lru_cache
 import time
@@ -19,7 +20,7 @@ def get_points_by_place(rank: int) -> int:
 
 @lru_cache
 def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
-    levels_list_top = get_levels_list()
+    levels_list_top = load_file("levels_list")
     players = get_players()
 
     level_points = {
@@ -42,7 +43,7 @@ def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
 
 @lru_cache
 def get_top_challenge_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
-    challenges_list_top = get_challenges_list()
+    challenges_list_top = load_file("challenges_list")
     players = get_players()
 
     challenge_points = {

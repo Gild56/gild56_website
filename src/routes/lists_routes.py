@@ -1,9 +1,8 @@
 from flask import Flask, render_template, redirect, url_for
 from src.routes.utils import get_username, logged_in, get_len, get_mean
-from src.logic.players import get_levels_list, get_challenges_list
 from src.logic.ranking import get_top_players, get_top_challenge_players, get_points_by_place
 from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
-from src.logic.data_loader import get_pos, get_id
+from src.logic.data_loader import get_pos, get_id, load_file
 
 
 def register_list_routes(app: Flask):
@@ -16,7 +15,7 @@ def register_list_routes(app: Flask):
     def levels_list():
         return render_template(
             "list.html", logged_in=logged_in(),
-            username=get_username(), levels=get_levels_list(),
+            username=get_username(), levels=load_file("levels_list"),
             top="levels", get_points_by_place=get_points_by_place
         )
 
@@ -24,7 +23,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/levels/<level>")
     def level_page(level: str):
         try:
-            levels_list_top = get_levels_list()
+            levels_list_top = load_file("levels_list")
             index = next(
                 i for i, item in enumerate(levels_list_top) if item[0] == level)
             level_info = levels_list_top[index]
@@ -44,7 +43,7 @@ def register_list_routes(app: Flask):
     def challenges_list():
         return render_template(
             "list.html", logged_in=logged_in(),
-            username=get_username(), levels=get_challenges_list(),
+            username=get_username(), levels=load_file("challenges_list"),
             top="challenges", get_points_by_place=get_points_by_place
         )
 
@@ -52,7 +51,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/challenges/<challenge>")
     def challenge_page(challenge: str):
         try:
-            challenges_list_top = get_challenges_list()
+            challenges_list_top = load_file("challenges_list")
             index = next(
                 i for i, item in enumerate(
                     challenges_list_top) if item[0] == challenge)
@@ -176,8 +175,8 @@ def register_list_routes(app: Flask):
                 challenges_points=challenges_points,
                 levels_position=levels_top_place+1,
                 challenges_position=challenges_top_place+1,
-                challenges_list_top=get_challenges_list(),
-                levels_list_top=get_levels_list(),
+                challenges_list_top=load_file("challenges_list"),
+                levels_list_top=load_file("levels_list"),
                 get_level_rank=get_level_rank,
                 extremes=extremes, get_len=get_len, get_pos=get_pos
             )

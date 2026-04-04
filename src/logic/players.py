@@ -5,21 +5,11 @@ import time
 
 
 @lru_cache
-def get_levels_list() -> list[tuple[str, str, str, str, dict[str, str]]]:
-    return load_file("levels_list")
-
-
-@lru_cache
-def get_challenges_list() -> list[tuple[str, str, str, str, dict[str, str]]]:
-    return load_file("challenges_list")
-
-
-@lru_cache
 def get_players() -> list[tuple[str, list[str], list[str], list[str]]]:
     players = load_file("players")
 
-    levels_list = get_levels_list()
-    challenges_list = get_challenges_list()
+    levels_list = load_file("levels_list")
+    challenges_list = load_file("challenges_list")
 
     updated_players: list[tuple[str, list[str], list[str], list[str]]] = []
 
@@ -51,8 +41,6 @@ def clear_cache():
     while True:
         time.sleep(24 * 60 * 60)  # 24h
 
-        get_levels_list.cache_clear()
-        get_challenges_list.cache_clear()
         get_players.cache_clear()
 
 threading.Thread(
