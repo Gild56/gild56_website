@@ -1,6 +1,8 @@
 __pycache__/
 .pytest_cache/
 old/
+ignore/
+
 TODO.md
 local.py
 make_jpg.py
