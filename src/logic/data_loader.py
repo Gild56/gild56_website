@@ -19,7 +19,15 @@ def load_file(file_name: str) -> Any:
 @lru_cache
 def get_demonlist() -> list[dict[str, Any]]:
     url = "https://api.demonlist.org/level/classic/list"
-    with urllib.request.urlopen(url) as response:
+
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0"
+        }
+    )
+
+    with urllib.request.urlopen(req) as response:
         data = response.read().decode("utf-8")
         json_data = json.loads(data)
         all_levels = json_data.get("data", {}).get("levels", [])
