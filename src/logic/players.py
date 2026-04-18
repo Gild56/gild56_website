@@ -12,6 +12,11 @@ def get_players() -> list[tuple[str, list[str], list[str], list[str]]]:
     challenges_list = load_file("challenges_list")
 
     updated_players: list[tuple[str, list[str], list[str], list[str]]] = []
+    for challenge in challenges_list:
+        try:
+            print(challenge[4])
+        except:
+            print(challenge)
 
     for name, info in players:
         if name == "Gild56":
