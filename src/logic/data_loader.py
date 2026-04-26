@@ -38,7 +38,7 @@ def get_demonlist() -> list[dict[str, Any]]:
 
     # It removes Azurite by Royen by its id in the database
     # to keep Azurite by Sillow, that everybody beats (костыли)
-    return [lvl for lvl in all_levels if lvl.get("id") != 2299]
+    return [lvl for lvl in all_levels if lvl.get("id") != 2299 or 2234]
 
 
 @lru_cache
