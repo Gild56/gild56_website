@@ -37,8 +37,12 @@ def get_demonlist() -> list[dict[str, Any]]:
         return []
 
     # It removes Azurite by Royen by its id in the database
-    # to keep Azurite by Sillow, that everybody beats (костыли)
-    return [lvl for lvl in all_levels if lvl.get("id") != 2299 or 2234]
+    # to keep Azurite by Sillow, that everybody beats
+    # and Deimos by ItsHybrid rather than by EndLevel (костыли)
+    exclude = [2299, 2234]
+    return [lvl for lvl in all_levels if lvl.get("id") not in exclude]
+
+# Je veux exclure les id de la liste exclude
 
 
 @lru_cache
