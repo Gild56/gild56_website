@@ -8,7 +8,7 @@ import time
 @lru_cache
 def get_points_by_place(rank: int) -> int:
     if rank == 1:
-        return 60
+        return 70
     if rank <= 4:
         return 50
     if rank <= 10:
