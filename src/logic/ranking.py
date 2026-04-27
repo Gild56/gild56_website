@@ -54,7 +54,6 @@ def clear_cache():
         time.sleep(24 * 60 * 60)  # 24h
 
         get_top_players.cache_clear()
-        get_top_challenge_players.cache_clear()
 
 threading.Thread(
     target=clear_cache,
