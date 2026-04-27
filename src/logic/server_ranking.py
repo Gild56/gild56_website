@@ -56,7 +56,7 @@ def get_top_server_players(top_type: str | None = "players") -> list[Any] | None
 
     players = get_players()
 
-    players = [(name, info) for (name, info, _, _) in players]
+    players = [(name, info) for (name, info, _, _, _, _) in players]
 
     leaderboard_db = load_file("leaderboard")
 
