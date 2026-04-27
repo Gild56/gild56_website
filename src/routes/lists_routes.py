@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from src.routes.utils import get_username, logged_in, get_len, get_mean
-from src.logic.ranking import get_top_players, get_top_challenge_players, get_points_by_place
+from src.logic.ranking import get_top_players, get_points_by_place
 from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
 from src.logic.data_loader import get_pos, get_id, load_file
 
@@ -11,7 +11,7 @@ def register_list_routes(app: Flask):
         return redirect(url_for('levels_list'))
 
 
-    @app.route("/lists/levels")
+    @app.route("/lists/gild/classic")
     def levels_list():
         return render_template(
             "list.html", logged_in=logged_in(),
@@ -20,12 +20,38 @@ def register_list_routes(app: Flask):
         )
 
 
-    @app.route("/lists/levels/<level>")
+    @app.route("/lists/gild/challenges")
+    def challenges_list():
+        return render_template(
+            "list.html", logged_in=logged_in(),
+            username=get_username(), levels=load_file("challenges_list"),
+            top="challenges", get_points_by_place=get_points_by_place
+        )
+
+
+    @app.route("/lists/server/classic")
+    def server_levels_list():
+        return render_template(
+            "list.html", logged_in=logged_in(),
+            username=get_username(), levels=load_file("server_levels_list"),
+            top="server_levels", get_points_by_place=get_points_by_place
+        )
+
+
+    @app.route("/lists/server/challenges")
+    def server_challenges_list():
+        return render_template(
+            "list.html", logged_in=logged_in(),
+            username=get_username(), levels=load_file("server_challenges_list"),
+            top="server_challenges", get_points_by_place=get_points_by_place
+        )
+
+
+    @app.route("/lists/gild/classic/<level>")
     def level_page(level: str):
         try:
             levels_list_top = load_file("levels_list")
-            index = next(
-                i for i, item in enumerate(levels_list_top) if item[0] == level)
+            index = next(i for i, item in enumerate(levels_list_top) if item[0] == level)
             level_info = levels_list_top[index]
 
             return render_template(
@@ -39,23 +65,48 @@ def register_list_routes(app: Flask):
             return redirect(url_for('error404'))
 
 
-    @app.route("/lists/challenges")
-    def challenges_list():
-        return render_template(
-            "list.html", logged_in=logged_in(),
-            username=get_username(), levels=load_file("challenges_list"),
-            top="challenges", get_points_by_place=get_points_by_place
-        )
-
-
-    @app.route("/lists/challenges/<challenge>")
+    @app.route("/lists/gild/challenges/<challenge>")
     def challenge_page(challenge: str):
         try:
             challenges_list_top = load_file("challenges_list")
-            index = next(
-                i for i, item in enumerate(
-                    challenges_list_top) if item[0] == challenge)
+            index = next(i for i, item in enumerate(challenges_list_top) if item[0] == challenge)
             level_info = challenges_list_top[index]
+
+            return render_template(
+                "level.html",
+                logged_in=logged_in(),
+                username=get_username(),
+                level=level_info,
+                level_position=index + 1
+            )
+        except StopIteration:
+            return redirect(url_for('error404'))
+
+
+    @app.route("/lists/server/classic/<level>")
+    def server_level_page(level: str):
+        try:
+            server_levels_list_top = load_file("server_levels_list")
+            index = next(i for i, item in enumerate(server_levels_list_top) if item[0] == level)
+            level_info = server_levels_list_top[index]
+
+            return render_template(
+                "level.html",
+                logged_in=logged_in(),
+                username=get_username(),
+                level=level_info,
+                level_position=index + 1
+            )
+        except StopIteration:
+            return redirect(url_for('error404'))
+
+
+    @app.route("/lists/server/challenges/<challenge>")
+    def server_challenge_page(challenge: str):
+        try:
+            server_challenges_list_top = load_file("server_challenges_list")
+            index = next(i for i, item in enumerate(server_challenges_list_top) if item[0] == challenge)
+            level_info = server_challenges_list_top[index]
 
             return render_template(
                 "level.html",
@@ -114,8 +165,8 @@ def register_list_routes(app: Flask):
         )
 
 
-    @app.route("/lists/leaderboard")
-    def leaderboard():
+    @app.route("/lists/gild/classic/leaderboard")
+    def levels_leaderboard():
         return render_template(
             "leaderboard.html",
             logged_in=logged_in(),
@@ -125,8 +176,30 @@ def register_list_routes(app: Flask):
         )
 
 
-    @app.route("/lists/challenges_leaderboards")
+    @app.route("/lists/gild/challenges/leaderboard")
     def challenges_leaderboard():
+        return render_template(
+            "leaderboard.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            players=get_top_challenge_players(),
+            top="challenges"
+        )
+
+
+    @app.route("/lists/server/classic/leaderboard")
+    def server_levels_leaderboard():
+        return render_template(
+            "leaderboard.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            players=get_top_players(),
+            top="levels"
+        )
+
+
+    @app.route("/lists/server/challenges/leaderboard")
+    def server_challenges_leaderboard():
         return render_template(
             "leaderboard.html",
             logged_in=logged_in(),
@@ -149,14 +222,15 @@ def register_list_routes(app: Flask):
                     if name == level_name:
                         return i + 1
 
-            top_players = get_top_players()
-            top_challenge_players = get_top_challenge_players()
+            top_players = get_top_players("levels_list")
+            top_challenge_players = get_top_players("challenges_list")
+            top_server_players = get_top_players("server_levels_list")
+            top_server_challenge_players = get_top_players("server_challenges_list")
 
-            levels_top_place = next(
-                i for i, item in enumerate(top_players) if item[0] == player)
-            challenges_top_place = next(
-                i for i, item in enumerate(
-                    top_challenge_players) if item[0] == player)
+            levels_top_place = next(i for i, item in enumerate(top_players) if item[0] == player)
+            challenges_top_place = next(i for i, item in enumerate(top_challenge_players) if item[0] == player)
+            server_levels_top_place = next(i for i, item in enumerate(top_server_players) if item[0] == player)
+            server_challenges_top_place = next(i for i, item in enumerate(top_server_challenge_players) if item[0] == player)
             player_data = top_players[levels_top_place]
             challenges_profile = top_challenge_players[challenges_top_place]
             challenges_points = challenges_profile[4]
@@ -175,6 +249,8 @@ def register_list_routes(app: Flask):
                 challenges_points=challenges_points,
                 levels_position=levels_top_place+1,
                 challenges_position=challenges_top_place+1,
+                server_levels_position=server_levels_top_place+1,
+                server_challenges_position=server_challenges_top_place+1,
                 challenges_list_top=load_file("challenges_list"),
                 levels_list_top=load_file("levels_list"),
                 get_level_rank=get_level_rank,
