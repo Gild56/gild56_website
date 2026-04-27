@@ -19,52 +19,34 @@ def get_points_by_place(rank: int) -> int:
 
 
 @lru_cache
-def get_top_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
-    levels_list_top = load_file("levels_list")
+def get_top_players(type: str | None = "levels_list") -> list[tuple[str, list[str], list[str], list[str], list[str], list[str], int]]:
+    top = load_file(type)
     players = get_players()
 
-    level_points = {
+    points = {
         level[0]: get_points_by_place(i + 1)
-        for i, level in enumerate(levels_list_top)
+        for i, level in enumerate(top)
     }
 
-    top_players: list[tuple[str, list[str], list[str], list[str], int]] = []
+    top_players: list[tuple[str, list[str], list[str], list[str], list[str], list[str], int]] = []
 
-    for name, tag, passed_levels_1, passed_levels_2 in players:
-        total_points = sum(level_points.get(lvl, 0) for lvl in passed_levels_1)
+    for name, tag, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges in players:
+        if type == "levels_list":
+            total_points = sum(points.get(lvl, 0) for lvl in passed_levels)
+        elif type == "challenges_list":
+            total_points = sum(points.get(lvl, 0) for lvl in passed_challenges)
+        elif type == "server_levels_list":
+            total_points = sum(points.get(lvl, 0) for lvl in passed_server_levels)
+        else:  # elif type == "server_challenges_list":
+            total_points = sum(points.get(lvl, 0) for lvl in passed_server_challenges)
+
         top_players.append(
-            (name, tag, passed_levels_1, passed_levels_2, total_points)
+            (name, tag, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges, total_points)
         )
 
     top_players.sort(key=lambda x: x[4], reverse=True)
 
     return top_players
-
-
-@lru_cache
-def get_top_challenge_players() -> list[tuple[str, list[str], list[str], list[str], int]]:
-    challenges_list_top = load_file("challenges_list")
-    players = get_players()
-
-    challenge_points = {
-        challenge[0]: get_points_by_place(i + 1)
-        for i, challenge in enumerate(challenges_list_top)
-    }
-
-    top_challenge_players: list[tuple[str, list[str], list[str], list[str], int]] = []
-
-    for name, tag, passed_levels_1, passed_levels_2 in players:
-        challenge_score = sum(
-            challenge_points.get(lvl, 0) for lvl in passed_levels_2
-        )
-
-        top_challenge_players.append(
-            (name, tag, passed_levels_1, passed_levels_2, challenge_score)
-        )
-
-    top_challenge_players.sort(key=lambda x: x[4], reverse=True)
-
-    return top_challenge_players
 
 
 def clear_cache():
