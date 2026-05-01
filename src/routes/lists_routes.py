@@ -171,8 +171,8 @@ def register_list_routes(app: Flask):
             "leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_top_players(),
-            top="levels"
+            players=get_top_players("levels_list"),
+            top="levels_list"
         )
 
 
@@ -182,8 +182,8 @@ def register_list_routes(app: Flask):
             "leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_top_challenge_players(),
-            top="challenges"
+            players=get_top_players("challenges_list"),
+            top="challenges_list"
         )
 
 
@@ -193,8 +193,8 @@ def register_list_routes(app: Flask):
             "leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_top_players(),
-            top="levels"
+            players=get_top_players("levels_list"),
+            top="server_levels_list"
         )
 
 
@@ -204,8 +204,8 @@ def register_list_routes(app: Flask):
             "leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_top_challenge_players(),
-            top="challenges"
+            players=get_top_players("challenges_list"),
+            top="server_challenges_list"
         )
 
 

@@ -5,8 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const authorEl = document.getElementById("author")
     let currentFile = null
 
-    document.getElementById("volume").addEventListener("input", (e)=>{
-        audio.volume = e.target.value
+    document.getElementById("volume").addEventListener("input", (e) => {
+        const v = parseFloat(e.target.value)
+        audio.volume = v === 0 ? 0 : Math.exp((v - 1) * 5)
     })
     async function loadRadio() {
         const res = await fetch("/radio/now")

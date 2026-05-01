@@ -27,26 +27,60 @@
 </header>
 
 <main class="big-margin-left-right">
-    {% if top == "levels" %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('challenges_leaderboard') }}">Challenges leaderboard</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Discord Server's leaderboard</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
-        </p>
-        <h1>Leaderboard:</h1>
+    {% if top == "levels_list" %}
+        <h1>Gild List Leaderboard</h1>
+    {% elif top == "challenges_list" %}
+        <h1>Gild Challenges List Leaderboard</h1>
+    {% elif top == "server_levels_list" %}
+        <h1>Gild Server List Leaderboard</h1>
     {% else %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('leaderboard') }}">Classic leaderboard</a> |
-            <a href="{{ url_for('challenges_list') }}">Challenges list</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Discord Server's leaderboard</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
-        </p>
-        <h1>Challenges leaderboard:</h1>
+        <h1>Gild Server Challenges List Leaderboard</h1>
     {% endif %}
 
+    <div class="panel">
+        <div class="dropdowns">
+            <div class="dropdown">
+                <button class="dropbtn">Gild List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('levels_list') }}">List</a>
+                    <a href="{{ url_for('levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Gild Server List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_levels_list') }}">List</a>
+                    <a href="{{ url_for('server_levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('server_challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('server_challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Server's Leaderboard</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_leaderboard_by_hardest') }}">By hardest</a>
+                    <a href="{{ url_for('server_leaderboard_by_list_points') }}">By list points</a>
+                    <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">By 5 hardests</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">More</button>
+                <div class="dropdown-content">
+                    <a href="https://docs.google.com/document/d/175JXSvwwOD0jXMXp24Llsg0-4lgEofpFAeNFF7lGRQY/edit?usp=sharing" target="_blank">Rules</a>
+                    <a href="https://forms.gle/zox839bvvHJEsuGU8" target="_blank">Create Account</a>
+                    <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="align-on-mobile">
-        {% for player in players %}{% if player[4] > 0 %}
+        {% for player in players %}{% if player[6] > 0 %}
             <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player[0]) }}'">
                 <div class="row">
                     <div>
@@ -56,8 +90,8 @@
                     </div>
                     <h1 class="left-margin">
                         #{{ loop.index0 + 1 }} - 
-                        {% if player[1][4] %}
-                            <span class="tag"> [{{ player[1][4] }}] </span>
+                        {% if player[1][6] %}
+                            <span class="tag"> [{{ player[1][6] }}] </span>
                         {% endif %}
                         {{ player[0] }}
                         {% if flag_exists(player[1][1]) %}
@@ -65,7 +99,7 @@
                         {% else %}
                             - <i>{{ player[1][1] }}</i>
                         {% endif %}
-                        <span class="points"> ({{ player[4] }} pts)</span>
+                        <span class="points"> ({{ player[6] }} pts)</span>
                     </h1>
                 </div>
             </div>

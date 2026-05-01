@@ -15,7 +15,9 @@ def get_points_by_place(rank: int) -> int:
         return 30
     if rank <= 20:
         return 20
-    return 10
+    if rank <= 40:
+        return 10
+    return 5
 
 
 @lru_cache
@@ -44,7 +46,7 @@ def get_top_players(type: str | None = "levels_list") -> list[tuple[str, list[st
             (name, tag, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges, total_points)
         )
 
-    top_players.sort(key=lambda x: x[4], reverse=True)
+    top_players.sort(key=lambda x: x[6], reverse=True)
 
     return top_players
 

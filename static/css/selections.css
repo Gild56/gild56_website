@@ -11,6 +11,7 @@ footer strong::selection {
 main li::selection,
 main p::selection,
 main b::selection,
+main span::selection,
 main i::selection,
 main h1::selection,
 main h2::selection,

@@ -220,7 +220,8 @@
 }
 
 .points {
-    color: var(--points)
+    color: var(--points);
+    margin-left: 10px;
 }
 
 .hardests {
@@ -264,6 +265,7 @@
 
 .flag {
     border-radius: 20%;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.8);
 }
 
 .play-button {
@@ -279,8 +281,8 @@
     color: var(--white);
 }
 
-/* Base du slider */
 input[type="range"] {
+    appearance: none;
     -webkit-appearance: none;
     width: 100px;
     height: 5px;
@@ -291,7 +293,6 @@ input[type="range"] {
     transition: background 0.2s;
 }
 
-/* Track - Chrome/Safari */
 input[type="range"]::-webkit-slider-runnable-track {
     height: 5px;
     background: var(--white);
@@ -299,8 +300,8 @@ input[type="range"]::-webkit-slider-runnable-track {
     transition: background 0.2s;
 }
 
-/* Thumb - Chrome/Safari */
 input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
     -webkit-appearance: none;
     height: 15px;
     width: 15px;
@@ -311,7 +312,6 @@ input[type="range"]::-webkit-slider-thumb {
     cursor: pointer;
 }
 
-/* Track - Firefox */
 input[type="range"]::-moz-range-track {
     height: 5px;
     background: white;
@@ -319,7 +319,6 @@ input[type="range"]::-moz-range-track {
     transition: background 0.2s;
 }
 
-/* Thumb - Firefox */
 input[type="range"]::-moz-range-thumb {
     height: 15px;
     width: 15px;
@@ -330,7 +329,6 @@ input[type="range"]::-moz-range-thumb {
     transition: background 0.2s;
 }
 
-/* Hover - Chrome/Safari */
 input[type="range"]:hover::-webkit-slider-runnable-track {
     background: var(--black);
 }
@@ -339,11 +337,76 @@ input[type="range"]:hover::-webkit-slider-thumb {
     background: var(--black);
 }
 
-/* Hover - Firefox */
 input[type="range"]:hover::-moz-range-track {
     background: var(--black);
 }
 
 input[type="range"]:hover::-moz-range-thumb {
     background: var(--black);
+}
+
+summary {
+    user-select: none;
+}
+
+.panel {
+    margin: 20px 0;
+}
+
+.dropdowns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    font-family: "Kumbh Sans", sans-serif !important;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: var(--level-container);
+    color: var(--white);
+    border: 2px solid var(--white);
+    border-radius: 12px;
+    font-weight: 900;
+    transition: 0.2s;
+}
+
+.dropbtn:hover {
+    background-color: var(--level-container-hover);
+    transform: scale(1);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 10;
+    border: 2px solid var(--white);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    background-color: var(--very-dark-blue);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.15s;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dark-blue);
+    color: var(--white);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

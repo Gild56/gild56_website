@@ -34,7 +34,7 @@ input:focus {
 }
 
 input::placeholder {
-    color: #001e88;
+    color: var(--dark-blue);
     font-style: italic;
 }
 

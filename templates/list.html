@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {% if top == "levels" %}
-        Levels list
+    {% if top == "levels_list" %}
+        Gild List
+    {% elif top == "challenges_list" %}
+        Gild Challenges List
+    {% elif top == "server_levels_list" %}
+        Gild Server List
     {% else %}
-        Challenges list
+        Gild Server Challenges List
     {% endif %}
 {% endblock %}
 
@@ -27,23 +31,57 @@
 </header>
 
 <main class="big-margin-left-right">
-    {% if top == "levels" %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('leaderboard') }}">Leaderboard</a> |
-            <a href="{{ url_for('challenges_list') }}">Challenges list</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Discord Server's leaderboard</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
-        </p>
-        <h1>Levels made by Gild56:</h1>
+    {% if top == "levels_list" %}
+        <h1>Gild List</h1>
+    {% elif top == "challenges_list" %}
+        <h1>Gild Challenges List</h1>
+    {% elif top == "server_levels_list" %}
+        <h1>Gild Server List</h1>
     {% else %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('challenges_leaderboard') }}">Leaderboard</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Discord Server's leaderboard</a> |
-            <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
-        </p>
-        <h1>Challenges made by Gild56:</h1>
+        <h1>Gild Server Challenges List</h1>
     {% endif %}
+
+    <div class="panel">
+        <div class="dropdowns">
+            <div class="dropdown">
+                <button class="dropbtn">Gild List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('levels_list') }}">List</a>
+                    <a href="{{ url_for('levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Gild Server List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_levels_list') }}">List</a>
+                    <a href="{{ url_for('server_levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('server_challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('server_challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Server's Leaderboard</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_leaderboard_by_hardest') }}">By hardest</a>
+                    <a href="{{ url_for('server_leaderboard_by_list_points') }}">By list points</a>
+                    <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">By 5 hardests</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">More</button>
+                <div class="dropdown-content">
+                    <a href="https://docs.google.com/document/d/175JXSvwwOD0jXMXp24Llsg0-4lgEofpFAeNFF7lGRQY/edit?usp=sharing" target="_blank">Rules</a>
+                    <a href="https://forms.gle/zox839bvvHJEsuGU8" target="_blank">Create Account</a>
+                    <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {% for level in levels %}
         {% if top == "levels" %}
@@ -73,5 +111,4 @@
 {% block script %}
 <script src="{{ url_for('static', filename='js/copyLink.js') }}"></script>
 <script src="{{ url_for('static', filename='js/copyLevelID.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lockRefreshButton.js') }}"></script>
 {% endblock %}
