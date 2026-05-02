@@ -36,18 +36,28 @@
         <a href="https://www.youtube.com/{{ player[1][0] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube">
         </a>
-        {% if player[4] > 0 %}
-            <p>#{{ levels_position }} Player ({{ player[4] }} points)</p>
+
+
+        {% if player[6] > 0 %}
+            <p>#{{ levels_top_place }} Gild List player ({{ player[6] }} points)</p>
         {% endif %}
         {% if challenges_points > 0 %}
-            <p>#{{ challenges_position }} Challenge player ({{ challenges_points }} points)</p>
+            <p>#{{ challenges_top_place }} Gild List Challenge player ({{ challenges_points }} points)</p>
+        {% endif %}
+        {% if server_levels_points > 0 %}
+            <p>#{{ server_levels_top_place }} Gild Server List player ({{ server_levels_points }} points)</p>
+        {% endif %}
+        {% if server_challenges_points > 0 %}
+            <p>#{{ server_challenges_top_place }} Gild List Challenge player ({{ server_challenges_points }} points)</p>
         {% endif %}
         <p class="player-description">{{ player[1][3] }}</p>
         <p><a href="https://youtube.com/{{ player[1][0] }}" target="_blank">YouTube Channel</a></p>
         {% if player[1][2] != "" %}
             <p><a href="{{ url_for('user_profile', profile=player[1][2]) }}" target="_blank">Community Account</a></p>
         {% endif %}
-        <h2>Levels completed:</h2>
+
+
+        <h2>Gild List levels completed:</h2>
         {% if player[2] == [] %}
             <p>No levels completed</p>
         {% else %}
@@ -57,7 +67,8 @@
                 {% endfor %}
             </p>
         {% endif %}
-        <h2>Challenges completed:</h2>
+
+        <h2>Gild Challenges List levels completed:</h2>
         {% if player[3] == [] %}
             <p>No challenges completed</p>
         {% else %}
@@ -67,6 +78,30 @@
                 {% endfor %}
             </p>
         {% endif %}
+
+
+        <h2>Gild List levels completed:</h2>
+        {% if player[4] == [] %}
+            <p>No server levels completed</p>
+        {% else %}
+            <p>
+                {% for level in player[4] %}
+                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ level }} (#{{ get_level_rank(level, levels_list_top) }})</a>
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        <h2>Gild Challenges List levels completed:</h2>
+        {% if player[5] == [] %}
+            <p>No server challenges completed</p>
+        {% else %}
+            <p>
+                {% for challenge in player[5] %}
+                    <a href="{{ url_for('challenge_page', challenge=challenge) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ challenge }} (#{{ get_level_rank(challenge, challenges_list_top) }})</a>
+                {% endfor %}
+            </p>
+        {% endif %}
+
         <h2>Extremes completed:</h2>
         {% if extremes == [] %}
             <p>No extremes completed</p>

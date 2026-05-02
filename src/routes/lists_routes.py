@@ -59,7 +59,8 @@ def register_list_routes(app: Flask):
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
-                level_position=index + 1
+                level_position=index + 1,
+                iter=iter, next=next
             )
         except StopIteration:
             return redirect(url_for('error404'))
@@ -77,7 +78,8 @@ def register_list_routes(app: Flask):
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
-                level_position=index + 1
+                level_position=index + 1,
+                iter=iter, next=next
             )
         except StopIteration:
             return redirect(url_for('error404'))
@@ -95,7 +97,8 @@ def register_list_routes(app: Flask):
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
-                level_position=index + 1
+                level_position=index + 1,
+                iter=iter, next=next
             )
         except StopIteration:
             return redirect(url_for('error404'))
@@ -113,7 +116,8 @@ def register_list_routes(app: Flask):
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
-                level_position=index + 1
+                level_position=index + 1,
+                iter=iter, next=next
             )
         except StopIteration:
             return redirect(url_for('error404'))
@@ -231,9 +235,12 @@ def register_list_routes(app: Flask):
             challenges_top_place = next(i for i, item in enumerate(top_challenge_players) if item[0] == player)
             server_levels_top_place = next(i for i, item in enumerate(top_server_players) if item[0] == player)
             server_challenges_top_place = next(i for i, item in enumerate(top_server_challenge_players) if item[0] == player)
+
             player_data = top_players[levels_top_place]
-            challenges_profile = top_challenge_players[challenges_top_place]
-            challenges_points = challenges_profile[4]
+
+            challenges_points = top_challenge_players[challenges_top_place][6]
+            server_levels_points = top_server_players[server_levels_top_place][6]
+            server_challenges_points = top_server_challenge_players[server_challenges_top_place][6]
 
             extremes = []
             top_server_players = get_top_server_players()
@@ -247,14 +254,16 @@ def register_list_routes(app: Flask):
                 username=get_username(),
                 player=player_data,
                 challenges_points=challenges_points,
-                levels_position=levels_top_place+1,
-                challenges_position=challenges_top_place+1,
-                server_levels_position=server_levels_top_place+1,
-                server_challenges_position=server_challenges_top_place+1,
+                levels_top_place=levels_top_place+1,
+                challenges_top_place=challenges_top_place+1,
+                server_levels_top_place=server_levels_top_place+1,
+                server_challenges_top_place=server_challenges_top_place+1,
                 challenges_list_top=load_file("challenges_list"),
                 levels_list_top=load_file("levels_list"),
                 get_level_rank=get_level_rank,
-                extremes=extremes, get_len=get_len, get_pos=get_pos
+                extremes=extremes, get_len=get_len, get_pos=get_pos,
+                server_levels_points=server_levels_points,
+                server_challenges_points=server_challenges_points
             )
         except StopIteration:
             return redirect(url_for('error404'))

@@ -200,13 +200,13 @@
     background-color: var(--dark-blue) !important;
     overflow-y: auto;
     resize: none;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: var(--white);
     margin-top: 3em;
     margin-bottom: 2em;
     text-align: center;
     padding: 2em;
-    width: 800px;
+    width: 1000px;
 }
 
 .level-page-container h1 {

@@ -21,32 +21,55 @@
 </header>
 
 <main class="big-margin-left-right">
-
     {% if top_type == "by_hardest" %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Sort by points</a> |
-            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a> |
-            <a href="{{ url_for('server_leaderboard_top_levels') }}">Levels completed</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a>
-        </p>
         <h1>Leaderboard (by hardest):</h1>
     {% elif top_type == "by_list_points" %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('server_leaderboard_by_hardest') }}">Sort by hardest</a> |
-            <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">Sort by 5 hardests</a> |
-            <a href="{{ url_for('server_leaderboard_top_levels') }}">Levels completed</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a>
-        </p>
         <h1>Leaderboard (by list points):</h1>
     {% else %}
-        <p class="bigger-line-height">
-            <a href="{{ url_for('server_leaderboard_by_hardest') }}">Sort by hardest</a> |
-            <a href="{{ url_for('server_leaderboard_by_list_points') }}">Sort by points</a> |
-            <a href="{{ url_for('server_leaderboard_top_levels') }}">Levels completed</a> |
-            <a href="{{ url_for('levels_list') }}">Levels list</a>
-        </p>
         <h1>Leaderboard (by 5 hardests):</h1>
     {% endif %}
+
+    <div class="panel">
+        <div class="dropdowns">
+            <div class="dropdown">
+                <button class="dropbtn">Gild List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('levels_list') }}">List</a>
+                    <a href="{{ url_for('levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Gild Server List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_levels_list') }}">List</a>
+                    <a href="{{ url_for('server_levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('server_challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('server_challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Server's Leaderboard</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_leaderboard_by_hardest') }}">By hardest</a>
+                    <a href="{{ url_for('server_leaderboard_by_list_points') }}">By list points</a>
+                    <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">By 5 hardests</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">More</button>
+                <div class="dropdown-content">
+                    <a href="https://docs.google.com/document/d/175JXSvwwOD0jXMXp24Llsg0-4lgEofpFAeNFF7lGRQY/edit?usp=sharing" target="_blank">Rules</a>
+                    <a href="https://forms.gle/zox839bvvHJEsuGU8" target="_blank">Create Account</a>
+                    <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="align-on-mobile">
         {% for player in players %}{%if player[2] and (top_type != "by_5_hardests" or get_len(player[2]) > 4) %}

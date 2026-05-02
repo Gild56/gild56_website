@@ -23,9 +23,7 @@
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
         <h1 class="copyable-heading big" data-copy-text="{{ level[1] }}">#{{level_position}} - {{ level[0] }}</h1>
-        {% if level[3] == "" or level[3] == "None" %}
-            <img src="{{ url_for('static', filename=('images/thumbnails/' + level[0] + '.png' )) }}" height="300" alt="{{ level[0] }}'s preview" class="levels-page-preview">
-        {% else %}
+        {% if not level[3] == "" and not level[3] == "None" %}
             <iframe width="533.33" height="300"
                     src="https://www.youtube.com/embed/{{ level[3] }}"
                     frameborder="0"
@@ -33,6 +31,16 @@
                     allowfullscreen
                     class="levels-page-preview">
             </iframe>
+        {% elif level[4] %}
+            <iframe width="533.33" height="300"
+                    src="https://www.youtube.com/embed/{{ next(iter(level[4].values())) }}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="levels-page-preview">
+            </iframe>
+        {% else %}
+            <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level[1] }}" height="300" alt="{{ level[0] }}'s preview" class="levels-page-preview" onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level[0] + '.png') }}';">
         {% endif %}
         <p>{{ level[2] }}</p>
         <p>ID: {{ level[1] }}</p>
@@ -42,7 +50,8 @@
                  <p>
                     <img src="{{ url_for('static', filename='images/cubes/' + player + '.png') }}" class="icon" alt="{{ player }}'s icon">
                     <a href="{{ url_for('player_page', player=player) }}">{{ player }}</a> -
-                    <a href="https://www.youtube.com/watch?v={{ video }}" target="_blank">Video</a></p>
+                    <a href="https://www.youtube.com/watch?v={{ video }}" target="_blank">Video</a>
+                </p>
             {% endfor %}
         {% else %}
             <p>There are no victors yet</p>

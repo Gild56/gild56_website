@@ -165,4 +165,8 @@
         margin-right: 0.5em !important;
         font-size: medium !important;
     }
+
+    .level-page-container {
+        font-size: 1rem
+    }
 }
