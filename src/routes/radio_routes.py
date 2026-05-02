@@ -9,7 +9,7 @@ def register_radio_routes(app: Flask):
     @app.route("/radio")
     def radio_page():
         return render_template(
-            "radio.html",
+            "other/radio.html",
             logged_in=logged_in(),
             username=get_username()
         )

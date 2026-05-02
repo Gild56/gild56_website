@@ -14,7 +14,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/classic")
     def levels_list():
         return render_template(
-            "list.html", logged_in=logged_in(),
+            "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("levels_list"),
             top="levels", get_points_by_place=get_points_by_place
         )
@@ -23,7 +23,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/challenges")
     def challenges_list():
         return render_template(
-            "list.html", logged_in=logged_in(),
+            "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("challenges_list"),
             top="challenges", get_points_by_place=get_points_by_place
         )
@@ -32,7 +32,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/classic")
     def server_levels_list():
         return render_template(
-            "list.html", logged_in=logged_in(),
+            "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("server_levels_list"),
             top="server_levels", get_points_by_place=get_points_by_place
         )
@@ -41,7 +41,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/challenges")
     def server_challenges_list():
         return render_template(
-            "list.html", logged_in=logged_in(),
+            "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("server_challenges_list"),
             top="server_challenges", get_points_by_place=get_points_by_place
         )
@@ -55,7 +55,7 @@ def register_list_routes(app: Flask):
             level_info = levels_list_top[index]
 
             return render_template(
-                "level.html",
+                "list/level.html",
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
@@ -74,7 +74,7 @@ def register_list_routes(app: Flask):
             level_info = challenges_list_top[index]
 
             return render_template(
-                "level.html",
+                "list/level.html",
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
@@ -93,7 +93,7 @@ def register_list_routes(app: Flask):
             level_info = server_levels_list_top[index]
 
             return render_template(
-                "level.html",
+                "list/level.html",
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
@@ -112,7 +112,7 @@ def register_list_routes(app: Flask):
             level_info = server_challenges_list_top[index]
 
             return render_template(
-                "level.html",
+                "list/level.html",
                 logged_in=logged_in(),
                 username=get_username(),
                 level=level_info,
@@ -128,7 +128,7 @@ def register_list_routes(app: Flask):
         def generate_link(level: str):
             return f"https://thumbnails.demonlist.org/classic/{get_id(level)}.png"
         return render_template(
-            "top_levels.html",
+            "list/top_levels.html",
             logged_in=logged_in(),
             username=get_username(),
             top_completed_levels=get_top_completed_levels(),
@@ -139,7 +139,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server_leaderboard/by_hardest")
     def server_leaderboard_by_hardest():
         return render_template(
-            "server_leaderboard.html",
+            "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_server_players("by_hardest"),
@@ -150,7 +150,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server_leaderboard/by_list_points")
     def server_leaderboard_by_list_points():
         return render_template(
-            "server_leaderboard.html",
+            "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_server_players("by_list_points"),
@@ -161,7 +161,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server_leaderboard/by_5_hardests")
     def server_leaderboard_by_5_hardests():
         return render_template(
-            "server_leaderboard.html",
+            "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_server_players("by_5_hardests"),
@@ -172,7 +172,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/classic/leaderboard")
     def levels_leaderboard():
         return render_template(
-            "leaderboard.html",
+            "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_players("levels_list"),
@@ -183,7 +183,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/challenges/leaderboard")
     def challenges_leaderboard():
         return render_template(
-            "leaderboard.html",
+            "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_players("challenges_list"),
@@ -194,7 +194,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/classic/leaderboard")
     def server_levels_leaderboard():
         return render_template(
-            "leaderboard.html",
+            "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_players("levels_list"),
@@ -205,7 +205,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/challenges/leaderboard")
     def server_challenges_leaderboard():
         return render_template(
-            "leaderboard.html",
+            "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
             players=get_top_players("challenges_list"),
@@ -249,7 +249,7 @@ def register_list_routes(app: Flask):
                     extremes = p[2]
 
             return render_template(
-                "player.html",
+                "list/player.html",
                 logged_in=logged_in(),
                 username=get_username(),
                 player=player_data,

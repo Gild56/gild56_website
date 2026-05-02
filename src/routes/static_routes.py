@@ -8,7 +8,7 @@ def register_static_routes(app: Flask):
     @app.route("/")
     def index():
         return render_template(
-            "index.html", logged_in=logged_in(),
+            "other/index.html", logged_in=logged_in(),
             username=get_username()
         )
 
@@ -16,7 +16,7 @@ def register_static_routes(app: Flask):
     @app.route("/contact")
     def contact():
         return render_template(
-            "contact.html", logged_in=logged_in(),
+            "other/contact.html", logged_in=logged_in(),
             username=get_username()
         )
 
@@ -24,7 +24,7 @@ def register_static_routes(app: Flask):
     @app.route("/hall_of_fame")
     def hall_of_fame():
         return render_template(
-            "hall_of_fame.html", logged_in=logged_in(),
+            "other/hall_of_fame.html", logged_in=logged_in(),
             username=get_username()
         )
 
@@ -32,14 +32,14 @@ def register_static_routes(app: Flask):
     @app.route("/games")
     def games():
         return render_template(
-            "games.html", logged_in=logged_in(),
+            "other/games.html", logged_in=logged_in(),
             username=get_username()
         )
 
 
     @app.route("/jaime_les_ours")
     def jaime_les_ours():
-        return render_template("jaime_les_ours.html")
+        return render_template("other/jaime_les_ours.html")
 
 
     def flag_exists(code: str):
@@ -53,7 +53,7 @@ def register_static_routes(app: Flask):
     @app.route("/404")
     def error404():
         return render_template(
-            "404.html", logged_in=logged_in(),
+            "other/404.html", logged_in=logged_in(),
             username=get_username()
         )
 

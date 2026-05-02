@@ -29,7 +29,7 @@ def register_community_routes(app: Flask):
             comments_post_ids.append(comment[2])
 
         return render_template(
-            "community.html", posts=posts, logged_in=logged_in(),
+            "community/community.html", posts=posts, logged_in=logged_in(),
             username=get_username(), role=get_role(),
             posts_and_comments_count=posts_and_comments_count,
             users_count=users_count, comments=comments,
@@ -52,7 +52,7 @@ def register_community_routes(app: Flask):
             return redirect(url_for('post', post_id=post_id))
 
         return render_template(
-            "post.html", post=g.db.get_post(post_id), logged_in=logged_in(),
+            "community/post.html", post=g.db.get_post(post_id), logged_in=logged_in(),
             username=get_username(), role=get_role(), comments=g.db.get_comments(),
             get_pfp=get_pfp, get_comment_author=g.db.get_comment_author,
             get_post_author=g.db.get_post_author
@@ -98,7 +98,7 @@ def register_community_routes(app: Flask):
             return redirect(url_for('error404'))
 
         return render_template(
-            'profile.html', username=get_username(),
+            'community/profile.html', username=get_username(),
             logged_in=logged_in(), my_profile=my_profile,
             posts=posts, comments=comments, profile=profile,
             comments_post_ids=comments_post_ids, bio=bio,
@@ -123,7 +123,7 @@ def register_community_routes(app: Flask):
             pfps = get_all_pfps()
 
             return render_template(
-                'change_pfp.html', username=get_username(),
+                'community/change_pfp.html', username=get_username(),
                 logged_in=logged_in(), pfps=pfps,
                 pfps_count=len(pfps)
             )

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if top == "levels_list" %}
+        Gild List
+    {% elif top == "challenges_list" %}
+        Gild Challenges List
+    {% elif top == "server_levels_list" %}
+        Gild Server List
+    {% else %}
+        Gild Server Challenges List
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('radio_page') }}">Radio</a>
+        <a href="{{ url_for('levels_list') }}" class="current">Lists</a>
+        <a class="change-theme-button" onclick="toggleDarkMode()">Theme</a>
+        {% if logged_in %}
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="big-margin-left-right">
+    {% if top == "levels_list" %}
+        <h1>Gild List</h1>
+    {% elif top == "challenges_list" %}
+        <h1>Gild Challenges List</h1>
+    {% elif top == "server_levels_list" %}
+        <h1>Gild Server List</h1>
+    {% else %}
+        <h1>Gild Server Challenges List</h1>
+    {% endif %}
+
+    <div class="panel">
+        <div class="dropdowns">
+            <div class="dropdown">
+                <button class="dropbtn">Gild List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('levels_list') }}">List</a>
+                    <a href="{{ url_for('levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Gild Server List</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_levels_list') }}">List</a>
+                    <a href="{{ url_for('server_levels_leaderboard') }}">Leaderboard</a>
+                    <a href="{{ url_for('server_challenges_list') }}">Challenges List</a>
+                    <a href="{{ url_for('server_challenges_leaderboard') }}">Challenges Leaderboard</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Server's Leaderboard</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('server_leaderboard_by_hardest') }}">By hardest</a>
+                    <a href="{{ url_for('server_leaderboard_by_list_points') }}">By list points</a>
+                    <a href="{{ url_for('server_leaderboard_by_5_hardests') }}">By 5 hardests</a>
+                    <a href="{{ url_for('server_leaderboard_top_levels') }}">Top levels</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">More</button>
+                <div class="dropdown-content">
+                    <a href="https://docs.google.com/document/d/175JXSvwwOD0jXMXp24Llsg0-4lgEofpFAeNFF7lGRQY/edit?usp=sharing" target="_blank">Rules</a>
+                    <a href="https://forms.gle/zox839bvvHJEsuGU8" target="_blank">Create Account</a>
+                    <a href="https://forms.gle/nggL7XxdbJx3YLT18" target="_blank">Send a completion</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for level in levels %}
+        {% if top == "levels" %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
+        {% else %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('challenge_page', challenge=level[0]) }}'">
+        {% endif %}
+            <div class="row">
+                <div>
+                    {% if level[3] != "" %}
+                        <a href="https://www.youtube.com/watch?v={{ level[3] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                    {% endif %}
+                    <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level[1] }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()"
+                    onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level[0] + '.png') }}';">
+                    </a>
+                </div>
+                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level[0] }} <span class="points">({{ get_points_by_place(loop.index0 + 1) }} pts)</span></h1>
+            </div>
+        </div>
+    {% endfor %}
+    <div id="copyNotification" class="notification">
+        ID copied to clipboard!
+    </div>
+</main>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/copyLink.js') }}"></script>
+<script src="{{ url_for('static', filename='js/copyLevelID.js') }}"></script>
+{% endblock %}

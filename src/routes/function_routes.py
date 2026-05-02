@@ -100,7 +100,7 @@ def register_function_routes(app: Flask):
                 error_message = "Incorrect login or password!"
 
         return render_template(
-            "log_in.html", logged_in=logged_in(),
+            "community/log_in.html", logged_in=logged_in(),
             error_message=error_message
         )
 
@@ -121,14 +121,14 @@ def register_function_routes(app: Flask):
             if g.db.user_exists(login):
                 error_message = "User with this login already exists."
                 return render_template(
-                    "sign_up.html", logged_in=logged_in(),
+                    "community/sign_up.html", logged_in=logged_in(),
                     error_message=error_message
                 )
 
             if password != repeat_password:
                 error_message = "The password isn't the same."
                 return render_template(
-                    "sign_up.html", logged_in=logged_in(),
+                    "community/sign_up.html", logged_in=logged_in(),
                     error_message=error_message
                 )
 
@@ -137,6 +137,6 @@ def register_function_routes(app: Flask):
             return redirect(url_for('community'))
 
         return render_template(
-            "sign_up.html", logged_in=logged_in(),
+            "community/sign_up.html", logged_in=logged_in(),
             error_message=error_message
         )
