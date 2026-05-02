@@ -403,7 +403,7 @@ summary {
 }
 
 .dropdown-content a:hover {
-    background-color: var(--dark-blue);
+    background-color: var(--mid-blue);
     color: var(--white);
 }
 
