@@ -16,7 +16,7 @@ def register_list_routes(app: Flask):
         return render_template(
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("levels_list"),
-            top="levels", get_points_by_place=get_points_by_place
+            top="levels_list", get_points_by_place=get_points_by_place
         )
 
 
@@ -25,7 +25,7 @@ def register_list_routes(app: Flask):
         return render_template(
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("challenges_list"),
-            top="challenges", get_points_by_place=get_points_by_place
+            top="challenges_list", get_points_by_place=get_points_by_place
         )
 
 
@@ -34,7 +34,7 @@ def register_list_routes(app: Flask):
         return render_template(
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("server_levels_list"),
-            top="server_levels", get_points_by_place=get_points_by_place
+            top="server_levels_list", get_points_by_place=get_points_by_place
         )
 
 
@@ -43,7 +43,7 @@ def register_list_routes(app: Flask):
         return render_template(
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=load_file("server_challenges_list"),
-            top="server_challenges", get_points_by_place=get_points_by_place
+            top="server_challenges_list", get_points_by_place=get_points_by_place
         )
 
 
