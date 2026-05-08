@@ -1,6 +1,6 @@
 from werkzeug.exceptions import HTTPException
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
 
 
@@ -50,14 +50,11 @@ def register_static_routes(app: Flask):
 
     # Error pages
 
-    @app.route("/404")
-    def error404():
-        return render_template(
-            "other/404.html", logged_in=logged_in(),
-            username=get_username()
-        )
-
-
     @app.errorhandler(404)
-    def handle_404(_error: HTTPException):
-        return redirect(url_for('error404'))
+    def handle_404(error: HTTPException):
+        return render_template(
+            "other/404.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            requested_url=request.url
+        ), 404

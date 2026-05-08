@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('contact') }}" class="current">Contact</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('radio_page') }}">Radio</a>
+        <a href="{{ url_for('levels_list') }}">Lists</a>
+        <a class="change-theme-button" onclick="toggleDarkMode()">Theme</a>
+        {% if logged_in %}
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h1>Contact</h1>
+        <p>
+            If you have a suggestion or a bug, you can contact me on
+            <a href="mailto:gild56gmd@gmail.com" target="_blank">Mail</a>,
+            <a href="https://t.me/gild56" target="_blank">Telegram</a> or
+            <a href="https://discord.com/users/gild56" target="_blank">Discord</a>.<br>
+            Please, don't spam stupid things.
+        </p>
+    </section>
+    <hr>
+    <section>
+        <h1>GitHub</h1>
+        <p>
+            If you have a suggestion or a bug, you can also visit my
+            <a href="https://github.com/Gild56" target="_blank">GitHub</a> page.
+        </p>
+    </section>
+    <hr>
+    <section>
+        <h1>Instagram</h1>
+        <p>
+            You can subscribe to my
+            <a href="https://www.instagram.com/gild56gmd/" target="_blank">Instagram</a> channel.<br>
+        </p>
+    </section>
+    <hr>
+    <section>
+        <h1>YouTube</h1>
+        <p>
+            Finally, you can subscribe to my
+            <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a> channel.<br>
+            Thanks! :D
+        </p>
+    </section>
+</main>
+{% endblock %}

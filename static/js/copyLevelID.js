@@ -3,14 +3,11 @@ let notificationTimeout;
 function showNotification() {
     const notification = document.getElementById('copyNotification');
 
-    // Si une précédente animation est en cours, on l'annule
     clearTimeout(notificationTimeout);
 
-    // Réinitialise l'affichage
     notification.style.display = 'block';
     notification.style.opacity = 1;
 
-    // Lance un nouveau timeout pour masquer la notification
     notificationTimeout = setTimeout(() => {
         notification.style.opacity = 0;
         setTimeout(() => {

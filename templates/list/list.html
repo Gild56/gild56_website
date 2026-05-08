@@ -86,10 +86,17 @@
     </div>
 
     {% for level in levels %}
-        {% if top == "levels" %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
-        {% else %}
+        {% if top == "server_challenges_list" %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('server_challenge_page', challenge=level[0]) }}'">
+        {% elif top == "challenges_list" %}
             <div class="level-container" onclick="window.location.href='{{ url_for('challenge_page', challenge=level[0]) }}'">
+        {% elif top == "server_levels_list" %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('server_level_page', level=level[0]) }}'">
+        {% else %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
+        {% endif %}
+        {% if top == "levels_list" %}
+        {% else %}
         {% endif %}
             <div class="row">
                 <div>

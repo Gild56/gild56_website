@@ -24,8 +24,9 @@
     <div class="bigger-container">
         <h1 class="big">404 Error</h1>
         <h2 class="medium">Page Not Found</h2>
-        <h2 class="no-bold">This is not the page you are looking for.</h2>
-        <h2 class="no-bold"><a href="{{ url_for('index') }}">Return to the home page.</a></h2>
+        <h2 class="no-bold">This is not the page you are looking for ¯\_(ツ)_/¯</h2>
+        <h2 class="no-bold">The page <span class="path">{{ requested_url }}</span> doesn't exist</h2>
+        <h2 class="no-bold"><a href="{{ url_for('index') }}">Return to the home page</a></h2>
     </div>
 </main>
 {% endblock %}
