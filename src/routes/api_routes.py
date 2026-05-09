@@ -123,8 +123,26 @@ def register_api_routes(app: Flask):
                 if p[0] == player:
                     extremes = p[2]
 
-            keys = ["nickname", "id", "description", "gild_completion", "completions"]
-            data = dict(zip(keys, list(player_data)))
+            keys = ["nickname", "data", "levels_list_completions", "challenges_list_completions", "server_levels_list_completions", "server_challenges_list_completions", "levels_list_points"]
+            data: dict[str, Any] = dict(zip(keys, list(player_data)))
+
+            data["youtube_channel"] = f"https://youtube.com/@{data["data"][0]}"
+            data["country"] = data["data"][1]
+            data["community_account"] = data["data"][2]
+            data["description"] = data["data"][3]
+            data["tag"] = data["data"][4]
+            data.pop("data")
+
+            data["challenges_list_points"] = challenges_points
+            data["server_levels_list_points"] = server_levels_points
+            data["server_challenges_list_points"] = server_challenges_points
+
+            data["extremes"] = extremes
+
+            data["levels_list_place"] = levels_top_place + 1
+            data["challenges_list_place"] = challenges_top_place + 1
+            data["server_levels_list_place"] = server_levels_top_place + 1
+            data["server_challenges_list_place"] = server_challenges_top_place + 1
 
             return data
         except StopIteration:
