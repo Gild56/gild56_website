@@ -1,6 +1,6 @@
-from flask import Flask, render_template
-from src.routes.utils import get_username, logged_in, get_len, get_mean
-from src.logic.ranking import get_top_players, get_points_by_place
+from flask import Flask, render_template, request
+from src.routes.utils import get_username, logged_in
+from src.logic.ranking import get_top_players
 from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
 from src.logic.data_loader import get_pos, get_id, load_file
 from typing import Any
@@ -91,16 +91,6 @@ def register_api_routes(app: Flask):
     @app.route("/api/players/<player>")
     def get_player(player: str) -> dict[str, Any]:
         try:
-            def get_level_rank(
-                level_name: str,
-                top_list: list[tuple[str, str, str, str, dict[str, str]]]
-            ):
-                level_name = level_name.strip().lower()
-                for i, level_data in enumerate(top_list):
-                    name = level_data[0].strip().lower()
-                    if name == level_name:
-                        return i + 1
-
             top_players = get_top_players("levels_list")
             top_challenge_players = get_top_players("challenges_list")
             top_server_players = get_top_players("server_levels_list")
@@ -147,3 +137,29 @@ def register_api_routes(app: Flask):
             return data
         except StopIteration:
             return {"error": f"Player <{player}> not found"}
+
+
+
+    @app.route("/api/players")
+    def get_players() -> list[dict[str, Any]]:
+        data = []
+
+        for player in get_top_players("levels_list"):
+            player_data = get_player(player[0])
+
+            player_data["extremes"] = {
+                level: get_pos(level)
+                for level in player_data.get("extremes", [])
+            }
+
+            data.append(player_data)
+
+        sort_key = request.args.get("sort")
+
+        if sort_key:
+            data.sort(
+                key=lambda x: x.get(sort_key, 0),
+                reverse=True
+            )
+
+        return data

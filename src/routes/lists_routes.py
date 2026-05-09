@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, abort
 from src.routes.utils import get_username, logged_in, get_len, get_mean
 from src.logic.ranking import get_top_players, get_points_by_place
 from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
@@ -63,7 +63,7 @@ def register_list_routes(app: Flask):
                 iter=iter, next=next
             )
         except StopIteration:
-            return redirect(url_for('error404'))
+            return abort(404)
 
 
     @app.route("/lists/gild/challenges/<challenge>")
@@ -82,7 +82,7 @@ def register_list_routes(app: Flask):
                 iter=iter, next=next
             )
         except StopIteration:
-            return redirect(url_for('error404'))
+            return abort(404)
 
 
     @app.route("/lists/server/classic/<level>")
@@ -101,7 +101,7 @@ def register_list_routes(app: Flask):
                 iter=iter, next=next
             )
         except StopIteration:
-            return redirect(url_for('error404'))
+            return abort(404)
 
 
     @app.route("/lists/server/challenges/<challenge>")
@@ -120,7 +120,7 @@ def register_list_routes(app: Flask):
                 iter=iter, next=next
             )
         except StopIteration:
-            return redirect(url_for('error404'))
+            return abort(404)
 
 
     @app.route("/lists/server_leaderboard/top_levels")
@@ -266,4 +266,4 @@ def register_list_routes(app: Flask):
                 server_challenges_points=server_challenges_points
             )
         except StopIteration:
-            return redirect(url_for('error404'))
+            return abort(404)

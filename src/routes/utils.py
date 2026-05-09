@@ -22,4 +22,6 @@ def get_len(item: list[Any] | dict[Any, Any] | tuple[Any]) -> int:
     return len(item)
 
 def get_mean(numbers: int) -> int:
+    if len(numbers) == 0:
+        return 0
     return sum(numbers) / len(numbers)

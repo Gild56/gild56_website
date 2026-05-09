@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, g
+from flask import Flask, render_template, redirect, url_for, request, g, abort
 from src.routes.utils import get_username, logged_in, get_role, get_pfp, get_all_pfps
 
 
@@ -71,10 +71,7 @@ def register_community_routes(app: Flask):
         comments = g.db.get_comments()
         bio = g.db.get_bio(profile)
 
-        posts_count = 0
-        for post in posts:
-            if post[2] == profile:
-                posts_count += 1
+        posts_count = sum(1 for post in posts if post[2] == profile)
 
         comments_post_ids: list[str] = []
         for comment in comments:
@@ -86,16 +83,12 @@ def register_community_routes(app: Flask):
             if post[2] not in posts_authors:
                 posts_authors.append(post[2])
 
-        theres_posts = False
-        if profile in posts_authors:
-            theres_posts = True
+        theres_posts = any(post[2] == profile for post in posts)
 
-        if profile == get_username():
-            my_profile = True
-        else:
-            my_profile = False
+        my_profile = profile == get_username()
+
         if not g.db.user_exists(profile):
-            return redirect(url_for('error404'))
+            return abort(404)
 
         return render_template(
             'community/profile.html', username=get_username(),
