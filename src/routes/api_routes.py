@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
 from src.logic.ranking import get_top_players
 from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
-from src.logic.data_loader import get_pos, get_id, load_file
+from src.logic.data_loader import get_pos, load_file
 from typing import Any
 
 
@@ -146,7 +146,9 @@ def register_api_routes(app: Flask):
 
         for player in get_top_players("levels_list"):
             player_data = get_player(player[0])
-
+            print(player)
+            print(player_data["extremes"] )
+            print(' ')
             player_data["extremes"] = {
                 level: get_pos(level)
                 for level in player_data.get("extremes", [])
