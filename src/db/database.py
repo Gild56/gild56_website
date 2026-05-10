@@ -89,11 +89,6 @@ class DataBase():
             self.connection.commit()
 
         except Exception as e:
-            print(f"\n\nError: {e}")
-            print(
-                f"Completed query:\n\n{query}\n"
-                f"With args {args} (get {fetch_count} rows)"
-            )
             if self.connection:
                 self.connection.rollback()
 

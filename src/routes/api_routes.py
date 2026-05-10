@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
 from src.logic.ranking import get_top_players
-from src.logic.server_ranking import get_top_server_players, get_top_completed_levels
+from src.logic.server_ranking import get_top_server_players, get_demonlist
 from src.logic.data_loader import get_pos, load_file
+from src.routes.utils import get_mean
+from collections import Counter
 from typing import Any
 
 
@@ -34,10 +36,7 @@ def register_api_routes(app: Flask):
 
 
     def normalize_levels(levels: dict[str, Any]) -> list[dict[str, Any]]:
-        data = []
-        for level in levels:
-            data.append(normalize_level(level[0], levels))
-        return data
+        return [normalize_level(level[0], levels) for level in levels]
 
 
     @app.route("/api")
@@ -108,15 +107,15 @@ def register_api_routes(app: Flask):
             server_challenges_points = top_server_challenge_players[server_challenges_top_place][6]
 
             extremes = []
-            top_server_players = get_top_server_players()
-            for p in top_server_players:
+            top_server_extreme_players = get_top_server_players()
+            for p in top_server_extreme_players:
                 if p[0] == player:
                     extremes = p[2]
 
             keys = ["nickname", "data", "levels_list_completions", "challenges_list_completions", "server_levels_list_completions", "server_challenges_list_completions", "levels_list_points"]
             data: dict[str, Any] = dict(zip(keys, list(player_data)))
 
-            data["youtube_channel"] = f"https://youtube.com/@{data["data"][0]}"
+            data["youtube_channel"] = f"https://youtube.com/{data['data'][0]}"
             data["country"] = data["data"][1]
             data["community_account"] = data["data"][2]
             data["description"] = data["data"][3]
@@ -128,6 +127,27 @@ def register_api_routes(app: Flask):
             data["server_challenges_list_points"] = server_challenges_points
 
             data["extremes"] = extremes
+            data["extremes"] = {
+                level: get_pos(level)
+                for level in data.get("extremes", [])
+            }
+
+            if data["extremes"]:
+                data["hardest"] = min(data["extremes"].values())
+
+                if len(data["extremes"]) >= 5:
+                    positions = sorted(data["extremes"].values())[:5]
+                    data["5_hardests"] = (
+                        get_mean(positions)
+                        if positions else None
+                    )
+                else:
+                    data["5_hardests"] = None
+
+            else:
+                data["hardest"] = None
+                data["5_hardests"] = None
+                data["list_points"] = 0
 
             data["levels_list_place"] = levels_top_place + 1
             data["challenges_list_place"] = challenges_top_place + 1
@@ -139,29 +159,83 @@ def register_api_routes(app: Flask):
             return {"error": f"Player <{player}> not found"}
 
 
-
     @app.route("/api/players")
     def get_players() -> list[dict[str, Any]]:
         data = []
 
         for player in get_top_players("levels_list"):
             player_data = get_player(player[0])
-            print(player)
-            print(player_data["extremes"] )
-            print(' ')
-            player_data["extremes"] = {
-                level: get_pos(level)
-                for level in player_data.get("extremes", [])
-            }
-
             data.append(player_data)
 
         sort_key = request.args.get("sort")
+        reverse = request.args.get("reverse", "true").lower() == "true"
 
         if sort_key:
             data.sort(
-                key=lambda x: x.get(sort_key, 0),
-                reverse=True
+                key=lambda x: (
+                    x.get(sort_key) is None,
+                    x.get(sort_key)
+                )
             )
 
+        if reverse:
+            data.reverse()
+
         return data
+
+
+    @app.route("/api/top_completed_extremes")
+    def get_top_completed_extremes() -> list[Any]:
+        def normalize_extremes(data: Any) -> list[str]:
+            if not data or len(data) < 2:
+                return []
+
+            levels_data = data[1]
+
+            if isinstance(levels_data, dict):
+                return list(levels_data.keys())
+
+            if isinstance(levels_data, list):
+                return levels_data
+
+            return []
+        all_levels = get_demonlist()
+
+        level_pos = {
+            lvl["name"].lower(): lvl["placement"]
+            for lvl in all_levels
+            if "name" in lvl and "placement" in lvl
+        }
+
+        def get_pos(level_name: str) -> int | None:
+            return level_pos.get(level_name.lower())
+
+        leaderboard_db = load_file("leaderboard")
+
+        all_finished_levels = []
+
+        for _, data in leaderboard_db.items():
+
+            levels = normalize_extremes(data)
+
+            for lvl in levels:
+                if get_pos(lvl) is not None:
+                    all_finished_levels.append(lvl)
+
+        counter = Counter(all_finished_levels)
+
+        result = []
+
+        for lvl, count in counter.items():
+            pos = get_pos(lvl)
+
+            if pos is not None:
+                result.append({
+                    "name": lvl,
+                    "position": pos,
+                    "completions": count
+                })
+
+        result.sort(key=lambda x: x["position"])
+
+        return result

@@ -32,10 +32,6 @@ def get_demonlist() -> list[dict[str, Any]]:
         json_data = json.loads(data)
         all_levels = json_data.get("data", {}).get("levels", [])
 
-    if not all_levels:
-        print("Error: No levels found.")
-        return []
-
     # It removes Azurite by Royen by its id in the database
     # to keep Azurite by Sillow, that everybody beats
     # and Deimos by ItsHybrid rather than by EndLevel (костыли)
