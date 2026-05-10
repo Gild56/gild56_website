@@ -95,10 +95,29 @@ def register_api_routes(app: Flask):
             top_server_players = get_top_players("server_levels_list")
             top_server_challenge_players = get_top_players("server_challenges_list")
 
-            levels_top_place = next(i for i, item in enumerate(top_players) if item[0] == player)
-            challenges_top_place = next(i for i, item in enumerate(top_challenge_players) if item[0] == player)
-            server_levels_top_place = next(i for i, item in enumerate(top_server_players) if item[0] == player)
-            server_challenges_top_place = next(i for i, item in enumerate(top_server_challenge_players) if item[0] == player)
+            levels_top_places = {
+                item[0]: i
+                for i, item in enumerate(top_players)
+            }
+            levels_top_place = levels_top_places[player]
+
+            challenges_top_places = {
+                item[0]: i
+                for i, item in enumerate(top_challenge_players)
+            }
+            challenges_top_place = challenges_top_places[player]
+
+            server_levels_top_places = {
+                item[0]: i
+                for i, item in enumerate(top_server_players)
+            }
+            server_levels_top_place = server_levels_top_places[player]
+
+            server_challenges_top_places = {
+                item[0]: i
+                for i, item in enumerate(top_server_challenge_players)
+            }
+            server_challenges_top_place = server_challenges_top_places[player]
 
             player_data = top_players[levels_top_place]
 
@@ -218,9 +237,10 @@ def register_api_routes(app: Flask):
 
             levels = normalize_extremes(data)
 
-            for lvl in levels:
-                if get_pos(lvl) is not None:
-                    all_finished_levels.append(lvl)
+            all_finished_levels.extend(
+                lvl for lvl in levels
+                if get_pos(lvl) is not None
+            )
 
         counter = Counter(all_finished_levels)
 
