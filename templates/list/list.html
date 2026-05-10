@@ -87,27 +87,28 @@
 
     {% for level in levels %}
         {% if top == "server_challenges_list" %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('server_challenge_page', challenge=level[0]) }}'">
+            <div class="level-container" onclick="window.location.href='{{ url_for('server_challenge_page', challenge=level['name']) }}'">
         {% elif top == "challenges_list" %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('challenge_page', challenge=level[0]) }}'">
+            <div class="level-container" onclick="window.location.href='{{ url_for('challenge_page', challenge=level['name']) }}'">
         {% elif top == "server_levels_list" %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('server_level_page', level=level[0]) }}'">
+            <div class="level-container" onclick="window.location.href='{{ url_for('server_level_page', level=level['name']) }}'">
         {% else %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level[0]) }}'">
+            <div class="level-container" onclick="window.location.href='{{ url_for('level_page', level=level['name']) }}'">
         {% endif %}
         {% if top == "levels_list" %}
         {% else %}
         {% endif %}
             <div class="row">
                 <div>
-                    {% if level[3] != "" %}
-                        <a href="https://www.youtube.com/watch?v={{ level[3] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                    {% if level['gild_completion'] != "" %}
+                        <a href="https://www.youtube.com/watch?v={{ level['gild_completion'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                    {% elif next(iter(level['completions'].values())) %}
                     {% endif %}
-                    <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level[1] }}" height="100" alt="{{ level[0] }}'s preview" class="preview" onclick="event.stopPropagation()"
-                    onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level[0] + '.png') }}';">
+                    <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()"
+                    onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level['name'] + '.png') }}';">
                     </a>
                 </div>
-                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level[0] }} <span class="points">({{ get_points_by_place(loop.index0 + 1) }} pts)</span></h1>
+                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level['name'] }} <span class="points">({{ get_points_by_place(loop.index0 + 1) }} pts)</span></h1>
             </div>
         </div>
     {% endfor %}
@@ -119,5 +120,4 @@
 
 {% block script %}
 <script src="{{ url_for('static', filename='js/copyLink.js') }}"></script>
-<script src="{{ url_for('static', filename='js/copyLevelID.js') }}"></script>
 {% endblock %}

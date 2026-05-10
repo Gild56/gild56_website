@@ -14,12 +14,12 @@ function copyText(textToCopy) {
 
         setTimeout(() => {
             notification.style.opacity = 0;
-        }, 1000);
+        }, 2000);
 
         setTimeout(() => {
             notification.style.display = 'none';
             notificationVisible = false;
-        }, 4000);
+        }, 2000);
     }).catch(err => {
         console.error("Failed to copy:", err);
     });

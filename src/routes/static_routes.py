@@ -1,5 +1,4 @@
 from werkzeug.exceptions import HTTPException
-import os
 from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
 
@@ -40,12 +39,6 @@ def register_static_routes(app: Flask):
     @app.route("/jaime_les_ours")
     def jaime_les_ours():
         return render_template("other/jaime_les_ours.html")
-
-
-    def flag_exists(code: str):
-        path = os.path.join(app.static_folder, "images", "flags", f"{code}.svg")
-        return os.path.exists(path)
-    app.jinja_env.globals.update(flag_exists=flag_exists)
 
 
     # Error pages

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}#{{level_position}} - {{ level[0] }}{% endblock %}
+{% block title %}#{{level_position}} - {{ level['name'] }}{% endblock %}
 
 {% block content %}
 <header>
@@ -22,31 +22,31 @@
 
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
-        <h1 class="copyable-heading big" data-copy-text="{{ level[1] }}">#{{level_position}} - {{ level[0] }}</h1>
-        {% if not level[3] == "" and not level[3] == "None" %}
+        <h1 class="copyable-heading big" data-copy-text="{{ level[1] }}">#{{ level['position'] }} - {{ level['name'] }}</h1>
+        {% if level['gild_completion'] == "" and not level['gild_completion'] == "None" %}rfgredfs
             <iframe width="533.33" height="300"
-                    src="https://www.youtube.com/embed/{{ level[3] }}"
+                    src="https://www.youtube.com/embed/{{ level['gild_completion'] }}"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                     class="levels-page-preview">
             </iframe>
-        {% elif level[4] %}
+        {% elif level['completions'] %}
             <iframe width="533.33" height="300"
-                    src="https://www.youtube.com/embed/{{ next(iter(level[4].values())) }}"
+                    src="https://www.youtube.com/embed/{{ next(iter(level['completions'].values())) }}"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                     class="levels-page-preview">
             </iframe>
         {% else %}
-            <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level[1] }}" height="300" alt="{{ level[0] }}'s preview" class="levels-page-preview" onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level[0] + '.png') }}';">
+            <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] }}" height="300" alt="{{ level['name'] }}'s preview" class="levels-page-preview" onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level['name'] + '.png') }}';">
         {% endif %}
-        <p>{{ level[2] }}</p>
-        <p>ID: {{ level[1] }}</p>
+        <p>{{ level['description'] }}</p>
+        <p>ID: {{ level['id'] }}</p>
         <h2>Victors:</h2>
-        {% if level[4] %}
-            {% for player, video in level[4].items() %}
+        {% if level['completions'] %}
+            {% for player, video in level['completions'].items() %}
                  <p>
                     <img src="{{ url_for('static', filename='images/cubes/' + player + '.png') }}" class="icon" alt="{{ player }}'s icon">
                     <a href="{{ url_for('player_page', player=player) }}">{{ player }}</a> -
@@ -66,5 +66,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='js/copyLevelID.js') }}"></script>
+<script src="{{ url_for('static', filename='js/copyLink.js') }}"></script>
 {% endblock %}

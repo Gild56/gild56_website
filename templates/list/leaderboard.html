@@ -82,26 +82,22 @@
     </div>
 
     <div class="align-on-mobile">
-        {% for player in players %}{% if player[6] > 0 %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player[0]) }}'">
+        {% for player in players %}{% if player[top + "_points"] > 0 %}
+            <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player['nickname']) }}'">
                 <div class="row">
                     <div>
-                        <a href="https://www.youtube.com/{{ player[1][0] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
-                            <img src="{{ url_for('static', filename=('images/cubes/' + player[0] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
+                        <a href="https://www.youtube.com/{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
+                            <img src="{{ url_for('static', filename=('images/cubes/' + player['nickname'] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
                         </a>
                     </div>
                     <h1 class="left-margin">
                         #{{ loop.index0 + 1 }} - 
-                        {% if player[1][6] %}
-                            <span class="tag"> [{{ player[1][6] }}] </span>
+                        {% if player['tag'] %}
+                            <span class="tag"> [{{ player['tag'] }}] </span>
                         {% endif %}
-                        {{ player[0] }}
-                        {% if flag_exists(player[1][1]) %}
-                            <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player[1][1] + '.svg') }}" alt="Flag of {{ player[1][1] }}">
-                        {% else %}
-                            - <i>{{ player[1][1] }}</i>
-                        {% endif %}
-                        <span class="points"> ({{ player[6] }} pts)</span>
+                        {{ player['nickname'] }}
+                        <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
+                        <span class="points"> ({{ player[top + "_points"] }} pts)</span>
                     </h1>
                 </div>
             </div>

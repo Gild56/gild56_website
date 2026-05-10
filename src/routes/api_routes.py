@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
 from src.logic.ranking import get_top_players
-from src.logic.server_ranking import get_top_server_players, get_demonlist
-from src.logic.data_loader import get_pos, load_file
+from src.logic.data_loader import get_pos, load_file, get_demonlist
 from src.routes.utils import get_mean
 from collections import Counter
 from typing import Any
@@ -11,7 +10,7 @@ from typing import Any
 def register_api_routes(app: Flask):
     def normalize_level(level:str, top: dict[str, Any]) -> dict[str, Any]:
         try:
-            position = next(i for i, item in enumerate(top) if item[0] == level)
+            position = next(i for i, item in enumerate(top) if item[0] == level) + 1
 
             level_data = top[position]
 
@@ -20,11 +19,6 @@ def register_api_routes(app: Flask):
             gild = data.pop("gild_completion", None)
 
             data["position"] = position
-
-            data["completions"] = {
-                k: f"https://youtube.com/?watch={v}" if isinstance(v, str) else v
-                for k, v in data["completions"].items()
-            }
 
             if gild:
                 data.setdefault("completions", {})
@@ -125,16 +119,28 @@ def register_api_routes(app: Flask):
             server_levels_points = top_server_players[server_levels_top_place][6]
             server_challenges_points = top_server_challenge_players[server_challenges_top_place][6]
 
-            extremes = []
-            top_server_extreme_players = get_top_server_players()
-            for p in top_server_extreme_players:
-                if p[0] == player:
-                    extremes = p[2]
+            leaderboard_db = load_file("leaderboard")
+
+            raw_data = leaderboard_db.get(player)
+
+            if raw_data:
+                levels_data = raw_data[1]
+
+                if isinstance(levels_data, dict):
+                    extremes = list(levels_data.keys())
+
+                elif isinstance(levels_data, list):
+                    extremes = levels_data
+
+                else:
+                    extremes = []
+            else:
+                extremes = []
 
             keys = ["nickname", "data", "levels_list_completions", "challenges_list_completions", "server_levels_list_completions", "server_challenges_list_completions", "levels_list_points"]
             data: dict[str, Any] = dict(zip(keys, list(player_data)))
 
-            data["youtube_channel"] = f"https://youtube.com/{data['data'][0]}"
+            data["youtube_channel"] = data['data'][0]
             data["country"] = data["data"][1]
             data["community_account"] = data["data"][2]
             data["description"] = data["data"][3]
@@ -152,19 +158,56 @@ def register_api_routes(app: Flask):
             }
 
             if data["extremes"]:
-                data["hardest"] = min(data["extremes"].values())
+                data["hardest_pos"] = min(data["extremes"].values())
+                hardest_name, hardest_position = min(
+                    data["extremes"].items(),
+                    key=lambda x: x[1]
+                )
+
+                data["hardest"] = {
+                    "name": hardest_name,
+                    "position": hardest_position
+                }
+
+                all_levels = get_demonlist()
+
+                level_points = {
+                    lvl["placement"]: float(lvl["points"])
+                    for lvl in all_levels
+                    if "placement" in lvl and "points" in lvl
+                }
+
+                data["list_points"] = round(
+                    sum(
+                        level_points.get(pos, 0.0)
+                        for pos in data["extremes"].values()
+                    ),
+                    2
+                )
 
                 if len(data["extremes"]) >= 5:
                     positions = sorted(data["extremes"].values())[:5]
-                    data["5_hardests"] = (
+                    data["5_hardests_mean"] = (
                         get_mean(positions)
                         if positions else None
                     )
+
+                    top5 = sorted(data["extremes"].items(), key=lambda x: x[1])[:5]
+
+                    data["5_hardests_mean"] = get_mean([p for _, p in top5])
+
+                    data["5_hardests"] = [
+                        {"name": name, "position": pos}
+                        for name, pos in top5
+                    ]
                 else:
+                    data["5_hardests_mean"] = None
                     data["5_hardests"] = None
 
             else:
                 data["hardest"] = None
+                data["hardest_pos"] = None
+                data["5_hardests_mean"] = None
                 data["5_hardests"] = None
                 data["list_points"] = 0
 
