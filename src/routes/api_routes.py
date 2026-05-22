@@ -12,7 +12,7 @@ def register_api_routes(app: Flask):
         try:
             position = next(i for i, item in enumerate(top) if item[0] == level) + 1
 
-            level_data = top[position]
+            level_data = top[position - 1]
 
             keys = ["name", "id", "description", "gild_completion", "completions"]
             data = dict(zip(keys, level_data))

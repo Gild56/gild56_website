@@ -104,7 +104,7 @@
                         <a href="https://www.youtube.com/watch?v={{ level['gild_completion'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
                     {% elif next(iter(level['completions'].values())) %}
                     {% endif %}
-                    <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()"
+                    <img src="{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] + '/small' }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()"
                     onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/thumbnails/' + level['name'] + '.png') }}';">
                     </a>
                 </div>

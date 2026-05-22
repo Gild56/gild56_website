@@ -87,7 +87,7 @@
                 <div class="row">
                     <div>
                         <a href="https://www.youtube.com/{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
-                            <img src="{{ url_for('static', filename=('images/cubes/' + player['nickname'] + '.png' )) }}" height="100" alt="{{ player[0] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
+                            <img src="{{ url_for('static', filename=('images/cubes/' + player['nickname'] + '.png' )) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
                         </a>
                     </div>
                     <h1 class="left-margin">
@@ -96,7 +96,9 @@
                             <span class="tag"> [{{ player['tag'] }}] </span>
                         {% endif %}
                         {{ player['nickname'] }}
-                        <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
+                        {% if player['country'] %}
+                            <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
+                        {% endif %}
                         <span class="points"> ({{ player[top + "_points"] }} pts)</span>
                     </h1>
                 </div>

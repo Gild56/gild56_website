@@ -12,6 +12,14 @@ def register_static_routes(app: Flask):
         )
 
 
+    @app.route("/tournaments")
+    def tournaments():
+        return render_template(
+            "other/tournaments.html", logged_in=logged_in(),
+            username=get_username()
+        )
+
+
     @app.route("/contact")
     def contact():
         return render_template(

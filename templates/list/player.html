@@ -27,7 +27,9 @@
                 <span class="tag"> [{{ player["tag"] }}] </span>
             {% endif %}
             {{ player["nickname"] }}
-            <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
+            {% if player['country'] %}
+                <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
+            {% endif %}
         </h1>
         <a href="{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg">
             <img src="{{ url_for('static', filename=('images/cubes/' + player['nickname'] + '.png' )) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube">
