@@ -10,9 +10,11 @@ from typing import Any
 def register_api_routes(app: Flask):
     def normalize_level(level:str, top: dict[str, Any]) -> dict[str, Any]:
         try:
-            position = next(i for i, item in enumerate(top) if item[0] == level) + 1
+            index = next(i for i, item in enumerate(top) if item[0] == level)
 
-            level_data = top[position - 1]
+            level_data = top[index]
+
+            position = index + 1
 
             keys = ["name", "id", "description", "gild_completion", "completions"]
             data = dict(zip(keys, level_data))

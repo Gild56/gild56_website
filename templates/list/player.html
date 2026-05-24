@@ -61,7 +61,7 @@
         {% else %}
             <p>
                 {% for level in player['levels_list_completions'] %}
-                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ level }} (#{{ get_level_rank(level, levels_list_top) }})</a>
+                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ level }} (#{{ get_level_rank(level, 'gild/classic') }})</a>
                 {% endfor %}
             </p>
         {% endif %}
@@ -72,7 +72,7 @@
         {% else %}
             <p>
                 {% for challenge in player['challenges_list_completions'] %}
-                    <a href="{{ url_for('challenge_page', challenge=challenge) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ challenge }} (#{{ get_level_rank(challenge, challenges_list_top) }})</a>
+                    <a href="{{ url_for('challenge_page', challenge=challenge) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ challenge }} (#{{ get_level_rank(challenge, 'gild/challenges') }})</a>
                 {% endfor %}
             </p>
         {% endif %}
@@ -84,7 +84,7 @@
         {% else %}
             <p>
                 {% for level in player['server_levels_list_completions'] %}
-                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ level }} (#{{ get_level_rank(level, server_levels_list_top) }})</a>
+                    <a href="{{ url_for('level_page', level=level) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ level }} (#{{ get_level_rank(level, 'server/classic') }})</a>
                 {% endfor %}
             </p>
         {% endif %}
@@ -95,7 +95,7 @@
         {% else %}
             <p>
                 {% for challenge in player['server_challenges_list_completions'] %}
-                    <a href="{{ url_for('challenge_page', challenge=challenge) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ challenge }} (#{{ get_level_rank(challenge, server_challenges_list_top) }})</a>
+                    <a href="{{ url_for('challenge_page', challenge=challenge) }}" style="white-space: nowrap; line-height: 1.8;" target="_blank">{{ challenge }} (#{{ get_level_rank(challenge, 'server/challenges') }})</a>
                 {% endfor %}
             </p>
         {% endif %}

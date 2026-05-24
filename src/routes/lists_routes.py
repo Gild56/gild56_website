@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, url_for, abort, request
 from src.routes.utils import get_username, logged_in, get_len, get_mean
 from src.logic.ranking import get_points_by_place
 from src.logic.data_loader import get_pos, get_id
-from typing import Any
 import requests
 
 
@@ -16,7 +15,7 @@ def register_list_routes(app: Flask):
     def levels_list():
         return render_template(
             "list/list.html", logged_in=logged_in(),
-            username=get_username(), levels=requests.get(f"{request.host_url}/api/lists/gild/classic").json(),
+            username=get_username(), levels=requests.get(f"{request.host_url}api/lists/gild/classic").json(),
             top="levels_list", get_points_by_place=get_points_by_place,
             iter=iter, next=next
         )
@@ -26,7 +25,7 @@ def register_list_routes(app: Flask):
     def challenges_list():
         return render_template(
             "list/list.html", logged_in=logged_in(),
-            username=get_username(), levels=requests.get(f"{request.host_url}/api/lists/gild/challenges").json(),
+            username=get_username(), levels=requests.get(f"{request.host_url}api/lists/gild/challenges").json(),
             top="challenges_list", get_points_by_place=get_points_by_place,
             iter=iter, next=next
         )
@@ -36,7 +35,7 @@ def register_list_routes(app: Flask):
     def server_levels_list():
         return render_template(
             "list/list.html", logged_in=logged_in(),
-            username=get_username(), levels=requests.get(f"{request.host_url}/api/lists/server/classic").json(),
+            username=get_username(), levels=requests.get(f"{request.host_url}api/lists/server/classic").json(),
             top="server_levels_list", get_points_by_place=get_points_by_place,
             iter=iter, next=next
         )
@@ -46,7 +45,7 @@ def register_list_routes(app: Flask):
     def server_challenges_list():
         return render_template(
             "list/list.html", logged_in=logged_in(),
-            username=get_username(), levels=requests.get(f"{request.host_url}/api/lists/server/challenges").json(),
+            username=get_username(), levels=requests.get(f"{request.host_url}api/lists/server/challenges").json(),
             top="server_challenges_list", get_points_by_place=get_points_by_place,
             iter=iter, next=next
         )
@@ -55,7 +54,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/classic/<level>")
     def level_page(level: str):
         try:
-            level_info = requests.get(f"{request.host_url}/api/lists/gild/classic/{level}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/gild/classic/{level}").json()
 
             return render_template(
                 "list/level.html",
@@ -71,7 +70,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/challenges/<challenge>")
     def challenge_page(challenge: str):
         try:
-            level_info = requests.get(f"{request.host_url}/api/lists/gild/challenges/{challenge}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/gild/challenges/{challenge}").json()
 
             return render_template(
                 "list/level.html",
@@ -87,7 +86,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/classic/<level>")
     def server_level_page(level: str):
         try:
-            level_info = requests.get(f"{request.host_url}/api/lists/server/classic/{level}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/server/classic/{level}").json()
 
             return render_template(
                 "list/level.html",
@@ -103,7 +102,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/challenges/<challenge>")
     def server_challenge_page(challenge: str):
         try:
-            level_info = requests.get(f"{request.host_url}/api/lists/server/challenges/{challenge}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/server/challenges/{challenge}").json()
 
             return render_template(
                 "list/level.html",
@@ -126,7 +125,7 @@ def register_list_routes(app: Flask):
             "list/top_levels.html",
             logged_in=logged_in(),
             username=get_username(),
-            top_completed_levels=requests.get(f"{request.host_url}/api/top_completed_extremes").json(),
+            top_completed_levels=requests.get(f"{request.host_url}api/top_completed_extremes").json(),
             generate_link=generate_link
         )
 
@@ -137,7 +136,7 @@ def register_list_routes(app: Flask):
             "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=hardest_pos&reverse=false").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=hardest_pos&reverse=false").json(),
             top_type="by_hardest", get_pos=get_pos, get_len=get_len
         )
 
@@ -148,7 +147,7 @@ def register_list_routes(app: Flask):
             "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=list_points").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=list_points").json(),
             top_type="by_list_points", get_len=get_len, get_pos=get_pos
         )
 
@@ -159,7 +158,7 @@ def register_list_routes(app: Flask):
             "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=5_hardests_mean&reverse=false").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=5_hardests_mean&reverse=false").json(),
             top_type="by_5_hardests", get_len=get_len, get_pos=get_pos, get_mean=get_mean
         )
 
@@ -170,7 +169,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=levels_list_points").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=levels_list_points").json(),
             top="levels_list"
         )
 
@@ -181,7 +180,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=challenges_list_points").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=challenges_list_points").json(),
             top="challenges_list"
         )
 
@@ -192,7 +191,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=server_levels_list_points").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=server_levels_list_points").json(),
             top="server_levels_list"
         )
 
@@ -203,7 +202,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=requests.get(f"{request.host_url}/api/players?sort=server_challenges_list_points").json(),
+            players=requests.get(f"{request.host_url}api/players?sort=server_challenges_list_points").json(),
             top="server_challenges_list"
         )
 
@@ -211,23 +210,17 @@ def register_list_routes(app: Flask):
     @app.route("/players/<player>")
     def player_page(player: str):
         try:
-            def get_level_rank(level_name: str, top_list: list[dict[str, "Any"]]) -> int | None:
-                level_name = level_name.strip().lower()
+            def get_level_rank(level_name: str, top: str) -> int | None:
+                print(f"{request.host_url}api/lists/{top}/{level_name}")
+                level_data = requests.get(f"{request.host_url}api/lists/{top}/{level_name}").json()
+                print(level_data)
+                position = level_data.get("position", None)
+                if position:
+                    return position
+                else:
+                    return None
 
-                for item in top_list:
-                    if item.get("name", "").strip().lower() == level_name:
-                        position = item.get("position", None)
-                        if position: position += 1
-                        return position
-
-                return None
-
-            player_data = requests.get(f"{request.host_url}/api/players/{player}").json()
-
-            levels_list_top = requests.get(f"{request.host_url}/api/lists/gild/classic").json()
-            challenges_list_top = requests.get(f"{request.host_url}/api/lists/gild/challenges").json()
-            server_levels_list_top = requests.get(f"{request.host_url}/api/lists/server/classic").json()
-            server_challenges_list_top = requests.get(f"{request.host_url}/api/lists/server/challenges").json()
+            player_data = requests.get(f"{request.host_url}api/players/{player}").json()
 
             return render_template(
                 "list/player.html",
@@ -235,11 +228,7 @@ def register_list_routes(app: Flask):
                 username=get_username(),
                 player=player_data,
                 get_level_rank=get_level_rank,
-                get_len=get_len, get_pos=get_pos,
-                levels_list_top=levels_list_top,
-                challenges_list_top=challenges_list_top,
-                server_levels_list_top=server_levels_list_top,
-                server_challenges_list_top=server_challenges_list_top,
+                get_len=get_len, get_pos=get_pos
             )
         except StopIteration:
             return abort(404)
