@@ -211,9 +211,7 @@ def register_list_routes(app: Flask):
     def player_page(player: str):
         try:
             def get_level_rank(level_name: str, top: str) -> int | None:
-                print(f"{request.host_url}api/lists/{top}/{level_name}")
                 level_data = requests.get(f"{request.host_url}api/lists/{top}/{level_name}").json()
-                print(level_data)
                 position = level_data.get("position", None)
                 if position:
                     return position
