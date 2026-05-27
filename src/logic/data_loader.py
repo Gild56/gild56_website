@@ -38,8 +38,6 @@ def get_demonlist() -> list[dict[str, Any]]:
     exclude = [2299, 2234]
     return [lvl for lvl in all_levels if lvl.get("id") not in exclude]
 
-# Je veux exclure les id de la liste exclude
-
 
 @lru_cache
 def get_pos(level_name: str) -> int:
