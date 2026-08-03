@@ -3,21 +3,33 @@ from src.logic.data_loader import load_file
 import threading
 from functools import lru_cache
 import time
-
+import math
 
 @lru_cache
-def get_points_by_place(rank: int) -> int:
-    if rank == 1:
-        return 60
-    if rank <= 4:
-        return 50
-    if rank <= 10:
-        return 30
+def get_points_by_place(rank: int) -> float:
+    if rank < 1:
+        return 0
+
+    if rank <= 8:
+        return 1000 - (rank - 1) * 40
+
     if rank <= 20:
-        return 20
-    if rank <= 40:
-        return 10
-    return 5
+        return 660 - (rank - 9) * 20
+
+    if rank <= 50:
+        return 396 - (rank - 21) * 4
+
+    if rank <= 75:
+        return 272 - (rank - 51) * 8
+
+    if rank <= 150:
+        return 80 - (rank - 75)
+
+    if rank <= 250:
+        return 4.6 - ((rank - 151) // 10) * 0.4
+
+    level = math.ceil((rank - 250) / 95)
+    return max(1.00 - level * 0.01, 0.05)
 
 
 @lru_cache
