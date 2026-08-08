@@ -32,7 +32,7 @@
             {% endif %}
         </h1>
         <a href="{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg">
-            <img src="{{ url_for('static', filename=('images/cubes/' + player['nickname'] + '.png' )) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube">
+            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube">
         </a>
 
 

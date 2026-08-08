@@ -80,7 +80,7 @@
         {% endif %}
             <div class="row">
                 <div>
-                    <img src="{{ generate_link(level['name']) }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()">
+                    <img src="{{ generate_gdl_thumbnail_link(level['name']) }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()">
                 </div>
                 <h1 class="copyable-heading left-margin" data-copy-text="{{ level['name'] }}" onclick="event.stopPropagation()">#{{ level["position"] }} - {{ level["name"] }}
                 {% if level["completions"] == 1 %}

@@ -53,17 +53,12 @@
     <h1 style="margin-top: 50px;">Hall of fame</h1>
     <p>
         <ul>
-            <li>Yevgen (friend / server guy!)</li>
-            <li>Ihv2010 <img src="{{ url_for('static', filename='images/cubes/Ihv2010.png') }}" class="icon" alt="Ihv2010's icon"> (goat)</li>
-            <li>Roxy <img src="{{ url_for('static', filename='images/cubes/Roxy.png') }}" class="icon" alt="Roxy's icon"> (goat)</li>
-            <li>Sepanzer <img src="{{ url_for('static', filename='images/cubes/Sepanzer.png') }}" class="icon" alt="Sepanzer's icon"></li>
-            <li>Ylissen <img src="{{ url_for('static', filename='images/cubes/Ylissen.png') }}" class="icon" alt="Ylissen's icon"> <i>(la dash orbe noire)</i></li>
-            <li>Kikouiz <img src="{{ url_for('static', filename='images/cubes/Kikouiz.png') }}" class="icon" alt="IcEDCave's icon"> (friend / birds' friend)</li>
-            <li>Adamorocco <img src="{{ url_for('static', filename='images/cubes/Adamorocco.png') }}" class="icon" alt="Adamorocco's icon"> (first user & friend)</li>
-            <li>Kevino <img src="{{ url_for('static', filename='images/cubes/Kevino.png') }}" class="icon" alt="Kevino's's icon"> (friend)</li>
-            <li>K2n <img src="{{ url_for('static', filename='images/cubes/K2n.png') }}" class="icon" alt="K2n's's icon"> (friend)</li>
+            <li>Ihv2010 <img src="{{ get_cube('Ihv2010') }}" class="icon" alt="Ihv2010's icon"> (goat)</li>
+            <li>Sepanzer <img src="{{ get_cube('Sepanzer') }}" class="icon" alt="Sepanzer's icon"></li>
+            <li>Adamorocco <img src="{{ get_cube('Adamorocco') }}" class="icon" alt="Adamorocco's icon"> (first user)</li>
             <li>Viktor Lukyanov (best teacher ever)</li>
-            <li>Every user of this site! <img src="{{ url_for('static', filename='images/cubes/CarryTheBall.png') }}" class="icon" alt="CarryTheBall"></li>
+            <li>Yevgen (friend / former host)</li>
+            <li>Every user of this site! <img src="{{ get_cube('CarryTheBall') }}" class="icon" alt="CarryTheBall"></li>
         </ul>
     </p>
 </main>

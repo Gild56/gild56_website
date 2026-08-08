@@ -48,7 +48,7 @@
         {% if level['completions'] %}
             {% for player, video in level['completions'].items() %}
                  <p>
-                    <img src="{{ url_for('static', filename='images/cubes/' + player + '.png') }}" class="icon" alt="{{ player }}'s icon">
+                    <img src="{{ get_cube(player) }}" class="icon" alt="{{ player }}'s icon">
                     <a href="{{ url_for('player_page', player=player) }}">{{ player }}</a> -
                     <a href="https://www.youtube.com/watch?v={{ video }}" target="_blank">Video</a>
                 </p>

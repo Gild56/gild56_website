@@ -1,6 +1,6 @@
 from werkzeug.exceptions import HTTPException
 from flask import Flask, render_template, request
-from src.routes.utils import get_username, logged_in
+from src.routes.utils import get_username, logged_in, get_cube
 
 
 def register_static_routes(app: Flask):
@@ -8,7 +8,7 @@ def register_static_routes(app: Flask):
     def index():
         return render_template(
             "other/index.html", logged_in=logged_in(),
-            username=get_username()
+            username=get_username(), get_cube=get_cube
         )
 
 

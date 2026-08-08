@@ -8,7 +8,7 @@ from functools import lru_cache
 
 @lru_cache
 def load_file(file_name: str) -> Any:
-    url = f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/{file_name}.json"
+    url = f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/json/{file_name}.json"
 
     with urllib.request.urlopen(url) as response:
         data = response.read().decode("utf-8")

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, g, abort
-from src.routes.utils import get_username, logged_in, get_role, get_pfp, get_all_pfps
+from src.routes.utils import get_username, logged_in, get_role, get_pfp, get_all_pfps, get_cube
 
 
 def register_community_routes(app: Flask):
@@ -35,7 +35,7 @@ def register_community_routes(app: Flask):
             users_count=users_count, comments=comments,
             comments_post_ids=comments_post_ids, get_pfp=get_pfp,
             get_comment_author=g.db.get_comment_author,
-            get_post_author=g.db.get_post_author
+            get_post_author=g.db.get_post_author, get_cube=get_cube
         )
 
 
@@ -100,7 +100,7 @@ def register_community_routes(app: Flask):
             get_role=g.db.get_role, role=get_role(),
             get_comment_author=g.db.get_comment_author,
             get_post_author=g.db.get_post_author,
-            pfps=get_all_pfps()
+            pfps=get_all_pfps(), get_cube=get_cube
         )
 
 
@@ -118,7 +118,7 @@ def register_community_routes(app: Flask):
             return render_template(
                 'community/change_pfp.html', username=get_username(),
                 logged_in=logged_in(), pfps=pfps,
-                pfps_count=len(pfps)
+                pfps_count=len(pfps), get_cube=get_cube
             )
 
         else:
