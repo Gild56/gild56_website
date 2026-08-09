@@ -3,9 +3,11 @@ import time
 from flask import Flask
 from src.logic.radio import radio
 from src.routes.utils import logged_in, get_username
+from urllib.parse import unquote
 
 
 def register_radio_routes(app: Flask):
+
     @app.route("/radio")
     def radio_page():
         return render_template(
@@ -23,13 +25,17 @@ def register_radio_routes(app: Flask):
             end = start + track["duration"]
 
             if start <= now <= end:
+
                 filename = track["file"].split("/")[-1]
+
+                filename = unquote(filename)
+
                 if " - " in filename:
                     author, title = filename.rsplit(" - ", 1)
-                    title = title.replace(".mp3", "")
+                    title = title.removesuffix(".mp3")
                 else:
                     author = "Unknown"
-                    title = filename.replace(".mp3", "")
+                    title = filename.removesuffix(".mp3")
 
                 return jsonify({
                     "file": track["file"],

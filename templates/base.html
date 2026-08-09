@@ -3,7 +3,7 @@
     <head>
         <title>{% block title %}{% endblock %} | Gild56</title>
         <script src="{{ url_for('static', filename='js/darkMode.js') }}"></script>
-        <link rel="icon" type="image/ico" href="{{ url_for('static', filename='images/other/logo.ico') }}">
+        <link rel="icon" type="image/png" href="{% block logo %}{{ url_for('static', filename='images/other/logo.png') }}{% endblock %}">
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
@@ -54,7 +54,7 @@
     </head>
 
     <body>
-        {% block content %}<!-- Page content should be there -->{% endblock %}
+        {% block content %}{% endblock %}
         <footer>
             <div class="columns">
                 <address>
@@ -74,6 +74,6 @@
                 </section>
             </div>
         </footer>
-        {% block script %}<!-- Javascript for the page -->{% endblock %}
+        {% block script %}{% endblock %}
     </body>
 </html>

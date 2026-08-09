@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ player['nickname'] }}{% endblock %}
+{% block logo %}{{ get_cube(player['nickname']) }}{% endblock %}
 
 {% block content %}
 <header>
@@ -23,6 +24,7 @@
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
         <h1 class="big no-margin">
+            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="icon">
             {% if player["tag"] %}
                 <span class="tag"> [{{ player["tag"] }}] </span>
             {% endif %}
@@ -31,10 +33,6 @@
                 <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
             {% endif %}
         </h1>
-        <a href="{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg">
-            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube">
-        </a>
-
 
         {% if player["levels_list_points"] > 0 %}
             <p>#{{ player['levels_list_place'] }} Gild List player ({{ player['levels_list_points'] }} points)</p>
