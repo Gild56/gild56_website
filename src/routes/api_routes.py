@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
-from src.logic.ranking import get_top_players
+from src.logic.ranking import get_top_players, get_player_ranks
 from src.logic.data_loader import get_pos, load_file, get_demonlist
 from src.routes.utils import get_mean
 from collections import Counter
@@ -16,15 +16,10 @@ def register_api_routes(app: Flask):
 
             position = index + 1
 
-            keys = ["name", "id", "description", "gild_completion", "completions"]
+            keys = ["name", "id", "description", "completions"]
             data = dict(zip(keys, level_data))
-            gild = data.pop("gild_completion", None)
 
             data["position"] = position
-
-            if gild:
-                data.setdefault("completions", {})
-                data["completions"]["Gild56"] = gild
 
             return data
         except:
@@ -63,22 +58,22 @@ def register_api_routes(app: Flask):
         return normalize_levels(load_file("server_challenges_list"))
 
 
-    @app.route("/api/lists/gild/classic/<level>")
+    @app.route("/api/lists/gild/classic/levels/<level>")
     def get_level(level: str):
         return normalize_level(level, load_file("levels_list"))
 
 
-    @app.route("/api/lists/gild/challenge/<level>")
+    @app.route("/api/lists/gild/challenges/levels/<level>")
     def get_challenge(level: str):
         return normalize_level(level, load_file("challenges_list"))
 
 
-    @app.route("/api/lists/server/classic/<level>")
+    @app.route("/api/lists/server/classic/levels/<level>")
     def get_server_level(level: str):
         return normalize_level(level, load_file("server_levels_list"))
 
 
-    @app.route("/api/lists/server/challenge/<level>")
+    @app.route("/api/lists/server/challenges/levels/<level>")
     def get_server_challenge(level: str):
         return normalize_level(level, load_file("server_challenges_list"))
 
@@ -86,40 +81,14 @@ def register_api_routes(app: Flask):
     @app.route("/api/players/<player>")
     def get_player(player: str) -> dict[str, Any]:
         try:
-            top_players = get_top_players("levels_list")
-            top_challenge_players = get_top_players("challenges_list")
-            top_server_players = get_top_players("server_levels_list")
-            top_server_challenge_players = get_top_players("server_challenges_list")
+            top_players = get_top_players()
 
-            levels_top_places = {
-                item[0]: i
-                for i, item in enumerate(top_players)
-            }
-            levels_top_place = levels_top_places[player]
+            player_data = next(
+                item for item in top_players
+                if item[0] == player
+            )
 
-            challenges_top_places = {
-                item[0]: i
-                for i, item in enumerate(top_challenge_players)
-            }
-            challenges_top_place = challenges_top_places[player]
-
-            server_levels_top_places = {
-                item[0]: i
-                for i, item in enumerate(top_server_players)
-            }
-            server_levels_top_place = server_levels_top_places[player]
-
-            server_challenges_top_places = {
-                item[0]: i
-                for i, item in enumerate(top_server_challenge_players)
-            }
-            server_challenges_top_place = server_challenges_top_places[player]
-
-            player_data = top_players[levels_top_place]
-
-            challenges_points = top_challenge_players[challenges_top_place][6]
-            server_levels_points = top_server_players[server_levels_top_place][6]
-            server_challenges_points = top_server_challenge_players[server_challenges_top_place][6]
+            ranks = get_player_ranks()
 
             leaderboard_db = load_file("leaderboard")
 
@@ -130,16 +99,14 @@ def register_api_routes(app: Flask):
 
                 if isinstance(levels_data, dict):
                     extremes = list(levels_data.keys())
-
                 elif isinstance(levels_data, list):
                     extremes = levels_data
-
                 else:
                     extremes = []
             else:
                 extremes = []
 
-            keys = ["nickname", "data", "levels_list_completions", "challenges_list_completions", "server_levels_list_completions", "server_challenges_list_completions", "levels_list_points"]
+            keys = ["nickname", "data", "levels_list_completions", "challenges_list_completions", "server_levels_list_completions", "server_challenges_list_completions", "levels_list_points", "challenges_list_points", "server_levels_list_points", "server_challenges_list_points"]
             data: dict[str, Any] = dict(zip(keys, list(player_data)))
 
             data["youtube_channel"] = data['data'][0]
@@ -149,9 +116,10 @@ def register_api_routes(app: Flask):
             data["tag"] = data["data"][4]
             data.pop("data")
 
-            data["challenges_list_points"] = challenges_points
-            data["server_levels_list_points"] = server_levels_points
-            data["server_challenges_list_points"] = server_challenges_points
+            data["levels_list_place"] = ranks["levels_list_place"][player]
+            data["challenges_list_place"] = ranks["challenges_list_place"][player]
+            data["server_levels_list_place"] = ranks["server_levels_list_place"][player]
+            data["server_challenges_list_place"] = ranks["server_challenges_list_place"][player]
 
             data["extremes"] = extremes
             data["extremes"] = {
@@ -196,8 +164,6 @@ def register_api_routes(app: Flask):
 
                     top5 = sorted(data["extremes"].items(), key=lambda x: x[1])[:5]
 
-                    data["5_hardests_mean"] = get_mean([p for _, p in top5])
-
                     data["5_hardests"] = [
                         {"name": name, "position": pos}
                         for name, pos in top5
@@ -213,21 +179,20 @@ def register_api_routes(app: Flask):
                 data["5_hardests"] = None
                 data["list_points"] = 0
 
-            data["levels_list_place"] = levels_top_place + 1
-            data["challenges_list_place"] = challenges_top_place + 1
-            data["server_levels_list_place"] = server_levels_top_place + 1
-            data["server_challenges_list_place"] = server_challenges_top_place + 1
-
             return data
-        except StopIteration:
+
+        except KeyError:
             return {"error": f"Player <{player}> not found"}
+
+        except StopIteration:
+            return {"error": f"Error processing the player <{player}>"}
 
 
     @app.route("/api/players")
     def get_players() -> list[dict[str, Any]]:
         data = []
 
-        for player in get_top_players("levels_list"):
+        for player in get_top_players():
             player_data = get_player(player[0])
             data.append(player_data)
 

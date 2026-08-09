@@ -1,15 +1,13 @@
-from src.logic.players import get_players
 from src.logic.data_loader import load_file
 import threading
 from functools import lru_cache
+from typing import Any
 import time
 import math
 
+
 @lru_cache
 def get_points_by_place(rank: int) -> float:
-    if rank < 1:
-        return 0
-
     if rank <= 8:
         return 1000 - (rank - 1) * 40
 
@@ -33,29 +31,77 @@ def get_points_by_place(rank: int) -> float:
 
 
 @lru_cache
-def get_top_players(type: str | None = "levels_list") -> list[tuple[str, list[str], list[str], list[str], list[str], list[str], int]]:
-    top = load_file(type)
+def get_players() -> list[tuple[str, list[str], list[str], list[str], list[str], list[str]]]:
+    players = load_file("players")
+
+    levels_list = load_file("levels_list")
+    challenges_list = load_file("challenges_list")
+    server_levels_list = load_file("server_levels_list")
+    server_challenges_list = load_file("server_challenges_list")
+
+    updated_players: list[tuple[str, list[str], list[str], list[str], list[str], list[str]]] = []
+
+    for name, info in players:
+
+        passed_levels = [
+            level[0] for level in levels_list if name in level[3]
+        ]
+
+        passed_challenges = [
+            challenge[0] for challenge in challenges_list if name in challenge[3]
+        ]
+
+        passed_server_levels = [
+            level[0] for level in server_levels_list if name in level[3]
+        ]
+
+        passed_server_challenges = [
+            challenge[0] for challenge in server_challenges_list if name in challenge[3]
+        ]
+
+        updated_players.append((name, info, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges))
+
+    return updated_players
+
+
+@lru_cache
+def get_top_players() -> list[tuple[str, list[str], list[str], list[str], list[str], list[str], int]]:
     players = get_players()
 
-    points = {
+    levels_list = load_file("levels_list")
+    levels_list_points = {
         level[0]: get_points_by_place(i + 1)
-        for i, level in enumerate(top)
+        for i, level in enumerate(levels_list)
+    }
+
+    challenges_list = load_file("challenges_list")
+    challenges_list_points = {
+        level[0]: get_points_by_place(i + 1)
+        for i, level in enumerate(challenges_list)
+    }
+
+    server_levels_list = load_file("levels_list")
+    server_levels_list_points = {
+        level[0]: get_points_by_place(i + 1)
+        for i, level in enumerate(server_levels_list)
+    }
+
+    server_challenges_list = load_file("challenges_list")
+    server_challenges_list_points = {
+        level[0]: get_points_by_place(i + 1)
+        for i, level in enumerate(server_challenges_list)
     }
 
     top_players: list[tuple[str, list[str], list[str], list[str], list[str], list[str], int]] = []
 
     for name, tag, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges in players:
-        if type == "levels_list":
-            total_points = sum(points.get(lvl, 0) for lvl in passed_levels)
-        elif type == "challenges_list":
-            total_points = sum(points.get(lvl, 0) for lvl in passed_challenges)
-        elif type == "server_levels_list":
-            total_points = sum(points.get(lvl, 0) for lvl in passed_server_levels)
-        else:  # elif type == "server_challenges_list":
-            total_points = sum(points.get(lvl, 0) for lvl in passed_server_challenges)
+        levels_points = sum(levels_list_points.get(lvl, 0) for lvl in passed_levels)
+        challenges_points = sum(challenges_list_points.get(lvl, 0) for lvl in passed_challenges)
+        server_levels_points = sum(server_levels_list_points.get(lvl, 0) for lvl in passed_server_levels)
+        server_challenges_points = sum(server_challenges_list_points.get(lvl, 0) for lvl in passed_server_challenges)
 
         top_players.append(
-            (name, tag, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges, total_points)
+            (name, tag, passed_levels, passed_challenges, passed_server_levels, passed_server_challenges, levels_points, challenges_points, server_levels_points, server_challenges_points)
         )
 
     top_players.sort(key=lambda x: x[6], reverse=True)
@@ -63,11 +109,41 @@ def get_top_players(type: str | None = "levels_list") -> list[tuple[str, list[st
     return top_players
 
 
+@lru_cache
+def get_player_ranks() -> dict[str, Any]:
+    top_players = get_top_players()
+
+    rank_indexes = {
+        "levels_list_place": 6,
+        "challenges_list_place": 7,
+        "server_levels_list_place": 8,
+        "server_challenges_list_place": 9,
+    }
+
+    ranks = {}
+
+    for rank_name, points_index in rank_indexes.items():
+        sorted_players = sorted(
+            top_players,
+            key=lambda player: player[points_index],
+            reverse=True
+        )
+
+        ranks[rank_name] = {
+            player[0]: position + 1
+            for position, player in enumerate(sorted_players)
+        }
+
+    return ranks
+
+
 def clear_cache():
     while True:
-        time.sleep(24 * 60 * 60)  # 24h
+        time.sleep(60 * 10)  # 10 min
 
+        get_players.cache_clear()
         get_top_players.cache_clear()
+        get_player_ranks.cache_clear()
 
 threading.Thread(
     target=clear_cache,

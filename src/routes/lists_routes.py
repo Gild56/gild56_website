@@ -51,10 +51,10 @@ def register_list_routes(app: Flask):
         )
 
 
-    @app.route("/lists/gild/classic/<level>")
+    @app.route("/lists/gild/classic/levels/<level>")
     def level_page(level: str):
         try:
-            level_info = requests.get(f"{request.host_url}api/lists/gild/classic/{level}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/gild/classic/levels/{level}").json()
 
             return render_template(
                 "list/level.html",
@@ -68,10 +68,10 @@ def register_list_routes(app: Flask):
             return abort(404)
 
 
-    @app.route("/lists/gild/challenges/<challenge>")
+    @app.route("/lists/gild/challenges/levels/<challenge>")
     def challenge_page(challenge: str):
         try:
-            level_info = requests.get(f"{request.host_url}api/lists/gild/challenges/{challenge}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/gild/challenges/levels/{challenge}").json()
 
             return render_template(
                 "list/level.html",
@@ -85,10 +85,10 @@ def register_list_routes(app: Flask):
             return abort(404)
 
 
-    @app.route("/lists/server/classic/<level>")
+    @app.route("/lists/server/classic/levels/<level>")
     def server_level_page(level: str):
         try:
-            level_info = requests.get(f"{request.host_url}api/lists/server/classic/{level}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/server/classic/levels/{level}").json()
 
             return render_template(
                 "list/level.html",
@@ -101,10 +101,10 @@ def register_list_routes(app: Flask):
             return abort(404)
 
 
-    @app.route("/lists/server/challenges/<challenge>")
+    @app.route("/lists/server/challenges/levels/<challenge>")
     def server_challenge_page(challenge: str):
         try:
-            level_info = requests.get(f"{request.host_url}api/lists/server/challenges/{challenge}").json()
+            level_info = requests.get(f"{request.host_url}api/lists/server/challenges/levels/{challenge}").json()
 
             return render_template(
                 "list/level.html",
@@ -213,7 +213,7 @@ def register_list_routes(app: Flask):
     def player_page(player: str):
         try:
             def get_level_rank(level_name: str, top: str) -> int | None:
-                level_data = requests.get(f"{request.host_url}api/lists/{top}/{level_name}").json()
+                level_data = requests.get(f"{request.host_url}api/lists/{top}/levels/{level_name}").json()
                 position = level_data.get("position", None)
                 if position:
                     return position
