@@ -32,18 +32,28 @@ def get_cover(author: str) -> str:
     return f"{COVERS_URL}/{quote(author)}.png"
 
 
-def get_all_songs() -> list[str]:
+def get_all_songs():
     url = "https://api.github.com/repos/Gild56/gild56_website_lists/contents/music"
 
-    with urllib.request.urlopen(url) as response:
-        files = json.load(response)
+    token = os.getenv("GITHUB_TOKEN")
 
-    return sorted(
-        file["name"]
-        for file in files
-        if file["type"] == "file"
-        and file["name"].lower().endswith(".mp3")
-    )
+    headers = {
+        "User-Agent": "Gild56-Website"
+    }
+
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+
+    request = urllib.request.Request(url, headers=headers)
+
+    with urllib.request.urlopen(request) as response:
+        data = json.load(response)
+
+    return [
+        file["name"].removesuffix(".mp3")
+        for file in data
+        if file["name"].endswith(".mp3")
+    ]
 
 
 music = get_all_songs()

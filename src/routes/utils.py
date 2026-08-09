@@ -2,6 +2,7 @@ from flask import g, session
 from typing import Any
 import urllib.request
 import json
+import os
 
 
 def get_pfp(user: str) -> str:
@@ -19,7 +20,18 @@ def get_role() -> str:
 def get_all_pfps() -> list[str]:
     url = "https://api.github.com/repos/Gild56/gild56_website_lists/contents/images/cubes"
 
-    with urllib.request.urlopen(url) as response:
+    token = os.getenv("GITHUB_TOKEN")
+
+    headers = {
+        "User-Agent": "Gild56-Website"
+    }
+
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+
+    request = urllib.request.Request(url, headers=headers)
+
+    with urllib.request.urlopen(request) as response:
         files = json.load(response)
 
     return sorted(
