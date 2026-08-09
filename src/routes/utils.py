@@ -37,7 +37,7 @@ def get_mean(numbers: int) -> int:
     return sum(numbers) / len(numbers)
 
 def get_cube(player_name: str):
-    return f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/cubes/{player_name.removesuffix(".png")}.png"
+    return f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/cubes/{player_name.removesuffix('.png')}.png"
 
 def get_thumbnail(level_name: str):
     return f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/thumbnails/{level_name}.png"
