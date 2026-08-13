@@ -102,7 +102,7 @@
                 <div>
                     <a href="https://www.youtube.com/watch?v={{ next(iter(level['completions'].values())) }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
                     <img src="{{ get_thumbnail(level['name']) }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()"
-                    onerror="this.onerror=null; this.src='{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] + '/small' }}';">
+                    onerror="this.onerror=null; this.src='{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] }}';">
                     </a>
                 </div>
                 <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level['name'] }} <span class="points">({{ get_points_by_place(loop.index0 + 1) }} pts)</span></h1>
