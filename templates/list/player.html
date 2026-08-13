@@ -47,9 +47,6 @@
         {% endif %}
         <p class="player-description">{{ player['descriptions'] }}</p>
         <p><a href="https://youtube.com/{{ player['youtube_channel'] }}" target="_blank">YouTube Channel</a></p>
-        {% if player['community_account'] != "" %}
-            <p><a href="{{ url_for('user_profile', profile=player['community_account']) }}" target="_blank">Community Account</a></p>
-        {% endif %}
 
 
         <h2>Gild List levels completed:</h2>

@@ -111,9 +111,8 @@ def register_api_routes(app: Flask):
 
             data["youtube_channel"] = data['data'][0]
             data["country"] = data["data"][1]
-            data["community_account"] = data["data"][2]
-            data["description"] = data["data"][3]
-            data["tag"] = data["data"][4]
+            data["description"] = data["data"][2]
+            data["tag"] = data["data"][3]
             data.pop("data")
 
             data["levels_list_place"] = ranks["levels_list_place"][player]

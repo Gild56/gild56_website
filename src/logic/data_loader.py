@@ -67,7 +67,7 @@ def get_id(level_name: str) -> str:
 
 def clear_cache():
     while True:
-        time.sleep(24 * 60 * 60)  # 24h
+        time.sleep(24 * 60)  # 1h
 
         get_demonlist.cache_clear()
         get_pos.cache_clear()
