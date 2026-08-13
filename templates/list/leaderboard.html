@@ -91,7 +91,7 @@
                 <div class="row">
                     <div>
                         <a href="https://www.youtube.com/{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
-                            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube" onclick="event.stopPropagation()">
+                            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube" onclick="event.stopPropagation()" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/cubes/Default.png';">
                         </a>
                     </div>
                     <h1 class="left-margin">

@@ -23,7 +23,7 @@
 <main>
     <div style="display: flex; justify-content: center;"><div class="level-page-container">
         <h1 class="big no-margin">
-            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="icon">
+            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="icon" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/cubes/Default.png';">
             {% if player["tag"] %}
                 <span class="tag"> [{{ player["tag"] }}] </span>
             {% endif %}
