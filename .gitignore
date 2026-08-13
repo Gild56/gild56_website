@@ -7,3 +7,4 @@ TODO.md
 local.py
 make_jpg.py
 old-site.db
+.env

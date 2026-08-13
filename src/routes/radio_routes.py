@@ -20,6 +20,9 @@ def register_radio_routes(app: Flask):
     def radio_now():
         now = time.time()
 
+        if radio.schedule and now > radio.schedule[-1]["start"] + radio.schedule[-1]["duration"]:
+            radio.generate_schedule()
+
         for track in radio.schedule:
             start = track["start"]
             end = start + track["duration"]
@@ -27,7 +30,6 @@ def register_radio_routes(app: Flask):
             if start <= now <= end:
 
                 filename = track["file"].split("/")[-1]
-
                 filename = unquote(filename)
 
                 if " - " in filename:
