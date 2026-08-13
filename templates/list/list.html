@@ -100,10 +100,7 @@
         {% endif %}
             <div class="row">
                 <div>
-                    {% if level['gild_completion'] != "" %}
-                        <a href="https://www.youtube.com/watch?v={{ level['gild_completion'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
-                    {% elif next(iter(level['completions'].values())) %}
-                    {% endif %}
+                    <a href="https://www.youtube.com/watch?v={{ next(iter(level['completions'].values())) }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
                     <img src="{{ get_thumbnail(level['name']) }}" height="100" alt="{{ level['name'] }}'s preview" class="preview" onclick="event.stopPropagation()"
                     onerror="this.onerror=null; this.src='{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] + '/small' }}';">
                     </a>
