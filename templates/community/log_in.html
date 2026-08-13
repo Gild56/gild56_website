@@ -21,6 +21,8 @@
         <div class="form">
             <form method="post" action="{{ url_for('log_in') }}" name="log-in">
                 <h1>Logging In:</h1>
+                <h3><b>WARNING</b> this is not an account for the list but for the <a href="{{ url_for('community') }}" target="_blank">Community tab</a></h3>
+                <h3>To create a list account go <a href="https://forms.gle/zox839bvvHJEsuGU8" target="_blank">there</a>, you can't log in into it tho</h3>
                 <p><input type="text" id="login" name="input_login" placeholder="Login" required></p>
                 <p><input type="password" id="password" name="input_password" placeholder="Password" minlength="5" required></p>
                 {% if error_message %}
