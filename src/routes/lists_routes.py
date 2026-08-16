@@ -136,7 +136,7 @@ def register_list_routes(app: Flask):
             "list/top_levels.html",
             logged_in=logged_in(),
             username=get_username(),
-            top_completed_levels=get_api(f"{request.host_url}api/top_completed_extremes"),
+            top_completed_levels=get_api(f"{request.host_url}api/lists/top_completed_extremes"),
             generate_gdl_thumbnail_link=generate_gdl_thumbnail_link
         )
 
@@ -147,7 +147,7 @@ def register_list_routes(app: Flask):
             "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=hardest_pos&reverse=false"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=hardest_pos&reverse=false"),
             top_type="by_hardest", get_pos=get_pos, get_len=get_len, get_cube=get_cube
         )
 
@@ -158,7 +158,7 @@ def register_list_routes(app: Flask):
             "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=list_points"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=list_points"),
             top_type="by_list_points", get_len=get_len, get_pos=get_pos, get_cube=get_cube
         )
 
@@ -169,7 +169,7 @@ def register_list_routes(app: Flask):
             "list/server_leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=5_hardests_mean&reverse=false"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=5_hardests_mean&reverse=false"),
             top_type="by_5_hardests", get_len=get_len, get_pos=get_pos, get_mean=get_mean
         )
 
@@ -180,7 +180,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=levels_list_points"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=levels_list_points"),
             top="levels_list", get_cube=get_cube
         )
 
@@ -191,7 +191,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=challenges_list_points"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=challenges_list_points"),
             top="challenges_list", get_cube=get_cube
         )
 
@@ -202,7 +202,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=server_levels_list_points"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=server_levels_list_points"),
             top="server_levels_list", get_cube=get_cube
         )
 
@@ -213,7 +213,7 @@ def register_list_routes(app: Flask):
             "list/leaderboard.html",
             logged_in=logged_in(),
             username=get_username(),
-            players=get_api(f"{request.host_url}api/players?sort=server_challenges_list_points"),
+            players=get_api(f"{request.host_url}api/lists/players?sort=server_challenges_list_points"),
             top="server_challenges_list", get_cube=get_cube
         )
 
@@ -229,7 +229,7 @@ def register_list_routes(app: Flask):
                 else:
                     return None
 
-            player_data = get_api(f"{request.host_url}api/players/{player}")
+            player_data = get_api(f"{request.host_url}api/lists/players/{player}")
 
             return render_template(
                 "list/player.html",

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}API Documentation{% endblock %}
 
 {% block content %}
 <header>
@@ -21,40 +21,61 @@
 </header>
 
 <main>
-    <section>
-        <h1>Contact</h1>
-        <p>
-            If you have a suggestion or a bug, you can contact me on
-            <a href="mailto:gild56gmd@gmail.com" target="_blank">Mail</a>,
-            <a href="https://t.me/gild56" target="_blank">Telegram</a> or
-            <a href="https://discord.com/users/gild56" target="_blank">Discord</a>.<br>
-            Please, don't spam stupid things.
-        </p>
-    </section>
+    <h1>Gild Website API Documentation</h1>
+
+    <h2>Get top levels</h2>
+    <p>
+        <span class="path"><b>/api/lists/</b>[gild/server]<b>/</b>[classic/challenges]</span>
+    </p>
+    <h3>Examples:</h3>
+    <ul>
+        <li><span class="path">/api/lists/gild/classic</span></li>
+        <li><span class="path">/api/lists/gild/challenges</span></li>
+        <li><span class="path">/api/lists/server/classic</span></li>
+        <li><span class="path">/api/lists/server/challenges</span></li>
+    </ul>
     <hr>
-    <section>
-        <h1>GitHub</h1>
-        <p>
-            If you have a suggestion or a bug, you can also visit my
-            <a href="https://github.com/Gild56" target="_blank">GitHub</a> page.
-        </p>
-    </section>
+
+    <h2>Get a level</h2>
+    <p>
+        <span class="path"><b>/api/lists/</b>[gild/server]<b>/</b>[classic/challenges]<b>/</b>[level name]</span>
+    </p>
+    <h3>Examples:</h3>
+    <ul>
+        <li><span class="path">/api/lists/gild/classic/Flashback</span></li>
+        <li><span class="path">/api/lists/gild/challenges/Unnamed</span></li>
+    </ul>
     <hr>
-    <section>
-        <h1>Instagram</h1>
-        <p>
-            You can subscribe to my
-            <a href="https://www.instagram.com/gild56gmd/" target="_blank">Instagram</a> channel.<br>
-        </p>
-    </section>
+
+    <h2>Get players</h2>
+    <ul>
+        <li><span class="path"><b>/api/lists/players</b></span> alphabetic order</li>
+        <li><span class="path"><b>/api/lists/players?sort=</b>[key]</span> reverted by default (from biggest to smallest)</li>
+        <li><span class="path"><b>/api/lists/players?sort=</b>[key]<b>&reverse=false</b></span> without revert (from smallest to biggest)</li>
+    </ul>
+    <h3>Examples:</h3>
+    <ul>
+        <li><span class="path">/api/lists/players?sort=levels_list_points</span></li>
+        <li><span class="path">/api/lists/players?sort=server_challenges_list_points</span></li>
+        <li><span class="path">/api/lists/players?sort=hardest_pos&reverse=false</span></li>
+        <li><span class="path">/api/lists/players?sort=5_hardests_mean&reverse=false</span></li>
+    </ul>
     <hr>
-    <section>
-        <h1>YouTube</h1>
-        <p>
-            Finally, you can subscribe to my
-            <a href="https://youtube.com/@gild56gmd" target="_blank">YouTube</a> channel.<br>
-            Thanks! :D
-        </p>
-    </section>
+
+    <h2>Get a player</h2>
+    <p>
+        <span class="path"><b>/api/lists/players/</b>[player]</span>
+    </p>
+    <h3>Examples:</h3>
+    <ul>
+        <li><span class="path">/api/lists/players/Ihv2010</span></li>
+        <li><span class="path">/api/lists/players/Gild56</span></li>
+    </ul>
+    <hr>
+
+    <h2>Get top completed extremes</h2>
+    <p>
+        <span class="path"><b>/api/lists/top_completed_extremes</b></span>
+    </p>
 </main>
 {% endblock %}

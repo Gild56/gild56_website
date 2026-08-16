@@ -42,16 +42,13 @@ def register_api_routes(app: Flask):
     def get_levels_list() -> list[dict[str, Any]]:
         return normalize_levels(load_file("levels_list"))
 
-
     @app.route("/api/lists/gild/challenges")
     def get_challenges_list() -> list[dict[str, Any]]:
         return normalize_levels(load_file("challenges_list"))
 
-
     @app.route("/api/lists/server/classic")
     def get_server_levels_list() -> list[dict[str, Any]]:
         return normalize_levels(load_file("server_levels_list"))
-
 
     @app.route("/api/lists/server/challenges")
     def get_server_challenges_list() -> list[dict[str, Any]]:
@@ -62,23 +59,20 @@ def register_api_routes(app: Flask):
     def get_level(level: str):
         return normalize_level(level, load_file("levels_list"))
 
-
     @app.route("/api/lists/gild/challenges/levels/<level>")
     def get_challenge(level: str):
         return normalize_level(level, load_file("challenges_list"))
 
-
     @app.route("/api/lists/server/classic/levels/<level>")
     def get_server_level(level: str):
         return normalize_level(level, load_file("server_levels_list"))
-
 
     @app.route("/api/lists/server/challenges/levels/<level>")
     def get_server_challenge(level: str):
         return normalize_level(level, load_file("server_challenges_list"))
 
 
-    @app.route("/api/players/<player>")
+    @app.route("/api/lists/players/<player>")
     def get_player(player: str) -> dict[str, Any]:
         try:
             top_players = get_top_players()
@@ -187,7 +181,7 @@ def register_api_routes(app: Flask):
             return {"error": f"Error processing the player <{player}>"}
 
 
-    @app.route("/api/players")
+    @app.route("/api/lists/players")
     def get_players() -> list[dict[str, Any]]:
         data = []
 
@@ -212,7 +206,7 @@ def register_api_routes(app: Flask):
         return data
 
 
-    @app.route("/api/top_completed_extremes")
+    @app.route("/api/lists/top_completed_extremes")
     def get_top_completed_extremes() -> list[Any]:
         def normalize_extremes(data: Any) -> list[str]:
             if not data or len(data) < 2:
