@@ -245,9 +245,13 @@ def register_list_routes(app: Flask):
 
 
     @app.route("/lists/roulette")
-    def roulette_page(player: str):
+    def roulette_page():
         return render_template(
             "list/roulette.html",
             logged_in=logged_in(),
-            username=get_username()
+            username=get_username(),
+            list_levels=get_api(f"{request.host_url}api/lists/gild/classic"),
+            challenges_levels=get_api(f"{request.host_url}api/lists/gild/challenges"),
+            server_list_levels=get_api(f"{request.host_url}api/lists/server/classic"),
+            server_challenges_levels=get_api(f"{request.host_url}api/lists/server/challenges")
         )

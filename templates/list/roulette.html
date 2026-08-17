@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ Roulette }}{% endblock %}
+{% block title %}Roulette{% endblock %}
 
 {% block content %}
+
 <header>
     <nav>
         <a href="{{ url_for('index') }}">Home</a>
@@ -12,6 +13,7 @@
         <a href="{{ url_for('radio_page') }}">Radio</a>
         <a href="{{ url_for('levels_list') }}" class="current">Lists</a>
         <a class="change-theme-button" onclick="toggleDarkMode()">Theme</a>
+
         {% if logged_in %}
             <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
         {% else %}
@@ -20,7 +22,1611 @@
     </nav>
 </header>
 
-<main>
-    <h1>Gild List Roulette!</h1>
+
+<main class="roulette-page">
+
+    <!-- ================================= -->
+    <!-- LIST SELECTION -->
+    <!-- ================================= -->
+
+    <section id="list-selection" class="roulette-section">
+
+        <h1>Gild List Roulette!</h1>
+
+        <p class="roulette-description">
+            Choose a list to get started.
+        </p>
+
+        <div class="list-buttons">
+
+            <button onclick="startRoulette('gild_classic')">
+                Gild Classic
+            </button>
+
+            <button onclick="startRoulette('gild_challenges')">
+                Gild Challenges
+            </button>
+
+            <button onclick="startRoulette('server_classic')">
+                Server Classic
+            </button>
+
+            <button onclick="startRoulette('server_challenges')">
+                Server Challenges
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- ROULETTE -->
+    <!-- ================================= -->
+
+    <section
+        id="roulette-game"
+        class="roulette-section"
+        style="display: none;"
+    >
+
+        <button
+            class="back-button"
+            onclick="backToLists()"
+        >
+            ← Back
+        </button>
+
+        <h1>Gild List Roulette!</h1>
+
+        <div
+            id="selected-list-name"
+            class="selected-list-name"
+        ></div>
+
+
+        <!-- Progress -->
+
+        <div class="progress-container">
+
+            <div id="progress-text">
+                1%
+            </div>
+
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- WHEEL -->
+        <!-- ================================= -->
+
+        <div class="wheel-wrapper">
+
+            <div class="wheel-pointer"></div>
+
+            <canvas
+                id="wheel"
+                width="500"
+                height="500"
+                title="Click the wheel to spin"
+            ></canvas>
+
+        </div>
+
+
+        <div id="spin-hint">
+            Click the wheel to spin
+        </div>
+
+
+        <div id="wheel-result">
+            Choose a level!
+        </div>
+
+
+        <!-- Objective -->
+
+        <div id="objective">
+            Do 1% of the level
+        </div>
+
+
+        <!-- Done -->
+
+        <button
+            id="done-button"
+            class="done-button"
+            onclick="levelDone()"
+            disabled
+        >
+            DONE
+        </button>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- VICTORY -->
+    <!-- ================================= -->
+
+    <section
+        id="victory-screen"
+        class="roulette-section"
+        style="display: none;"
+    >
+
+        <h1>🏆 Victory!</h1>
+
+        <p class="victory-text">
+            You completed the Gild List Roulette!
+        </p>
+
+        <button
+            class="back-to-menu-button"
+            onclick="backToLists()"
+        >
+            Back to List Selection
+        </button>
+
+    </section>
+
 </main>
+
+
+<style>
+
+/* ================================= */
+/* GENERAL */
+/* ================================= */
+
+.roulette-page {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.roulette-section {
+    max-width: 800px;
+    margin: auto;
+}
+
+.roulette-description {
+    font-size: 20px;
+    margin-bottom: 35px;
+}
+
+
+/* ================================= */
+/* LIST SELECTION */
+/* ================================= */
+
+.list-buttons {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+
+    max-width: 600px;
+
+    margin: auto;
+}
+
+.list-buttons button {
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 18px 25px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: #2878ff;
+
+    color: white;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.list-buttons button:hover {
+    transform: scale(1.04);
+
+    opacity: 0.9;
+}
+
+
+/* ================================= */
+/* BACK */
+/* ================================= */
+
+.back-button {
+    display: block;
+
+    margin-bottom: 20px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px 18px;
+
+    cursor: pointer;
+
+    background: #555;
+
+    color: white;
+
+    font-size: 16px;
+
+    transition: transform 0.15s ease;
+}
+
+.back-button:hover {
+    transform: scale(1.04);
+}
+
+
+/* ================================= */
+/* LIST NAME */
+/* ================================= */
+
+.selected-list-name {
+    font-size: 22px;
+
+    margin: 10px 0 20px;
+
+    opacity: 0.8;
+}
+
+
+/* ================================= */
+/* PROGRESS */
+/* ================================= */
+
+.progress-container {
+    max-width: 500px;
+
+    margin: 0 auto 25px;
+}
+
+#progress-text {
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+
+    height: 18px;
+
+    background: #ddd;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+#progress-fill {
+    height: 100%;
+
+    width: 1%;
+
+    background: #2878ff;
+
+    transition: width 0.4s ease;
+}
+
+
+/* ================================= */
+/* WHEEL */
+/* ================================= */
+
+.wheel-wrapper {
+    position: relative;
+
+    width: 500px;
+
+    height: 500px;
+
+    margin: 20px auto;
+}
+
+#wheel {
+    width: 500px;
+
+    height: 500px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: filter 0.15s ease;
+}
+
+#wheel:hover {
+    filter: brightness(1.08);
+}
+
+
+/* ================================= */
+/* POINTER */
+/* ================================= */
+
+.wheel-pointer {
+    position: absolute;
+
+    top: -10px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 0;
+
+    height: 0;
+
+    border-left: 20px solid transparent;
+
+    border-right: 20px solid transparent;
+
+    border-top: 35px solid #e53935;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+
+/* ================================= */
+/* SPIN HINT */
+/* ================================= */
+
+#spin-hint {
+    font-size: 17px;
+
+    opacity: 0.65;
+
+    margin-top: 5px;
+}
+
+
+/* ================================= */
+/* RESULT */
+/* ================================= */
+
+#wheel-result {
+    min-height: 35px;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    margin: 20px 0;
+}
+
+
+/* ================================= */
+/* OBJECTIVE */
+/* ================================= */
+
+#objective {
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin: 25px 0;
+}
+
+
+/* ================================= */
+/* DONE */
+/* ================================= */
+
+.done-button {
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 15px 45px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: #2e9d50;
+
+    color: white;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.done-button:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.done-button:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+
+/* ================================= */
+/* VICTORY */
+/* ================================= */
+
+.victory-text {
+    font-size: 25px;
+
+    margin: 30px;
+}
+
+.back-to-menu-button {
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 18px 30px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: #2878ff;
+
+    color: white;
+
+    transition: transform 0.15s ease;
+}
+
+.back-to-menu-button:hover {
+    transform: scale(1.05);
+}
+
+
+/* ================================= */
+/* MOBILE */
+/* ================================= */
+
+@media (max-width: 600px) {
+
+    .list-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .wheel-wrapper {
+        width: 90vw;
+        height: 90vw;
+    }
+
+    #wheel {
+        width: 90vw;
+        height: 90vw;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* ================================= */
+/* LIST DATA */
+/* ================================= */
+
+const lists = {
+    gild_classic: {{ list_levels | tojson }},
+    gild_challenges: {{ challenges_levels | tojson }},
+    server_classic: {{ server_list_levels | tojson }},
+    server_challenges: {{ server_challenges_levels | tojson }}
+};
+
+
+/* ================================= */
+/* GAME STATE */
+/* ================================= */
+
+let currentList = [];
+
+let currentListName = "";
+
+let currentLevels = [];
+
+let selectedLevel = null;
+
+let currentPercent = 1;
+
+let spinning = false;
+
+let wheelRotation = 0;
+
+
+/*
+ * Animation state.
+ */
+
+let spinStartRotation = 0;
+
+let spinTargetRotation = 0;
+
+let spinStartTime = 0;
+
+let spinAnimationFrame = null;
+
+
+/*
+ * Slow animation.
+ *
+ * 7000 ms = 7 seconds.
+ */
+
+const SPIN_DURATION = 7000;
+
+
+/* ================================= */
+/* DOM */
+/* ================================= */
+
+const canvas =
+    document.getElementById("wheel");
+
+const ctx =
+    canvas.getContext("2d");
+
+const doneButton =
+    document.getElementById("done-button");
+
+const resultElement =
+    document.getElementById("wheel-result");
+
+const objectiveElement =
+    document.getElementById("objective");
+
+const progressText =
+    document.getElementById("progress-text");
+
+const progressFill =
+    document.getElementById("progress-fill");
+
+const spinHint =
+    document.getElementById("spin-hint");
+
+
+/* ================================= */
+/* START */
+/* ================================= */
+
+function startRoulette(listName) {
+
+    currentList =
+        lists[listName] || [];
+
+    currentListName =
+        listName;
+
+
+    if (
+        !Array.isArray(currentList) ||
+        currentList.length === 0
+    ) {
+        alert("This list is empty or invalid.");
+        return;
+    }
+
+
+    document.getElementById(
+        "list-selection"
+    ).style.display = "none";
+
+    document.getElementById(
+        "victory-screen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "roulette-game"
+    ).style.display = "block";
+
+
+    /*
+     * Reset everything.
+     */
+
+    currentPercent = 1;
+
+    selectedLevel = null;
+
+    spinning = false;
+
+    wheelRotation = 0;
+
+    spinAnimationFrame = null;
+
+
+    canvas.style.transform =
+        "rotate(0deg)";
+
+
+    /*
+     * List name.
+     */
+
+    document.getElementById(
+        "selected-list-name"
+    ).textContent =
+        formatListName(listName);
+
+
+    /*
+     * Reset UI.
+     */
+
+    resultElement.textContent =
+        "Choose a level!";
+
+    spinHint.textContent =
+        "Click the wheel to spin";
+
+    doneButton.disabled =
+        true;
+
+
+    updateProgress();
+
+    generateFourLevels();
+}
+
+
+/* ================================= */
+/* LIST NAME */
+/* ================================= */
+
+function formatListName(name) {
+
+    const names = {
+
+        gild_classic:
+            "Gild Classic",
+
+        gild_challenges:
+            "Gild Challenges",
+
+        server_classic:
+            "Server Classic",
+
+        server_challenges:
+            "Server Challenges"
+
+    };
+
+    return names[name] || name;
+}
+
+
+/* ================================= */
+/* GENERATE LEVELS */
+/* ================================= */
+
+function generateFourLevels() {
+
+    currentLevels = [];
+
+    selectedLevel = null;
+
+    spinning = false;
+
+
+    /*
+     * Cancel any previous animation.
+     */
+
+    if (spinAnimationFrame !== null) {
+
+        cancelAnimationFrame(
+            spinAnimationFrame
+        );
+
+        spinAnimationFrame = null;
+    }
+
+
+    /*
+     * Copy list.
+     */
+
+    const available =
+        [...currentList];
+
+
+    const amount =
+        Math.min(
+            4,
+            available.length
+        );
+
+
+    /*
+     * Pick random levels.
+     */
+
+    for (
+        let i = 0;
+        i < amount;
+        i++
+    ) {
+
+        const randomIndex =
+            Math.floor(
+                Math.random() *
+                available.length
+            );
+
+
+        currentLevels.push(
+            available.splice(
+                randomIndex,
+                1
+            )[0]
+        );
+    }
+
+
+    /*
+     * Reset wheel.
+     */
+
+    wheelRotation = 0;
+
+    canvas.style.transform =
+        "rotate(0deg)";
+
+
+    /*
+     * Reset controls.
+     */
+
+    doneButton.disabled =
+        true;
+
+    spinHint.textContent =
+        "Click the wheel to spin";
+
+    resultElement.textContent =
+        "Choose a level!";
+
+
+    drawWheel();
+}
+
+
+/* ================================= */
+/* LEVEL NAME */
+/* ================================= */
+
+function getLevelName(level) {
+
+    if (typeof level === "string") {
+        return level;
+    }
+
+    if (!level) {
+        return "Unknown Level";
+    }
+
+    if (level.name) {
+        return level.name;
+    }
+
+    if (level.level) {
+        return level.level;
+    }
+
+    if (level.title) {
+        return level.title;
+    }
+
+    return "Unknown Level";
+}
+
+
+/* ================================= */
+/* DRAW WHEEL */
+/* ================================= */
+
+function drawWheel() {
+
+    const centerX =
+        canvas.width / 2;
+
+    const centerY =
+        canvas.height / 2;
+
+    const radius =
+        canvas.width / 2 - 5;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const amount =
+        currentLevels.length;
+
+
+    if (amount === 0) {
+        return;
+    }
+
+
+    const slice =
+        (Math.PI * 2) / amount;
+
+
+    const colors = [
+        "#2878ff",
+        "#e53935",
+        "#2e9d50",
+        "#9c27b0"
+    ];
+
+
+    for (
+        let i = 0;
+        i < amount;
+        i++
+    ) {
+
+        const startAngle =
+            i * slice;
+
+        const endAngle =
+            startAngle + slice;
+
+
+        /*
+         * Draw segment.
+         */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            centerX,
+            centerY
+        );
+
+        ctx.arc(
+            centerX,
+            centerY,
+            radius,
+            startAngle,
+            endAngle
+        );
+
+        ctx.closePath();
+
+
+        ctx.fillStyle =
+            colors[
+                i % colors.length
+            ];
+
+        ctx.fill();
+
+
+        ctx.strokeStyle =
+            "#ffffff";
+
+        ctx.lineWidth = 4;
+
+        ctx.stroke();
+
+
+        /*
+         * =================================
+         * LEVEL TEXT
+         * =================================
+         *
+         * The text is deliberately placed
+         * further away from the center.
+         *
+         * 145px = minimum distance from
+         * the center of the wheel.
+         */
+
+        const textRadius = 155;
+
+
+        ctx.save();
+
+        ctx.translate(
+            centerX,
+            centerY
+        );
+
+
+        /*
+         * Put text in the middle
+         * of the segment.
+         */
+
+        const textAngle =
+            startAngle +
+            slice / 2;
+
+
+        ctx.rotate(textAngle);
+
+
+        ctx.textAlign =
+            "center";
+
+        ctx.textBaseline =
+            "middle";
+
+        ctx.fillStyle =
+            "#ffffff";
+
+
+        /*
+         * Bigger padding from center.
+         */
+
+        const textX =
+            Math.max(
+                textRadius,
+                radius * 0.55
+            );
+
+
+        /*
+         * Font size.
+         */
+
+        ctx.font =
+            "bold 18px Arial";
+
+
+        let name =
+            getLevelName(
+                currentLevels[i]
+            );
+
+
+        /*
+         * Maximum characters.
+         *
+         * This prevents names from
+         * reaching the wheel center
+         * or the opposite side.
+         */
+
+        if (name.length > 24) {
+
+            name =
+                name.substring(
+                    0,
+                    21
+                ) + "...";
+        }
+
+
+        /*
+         * For the 4-segment wheel,
+         * use two lines if necessary.
+         */
+
+        if (
+            name.length > 15 &&
+            amount === 4
+        ) {
+
+            const words =
+                name.split(" ");
+
+            let line1 = "";
+            let line2 = "";
+
+
+            for (
+                const word of words
+            ) {
+
+                if (
+                    (line1 + " " + word)
+                        .trim()
+                        .length <= 13
+                ) {
+
+                    line1 =
+                        (
+                            line1 +
+                            " " +
+                            word
+                        ).trim();
+
+                } else {
+
+                    line2 =
+                        (
+                            line2 +
+                            " " +
+                            word
+                        ).trim();
+                }
+            }
+
+
+            if (line2.length > 0) {
+
+                ctx.fillText(
+                    line1,
+                    textX,
+                    -12
+                );
+
+                ctx.fillText(
+                    line2,
+                    textX,
+                    12
+                );
+
+            } else {
+
+                ctx.fillText(
+                    line1,
+                    textX,
+                    0
+                );
+            }
+
+        } else {
+
+            ctx.fillText(
+                name,
+                textX,
+                0
+            );
+        }
+
+
+        ctx.restore();
+    }
+
+
+    /*
+     * =================================
+     * CENTER
+     * =================================
+     */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centerX,
+        centerY,
+        55,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#222";
+
+    ctx.fill();
+
+
+    ctx.strokeStyle =
+        "#ffffff";
+
+    ctx.lineWidth = 4;
+
+    ctx.stroke();
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+    ctx.font =
+        "bold 18px Arial";
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillText(
+        "SPIN",
+        centerX,
+        centerY
+    );
+}
+
+
+/* ================================= */
+/* WHEEL CLICK */
+/* ================================= */
+
+canvas.addEventListener(
+    "click",
+    function () {
+
+        /*
+         * If already spinning,
+         * the second click SKIPS
+         * the animation.
+         */
+
+        if (spinning) {
+
+            skipSpin();
+
+            return;
+        }
+
+
+        /*
+         * Don't spin again after
+         * a winner has been selected.
+         */
+
+        if (selectedLevel !== null) {
+            return;
+        }
+
+
+        if (currentLevels.length === 0) {
+            return;
+        }
+
+
+        spinWheel();
+    }
+);
+
+
+/* ================================= */
+/* SPIN */
+/* ================================= */
+
+function spinWheel() {
+
+    if (spinning) {
+        return;
+    }
+
+    if (selectedLevel !== null) {
+        return;
+    }
+
+    if (currentLevels.length === 0) {
+        return;
+    }
+
+
+    spinning = true;
+
+
+    doneButton.disabled =
+        true;
+
+
+    spinHint.textContent =
+        "Click the wheel again to skip";
+
+
+    /*
+     * Select winner BEFORE
+     * starting the animation.
+     */
+
+    const winnerIndex =
+        Math.floor(
+            Math.random() *
+            currentLevels.length
+        );
+
+
+    selectedLevel =
+        currentLevels[winnerIndex];
+
+
+    /*
+     * Calculate segment angle.
+     */
+
+    const segmentAngle =
+        360 /
+        currentLevels.length;
+
+
+    const winnerAngle =
+        winnerIndex *
+        segmentAngle +
+        segmentAngle / 2;
+
+
+    /*
+     * Slow suspense:
+     *
+     * 6 complete rotations
+     * + final positioning.
+     */
+
+    const extraTurns = 6;
+
+
+    spinStartRotation =
+        wheelRotation;
+
+
+    spinTargetRotation =
+        wheelRotation +
+        extraTurns * 360 +
+        (360 - winnerAngle);
+
+
+    spinStartTime =
+        performance.now();
+
+
+    spinAnimationFrame =
+        requestAnimationFrame(
+            animateSpin
+        );
+}
+
+
+/* ================================= */
+/* ANIMATION */
+/* ================================= */
+
+function animateSpin(currentTime) {
+
+    if (!spinning) {
+        return;
+    }
+
+
+    const elapsed =
+        currentTime -
+        spinStartTime;
+
+
+    let progress =
+        Math.min(
+            elapsed /
+            SPIN_DURATION,
+            1
+        );
+
+
+    /*
+     * Very smooth ease-out.
+     *
+     * The wheel starts quickly,
+     * then becomes progressively slower.
+     */
+
+    const eased =
+        1 -
+        Math.pow(
+            1 - progress,
+            5
+        );
+
+
+    wheelRotation =
+        spinStartRotation +
+        (
+            spinTargetRotation -
+            spinStartRotation
+        ) *
+        eased;
+
+
+    canvas.style.transform =
+        `rotate(${wheelRotation}deg)`;
+
+
+    if (progress < 1) {
+
+        spinAnimationFrame =
+            requestAnimationFrame(
+                animateSpin
+            );
+
+    } else {
+
+        finishSpin();
+    }
+}
+
+
+/* ================================= */
+/* SKIP SPIN */
+/* ================================= */
+
+function skipSpin() {
+
+    if (!spinning) {
+        return;
+    }
+
+
+    /*
+     * Stop animation immediately.
+     */
+
+    if (
+        spinAnimationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            spinAnimationFrame
+        );
+
+        spinAnimationFrame =
+            null;
+    }
+
+
+    /*
+     * Move directly to the
+     * final position.
+     */
+
+    wheelRotation =
+        spinTargetRotation;
+
+
+    canvas.style.transform =
+        `rotate(${wheelRotation}deg)`;
+
+
+    finishSpin();
+}
+
+
+/* ================================= */
+/* FINISH SPIN */
+/* ================================= */
+
+function finishSpin() {
+
+    spinning = false;
+
+
+    spinAnimationFrame =
+        null;
+
+
+    /*
+     * Make absolutely sure that
+     * the wheel is at the winner.
+     */
+
+    wheelRotation =
+        spinTargetRotation;
+
+
+    canvas.style.transform =
+        `rotate(${wheelRotation}deg)`;
+
+
+    showWinner();
+}
+
+
+/* ================================= */
+/* SHOW WINNER */
+/* ================================= */
+
+function showWinner() {
+
+    const name =
+        getLevelName(
+            selectedLevel
+        );
+
+
+    resultElement.textContent =
+        "Selected level: " + name;
+
+
+    spinHint.textContent =
+        "Complete the objective, then press DONE";
+
+
+    doneButton.disabled =
+        false;
+}
+
+
+/* ================================= */
+/* LEVEL DONE */
+/* ================================= */
+
+function levelDone() {
+
+    if (spinning) {
+        return;
+    }
+
+    if (!selectedLevel) {
+        return;
+    }
+
+
+    /*
+     * At 100%, the selected level
+     * must be completely finished.
+     */
+
+    if (currentPercent >= 100) {
+
+        showVictory();
+
+        return;
+    }
+
+
+    /*
+     * Increase progress.
+     */
+
+    currentPercent++;
+
+
+    updateProgress();
+
+
+    /*
+     * Generate four completely
+     * new levels.
+     */
+
+    generateFourLevels();
+}
+
+
+/* ================================= */
+/* UPDATE PROGRESS */
+/* ================================= */
+
+function updateProgress() {
+
+    progressText.textContent =
+        currentPercent + "%";
+
+
+    progressFill.style.width =
+        currentPercent + "%";
+
+
+    if (currentPercent >= 100) {
+
+        objectiveElement.textContent =
+            "Finish the level completely";
+
+    } else {
+
+        objectiveElement.textContent =
+            `Do ${currentPercent}% of the level`;
+    }
+}
+
+
+/* ================================= */
+/* VICTORY */
+/* ================================= */
+
+function showVictory() {
+
+    spinning = false;
+
+    selectedLevel = null;
+
+
+    if (
+        spinAnimationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            spinAnimationFrame
+        );
+
+        spinAnimationFrame =
+            null;
+    }
+
+
+    document.getElementById(
+        "roulette-game"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "victory-screen"
+    ).style.display = "block";
+}
+
+
+/* ================================= */
+/* BACK TO LIST SELECTION */
+/* ================================= */
+
+function backToLists() {
+
+    spinning = false;
+
+    selectedLevel = null;
+
+    currentLevels = [];
+
+    currentPercent = 1;
+
+    wheelRotation = 0;
+
+
+    if (
+        spinAnimationFrame !== null
+    ) {
+
+        cancelAnimationFrame(
+            spinAnimationFrame
+        );
+
+        spinAnimationFrame =
+            null;
+    }
+
+
+    canvas.style.transform =
+        "rotate(0deg)";
+
+
+    document.getElementById(
+        "roulette-game"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "victory-screen"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "list-selection"
+    ).style.display = "block";
+}
+
+</script>
+
 {% endblock %}

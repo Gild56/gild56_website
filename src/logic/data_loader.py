@@ -5,11 +5,16 @@ import json
 import time
 import os
 from functools import lru_cache
+import base64
+from typing import Any
 
 
 @lru_cache
 def load_file(file_name: str) -> Any:
-    url = f"https://api.github.com/repos/Gild56/gild56_website_lists/main/json/{file_name}.json"
+    url = (
+        f"https://api.github.com/repos/"
+        f"Gild56/gild56_website_lists/contents/json/{file_name}.json"
+    )
 
     token = os.getenv("GITHUB_TOKEN")
 
@@ -23,9 +28,17 @@ def load_file(file_name: str) -> Any:
     request = urllib.request.Request(url, headers=headers)
 
     with urllib.request.urlopen(request) as response:
-        data = response.read().decode("utf-8")
+        github_data = json.loads(response.read().decode("utf-8"))
 
-    return json.loads(data)
+    content = github_data["content"]
+
+    content = content.replace("\n", "")
+
+    decoded = base64.b64decode(content).decode("utf-8")
+
+    data = json.loads(decoded)
+
+    return data
 
 
 @lru_cache

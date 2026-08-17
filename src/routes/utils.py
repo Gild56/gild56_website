@@ -3,7 +3,6 @@ from typing import Any
 import urllib.request
 import json
 import os
-from urllib.parse import quote
 
 
 def get_pfp(user: str) -> str:
