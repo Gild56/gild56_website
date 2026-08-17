@@ -1,31 +1,15 @@
 import random
 import time
-import urllib.request
 import json
-import tempfile
+import urllib.request
 import os
-
 from urllib.parse import quote
-from mutagen.mp3 import MP3
+import base64
 
 
 MUSIC_URL = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/music"
 COVERS_URL = "https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/covers"
-
-
-def get_duration(url: str) -> float:
-    with tempfile.NamedTemporaryFile(
-        suffix=".mp3",
-        delete=False
-    ) as temp:
-        temp_path = temp.name
-
-    try:
-        urllib.request.urlretrieve(url, temp_path)
-        return MP3(temp_path).info.length
-    finally:
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
+DURATIONS_URL = "https://api.github.com/repos/Gild56/gild56_website_lists/contents/json/song_durations.json"
 
 
 def get_song(song: str) -> str:
@@ -36,37 +20,39 @@ def get_cover(author: str) -> str:
     return f"{COVERS_URL}/{quote(author, safe='')}.png"
 
 
-def get_all_songs():
-    url = (
-        "https://api.github.com/repos/"
-        "Gild56/gild56_website_lists/contents/music"
-    )
-
+def get_song_durations():
     token = os.getenv("GITHUB_TOKEN")
 
     headers = {
-        "User-Agent": "Gild56-Website"
+        "User-Agent": "Gild56-Website",
+        "Accept": "application/vnd.github+json"
     }
 
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
     request = urllib.request.Request(
-        url,
+        DURATIONS_URL,
         headers=headers
     )
 
-    with urllib.request.urlopen(request) as response:
+    with urllib.request.urlopen(request, timeout=10) as response:
         data = json.load(response)
 
+    content = base64.b64decode(data["content"]).decode("utf-8")
+
+    return json.loads(content)
+
+
+def get_all_songs():
     return [
-        file["name"].removesuffix(".mp3")
-        for file in data
-        if file["type"] == "file"
-        and file["name"].endswith(".mp3")
+        filename.removesuffix(".mp3")
+        for filename in song_durations
+        if filename.endswith(".mp3")
     ]
 
 
+song_durations = get_song_durations()
 music = get_all_songs()
 
 
@@ -86,7 +72,6 @@ class RadioScheduler:
         start: float,
         pause: float = 0
     ):
-
         if path is None:
             self.schedule.append({
                 "file": None,
@@ -98,7 +83,14 @@ class RadioScheduler:
 
         web_path = get_song(path)
 
-        duration = get_duration(web_path)
+        filename = f"{path}.mp3"
+
+        duration = song_durations.get(filename)
+
+        if duration is None:
+            raise ValueError(
+                f"Can't find duration for the song {filename}"
+            )
 
         self.schedule.append({
             "file": web_path,

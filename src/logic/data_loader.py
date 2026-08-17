@@ -3,14 +3,26 @@ from typing import Any
 import threading
 import json
 import time
+import os
 from functools import lru_cache
 
 
 @lru_cache
 def load_file(file_name: str) -> Any:
-    url = f"https://raw.githubusercontent.com/Gild56/gild56_website_lists/main/json/{file_name}.json"
+    url = f"https://api.github.com/repos/Gild56/gild56_website_lists/main/json/{file_name}.json"
 
-    with urllib.request.urlopen(url) as response:
+    token = os.getenv("GITHUB_TOKEN")
+
+    headers = {
+        "User-Agent": "Gild56-Website"
+    }
+
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+
+    request = urllib.request.Request(url, headers=headers)
+
+    with urllib.request.urlopen(request) as response:
         data = response.read().decode("utf-8")
 
     return json.loads(data)
