@@ -240,5 +240,14 @@ def register_list_routes(app: Flask):
                 get_len=get_len, get_pos=get_pos,
                 get_cube=get_cube
             )
-        except StopIteration:
+        except:
             return abort(404)
+
+
+    @app.route("/lists/roulette")
+    def roulette_page(player: str):
+        return render_template(
+            "list/roulette.html",
+            logged_in=logged_in(),
+            username=get_username()
+        )

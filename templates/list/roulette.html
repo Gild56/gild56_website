@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ Roulette }}{% endblock %}
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('games') }}">Games</a>
+        <a href="{{ url_for('community') }}">Community</a>
+        <a href="{{ url_for('radio_page') }}">Radio</a>
+        <a href="{{ url_for('levels_list') }}" class="current">Lists</a>
+        <a class="change-theme-button" onclick="toggleDarkMode()">Theme</a>
+        {% if logged_in %}
+            <a href="{{ url_for('user_profile', profile=username) }}">{{ username }}</a>
+        {% else %}
+            <a href="{{ url_for('log_in') }}">Log In</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <h1>Gild List Roulette!</h1>
+</main>
+{% endblock %}
