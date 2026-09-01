@@ -48,22 +48,6 @@ def get_all_pfps() -> list[str]:
         if file["type"] == "file"
     )
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-
-def github_request(url: str):
-    headers = {
-        "User-Agent": "Gild56-Website",
-        "Accept": "application/vnd.github+json"
-    }
-
-    if GITHUB_TOKEN:
-        headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
-
-    request = urllib.request.Request(url, headers=headers)
-
-    with urllib.request.urlopen(request, timeout=10) as response:
-        return json.loads(response.read().decode("utf-8"))
-
 
 def get_cube(player: str):
     player_name = player.removesuffix(".png")
