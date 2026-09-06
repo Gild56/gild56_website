@@ -2,13 +2,13 @@
 
 {% block title %}
     {% if top == "levels_list" %}
-        Gild List Leaderboard
+        Gild List Countries Leaderboard
     {% elif top == "challenges_list" %}
-        Gild Challenges List Leaderboard
+        Gild Challenges List Countries Leaderboard
     {% elif top == "server_levels_list" %}
-        Gild Server List Leaderboard
+        Gild Server List Countries Leaderboard
     {% else %}
-        Gild Server Challenges List Leaderboard
+        Gild Server Challenges List Countries Leaderboard
     {% endif %}
 {% endblock %}
 
@@ -32,13 +32,13 @@
 
 <main class="big-margin-left-right">
     {% if top == "server_challenges_list" %}
-        <h1>Gild Server Challenges List Leaderboard</h1>
+        <h1>Gild Server Challenges List Countries Leaderboard</h1>
     {% elif top == "challenges_list" %}
-        <h1>Gild Challenges List Leaderboard</h1>
+        <h1>Gild Challenges List Countries Leaderboard</h1>
     {% elif top == "server_levels_list" %}
-        <h1>Gild Server List Leaderboard</h1>
+        <h1>Gild Server List Countries Leaderboard</h1>
     {% else %}
-        <h1>Gild List Leaderboard</h1>
+        <h1>Gild List Countries Leaderboard</h1>
     {% endif %}
 
     <div class="panel">
@@ -91,24 +91,14 @@
     </div>
 
     <div class="align-on-mobile">
-        {% for player in players %}{% if player[top + "_points"] > 0 %}
-            <div class="level-container" onclick="window.location.href='{{ url_for('player_page', player=player['nickname']) }}'">
+        {% for country in countries %}{% if country[top + "_points"] > 0 %}
+            <div class="level-container">
                 <div class="row">
-                    <div>
-                        <a href="https://www.youtube.com/{{ player['youtube_channel'] }}" target="_blank" class="no-margin no-bg" onclick="event.stopPropagation()">
-                            <img src="{{ get_cube(player['nickname']) }}" height="100" alt="{{ player['nickname'] }}'s cube" class="player-cube" onclick="event.stopPropagation()" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Gild56/gild56_website_lists/refs/heads/main/images/cubes/Default.png';">
-                        </a>
-                    </div>
                     <h1 class="left-margin">
                         #{{ loop.index0 + 1 }} - 
-                        {% if player['tag'] %}
-                            <span class="tag"> [{{ player['tag'] }}] </span>
-                        {% endif %}
-                        {{ player['nickname'] }}
-                        {% if player['country'] %}
-                            <img class="emoji flag" src="{{ url_for('static', filename='images/flags/' + player['country'] + '.svg') }}" alt="Flag of {{ player['country'] }}">
-                        {% endif %}
-                        <span class="points"> ({{ player[top + "_points"] }} pts)</span>
+                        <img class="emoji flag" style="margin-right: 5px; margin-left: 5px;" src="{{ url_for('static', filename='images/flags/' + country['code'] + '.svg') }}" alt="Flag of {{ country['name'] }}">
+                        {{ country['name'] }}
+                        <span class="points no-margin"> ({{ country[top + "_points"] }} pts / {{ country["players_count"] }} player{% if country["players_count"] > 1 %}s{% endif %})</span>
                     </h1>
                 </div>
             </div>

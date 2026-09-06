@@ -3,6 +3,8 @@ from typing import Any
 import urllib.request
 import json
 import os
+from urllib.request import urlopen
+from urllib.parse import quote
 
 
 def get_pfp(user: str) -> str:
@@ -24,6 +26,13 @@ def get_mean(numbers: int) -> int:
     if len(numbers) == 0:
         return 0
     return sum(numbers) / len(numbers)
+
+def get_api(route: str):
+    route = quote(route, safe=":/?=&")
+
+    with urlopen(route) as response:
+        return json.load(response)
+
 
 def get_all_pfps() -> list[str]:
     url = "https://api.github.com/repos/Gild56/gild56_website_lists/contents/images/cubes"

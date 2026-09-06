@@ -2,9 +2,10 @@ from flask import Flask, render_template, request
 from src.routes.utils import get_username, logged_in
 from src.logic.ranking import get_top_players, get_player_ranks
 from src.logic.data_loader import get_pos, load_file, get_demonlist
-from src.routes.utils import get_mean
+from src.routes.utils import get_mean, get_api
 from collections import Counter
 from typing import Any
+import json
 
 
 def register_api_routes(app: Flask):
@@ -183,17 +184,17 @@ def register_api_routes(app: Flask):
 
     @app.route("/api/lists/players")
     def get_players() -> list[dict[str, Any]]:
-        data = []
+        players = []
 
         for player in get_top_players():
             player_data = get_player(player[0])
-            data.append(player_data)
+            players.append(player_data)
 
         sort_key = request.args.get("sort")
         reverse = request.args.get("reverse", "true").lower() == "true"
 
         if sort_key:
-            data.sort(
+            players.sort(
                 key=lambda x: (
                     x.get(sort_key) is None,
                     x.get(sort_key)
@@ -201,9 +202,93 @@ def register_api_routes(app: Flask):
             )
 
         if reverse:
-            data.reverse()
+            players.reverse()
 
-        return data
+        return players
+
+
+    @app.route("/api/lists/countries")
+    def get_countries() -> list[dict[str, Any]]:
+        countries = []
+
+        with open("static/images/flags/country_names_list.json", "r", encoding="utf-8") as f:
+            country_names_list = json.load(f)
+
+        players = get_api(f"{request.host_url}api/lists/players")
+
+        for player in players:
+            country_code = player["country"]
+
+            country_index = None
+
+            for i, country in enumerate(countries):
+                if country["code"] == country_code:
+                    country_index = i
+                    break
+
+            if country_index is None:
+                countries.append(
+                    {
+                        "code": country_code,
+                        "name": country_names_list.get(country_code, country_code),
+                        "levels_list_points": 0,
+                        "challenges_list_points": 0,
+                        "server_levels_list_points": 0,
+                        "server_challenges_list_points": 0,
+                        "players_count": 0,
+                        "players": []
+                    }
+                )
+
+                country_index = len(countries) - 1
+
+            player_stats = {
+                "nickname": player["nickname"],
+                "levels_list_points": player["levels_list_points"],
+                "challenges_list_points": player["challenges_list_points"],
+                "server_levels_list_points": player["server_levels_list_points"],
+                "server_challenges_list_points": player["server_challenges_list_points"]
+            }
+
+            countries[country_index]["levels_list_points"] += player["levels_list_points"]
+            countries[country_index]["challenges_list_points"] += player["challenges_list_points"]
+            countries[country_index]["server_levels_list_points"] += player["server_levels_list_points"]
+            countries[country_index]["server_challenges_list_points"] += player["server_challenges_list_points"]
+            countries[country_index]["players_count"] += 1
+            countries[country_index]["players"].append(player_stats)
+
+        ranking_keys = [
+            ("levels_list_points", "levels_list_place"),
+            ("challenges_list_points", "challenges_list_place"),
+            ("server_levels_list_points", "server_levels_list_place"),
+            ("server_challenges_list_points", "server_challenges_list_place"),
+        ]
+
+        for points_key, place_key in ranking_keys:
+            sorted_countries = sorted(
+                countries,
+                key=lambda country: country[points_key],
+                reverse=True
+            )
+
+            for place, country in enumerate(sorted_countries, start=1):
+                country[place_key] = place
+
+        sort_key = request.args.get("sort")
+        reverse = request.args.get("reverse", "true").lower() == "true"
+
+        if sort_key:
+            countries.sort(
+                key=lambda x: (
+                    x.get(sort_key) is None,
+                    x.get(sort_key)
+                )
+            )
+
+        if reverse:
+            countries.reverse()
+
+        return countries
 
 
     @app.route("/api/lists/top_completed_extremes")

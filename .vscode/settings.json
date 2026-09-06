@@ -13,6 +13,8 @@
         "reportRedeclaration": "none",
         "reportOptionalIterable": "none",
         "reportUnusedFunction": "none",
-        "reportUnknownLambdaType": "none"
+        "reportUnknownLambdaType": "none",
+        "reportUnknownParameterType": "none",
+        "reportMissingParameterType": "none"
     }
 }

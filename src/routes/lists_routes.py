@@ -1,17 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, abort, request
-from src.routes.utils import get_username, logged_in, get_len, get_mean, get_cube, get_thumbnail
+from src.routes.utils import get_username, logged_in, get_len, get_mean, get_cube, get_thumbnail, get_api
 from src.logic.ranking import get_points_by_place
 from src.logic.data_loader import get_pos, get_id
-import json
-from urllib.request import urlopen
-from urllib.parse import quote
-
-def get_api(route: str):
-    route = quote(route, safe=":/?=&")
-
-    with urlopen(route) as response:
-        return json.load(response)
-
 
 
 def register_list_routes(app: Flask):
@@ -214,6 +204,50 @@ def register_list_routes(app: Flask):
             logged_in=logged_in(),
             username=get_username(),
             players=get_api(f"{request.host_url}api/lists/players?sort=server_challenges_list_points"),
+            top="server_challenges_list", get_cube=get_cube
+        )
+
+
+    @app.route("/lists/gild/classic/countries")
+    def levels_countries_leaderboard():
+        return render_template(
+            "list/countries.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            countries=get_api(f"{request.host_url}api/lists/countries?sort=levels_list_points"),
+            top="levels_list", get_cube=get_cube
+        )
+
+
+    @app.route("/lists/gild/challenges/countries")
+    def challenges_countries_leaderboard():
+        return render_template(
+            "list/leaderboard.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            countries=get_api(f"{request.host_url}api/lists/countries?sort=challenges_list_points"),
+            top="challenges_list", get_cube=get_cube
+        )
+
+
+    @app.route("/lists/server/classic/countries")
+    def server_levels_countries_leaderboard():
+        return render_template(
+            "list/leaderboard.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            countries=get_api(f"{request.host_url}api/lists/countries?sort=server_levels_list_points"),
+            top="server_levels_list", get_cube=get_cube
+        )
+
+
+    @app.route("/lists/server/challenges/countries")
+    def server_challenges_countries_leaderboard():
+        return render_template(
+            "list/leaderboard.html",
+            logged_in=logged_in(),
+            username=get_username(),
+            countries=get_api(f"{request.host_url}api/lists/countries?sort=server_challenges_list_points"),
             top="server_challenges_list", get_cube=get_cube
         )
 
