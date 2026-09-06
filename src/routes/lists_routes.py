@@ -222,7 +222,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/gild/challenges/countries")
     def challenges_countries_leaderboard():
         return render_template(
-            "list/leaderboard.html",
+            "list/countries.html",
             logged_in=logged_in(),
             username=get_username(),
             countries=get_api(f"{request.host_url}api/lists/countries?sort=challenges_list_points"),
@@ -233,7 +233,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/classic/countries")
     def server_levels_countries_leaderboard():
         return render_template(
-            "list/leaderboard.html",
+            "list/countries.html",
             logged_in=logged_in(),
             username=get_username(),
             countries=get_api(f"{request.host_url}api/lists/countries?sort=server_levels_list_points"),
@@ -244,7 +244,7 @@ def register_list_routes(app: Flask):
     @app.route("/lists/server/challenges/countries")
     def server_challenges_countries_leaderboard():
         return render_template(
-            "list/leaderboard.html",
+            "list/countries.html",
             logged_in=logged_in(),
             username=get_username(),
             countries=get_api(f"{request.host_url}api/lists/countries?sort=server_challenges_list_points"),
