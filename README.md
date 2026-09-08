@@ -4,8 +4,4 @@ The `gild56_website` project is my personal website. You can chat in the communi
 
 ## Website
 
-The current version of the Gild56 Website is hosted [there](https://misha.devatlant.com).
-
-Feel free to make a post at the [Community page](https://misha.devatlant.com/community) :3
-
-The top with levels is [there](https://misha.devatlant.com/lists/levels)
+The current version of the Gild56 Website is hosted [on gild56-website.onrender.com](https://gild56-website.onrender.com/)
