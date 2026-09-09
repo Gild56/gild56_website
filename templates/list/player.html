@@ -45,7 +45,13 @@
         {% if player['server_challenges_list_points'] > 0 %}
             <p>#{{ player['server_challenges_list_place'] }} Gild List Challenge player ({{ player['server_challenges_list_points'] }} points)</p>
         {% endif %}
-        <p class="player-description">{{ player['descriptions'] }}</p>
+
+        {% if player['description'] %}
+            <p class="player-description">{{ player['description'] }}</p>
+        {% else %}
+            <p class="player-description"><i>For example nothing...</i>></p>
+        {% endif %}
+
         <p><a href="https://youtube.com/{{ player['youtube_channel'] }}" target="_blank">YouTube Channel</a></p>
 
 
