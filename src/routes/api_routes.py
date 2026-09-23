@@ -24,7 +24,7 @@ def register_api_routes(app: Flask):
 
             return data
         except:
-            return {"error": f"Level <{level}> not found"}
+            return {"error": f"Level <{level}> not found or an error occured"}
 
 
     def normalize_levels(levels: dict[str, Any]) -> list[dict[str, Any]]:
@@ -71,6 +71,26 @@ def register_api_routes(app: Flask):
     @app.route("/api/lists/server/challenges/levels/<level>")
     def get_server_challenge(level: str):
         return normalize_level(level, load_file("server_challenges_list"))
+
+
+    @app.route("/api/lists/id/<id>")
+    def get_level_by_id(id: str):
+        lists = [
+            ("levels_list", load_file("levels_list")),
+            ("challenges_list", load_file("challenges_list")),
+            ("server_levels_list", load_file("server_levels_list")),
+            ("server_challenges_list", load_file("server_challenges_list"))
+        ]
+
+        for top_name, top in lists:
+            for index, item in enumerate(top):
+                if item[1] == id:
+                    data = dict(zip(["name", "id", "description", "completions"], item))
+                    data["position"] = index + 1
+                    data["list"] = top_name
+                    return data
+
+        return {"error": f"Level at id <{id}> not found or an error occured"}
 
 
     @app.route("/api/lists/players/<player>")
