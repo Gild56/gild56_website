@@ -8,7 +8,7 @@ from urllib.parse import quote
 
 
 def get_pfp(user: str) -> str:
-    return url_for('static', filename=('images/cubes/' + get_pfp(user))
+    return url_for('static', filename=('images/cubes/' + user))
 
 def logged_in() -> bool:
     return session.get("account_login", None) is not None
