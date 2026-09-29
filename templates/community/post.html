@@ -19,7 +19,7 @@
 <main>
     <h1>Add a comment to this post:</h1>
     <form method="post" action="{{ url_for('post', post_id=post[0]) }}" class="margin-bottom" name="comment">
-        <p><textarea id="input-comment-text" name="input_comment_text" placeholder="Write your comment here..."></textarea></p>
+        <p><textarea id="input-comment-text" name="input_comment_text" placeholder="Write your comment here..." maxlength="2000"></textarea></p>
         <button type="submit">Publish</button>
     </form>
     <hr>
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="img-container">
                 <a href="{{ url_for('user_profile', profile=post[2]) }}" class="no-bg no-margin no-padding">
-                    <img src="{{ get_cube(post[2]) }}" height="20", width="20" alt="{{ post[2] }}'s pfp">
+                    <img src="{{ get_pfp(post[2]) }}" height="20", width="20" alt="{{ post[2] }}'s pfp">
                 </a>
             </div>
             <a href="{{ url_for('user_profile', profile=post[2]) }}" class="name no-margin">{{ post[2] }}</a>
@@ -47,7 +47,7 @@
                     <div class="row">
                         <div class="img-container">
                             <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin no-padding">
-                                <img src="{{ get_cube(comment[3]) }}" height="20", width="20" alt="{{ comment[3] }}'s pfp">
+                                <img src="{{ get_pfp(comment[3]) }}" height="20", width="20" alt="{{ comment[3] }}'s pfp">
                             </a>
                         </div>
                         <a href="{{ url_for('user_profile', profile=comment[3]) }}" class="name no-margin">{{ comment[3] }}</a>
