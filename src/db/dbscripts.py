@@ -102,7 +102,7 @@ class DBScripts(DataBase):
 
     def add_post(self, content: str, author_name: str) -> None:
         """Adds a post with parameters."""
-        self.execute("add_post", [content, author_name])
+        self.execute("add_post", [content[:2000], author_name])
 
     def add_comment(
             self, content: str,
@@ -110,7 +110,7 @@ class DBScripts(DataBase):
             author_name: str
             ) -> None:
         """Adds a comment with parameters."""
-        self.execute("add_comment", [content, post_id, author_name])
+        self.execute("add_comment", [content[:2000], post_id, author_name])
 
     def get_role(self, login: str) -> str | None:
         """Returns user's role."""
