@@ -49,6 +49,12 @@
     <p>
         <a href="{{ url_for('tournaments') }}">Gild Tournaments</a>
     </p>
+    
+    {% if logged_in %}
+        <p>
+            <a href="{{ url_for('log_out') }}" class="link no-margin small-margin-left">Log Out</a>
+        </p>
+    {% endif %}
 
     <h1 style="margin-top: 50px;">Hall of fame</h1>
     <p>
@@ -85,9 +91,10 @@
             <li><img src="{{ get_cube('Minh') }}" class="icon" alt="Minh's icon"> Minh <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/vn.svg') }}" alt="Vietnamese flag"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
             <li><img src="{{ get_cube('Djo2x') }}" class="icon" alt="Djo2x's icon"> Djo2x <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
             <li><img src="{{ get_cube('speedy') }}" class="icon" alt="speedy's icon"> speedy <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/es.svg') }}" alt="Spanish flag"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
+            <li><img src="{{ get_cube('Tumbaburrosvr') }}" class="icon" alt="Tumbaburrosvr's icon"> Tumbaburrosvr <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/es.svg') }}" alt="Spanish flag"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
             <li><img src="{{ get_cube('Sao') }}" class="icon" alt="Sao's icon"> Sao <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/fr.svg') }}" alt="French flag"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
             <li><img src="{{ get_cube('Maveron') }}" class="icon" alt="Maveron's icon"> Maveron (mkm) <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/ru.svg') }}"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
-            <li>MrLink <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/fr.svg') }}" alt="French flag"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
+            <li><img src="{{ get_cube('Mr Link') }}" class="icon" alt="Maveron's icon"> Mr Link <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/fr.svg') }}" alt="French flag"> <img class="emoji flag-no-shadow" src="{{ url_for('static', filename='images/flags/gb.svg') }}" alt="British flag"></li>
         </ul>
     </p>
 </main>
