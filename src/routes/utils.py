@@ -16,6 +16,9 @@ def get_username() -> str:
 def get_role() -> str:
     return g.db.get_role(get_username())
 
+def get_pfp(user: str) -> str:
+    return get_cube(g.db.get_pfp(user))
+
 def get_len(item: list[Any] | dict[Any, Any] | tuple[Any]) -> int:
     return len(item)
 
