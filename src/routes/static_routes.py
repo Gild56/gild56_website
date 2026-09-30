@@ -62,7 +62,7 @@ def register_static_routes(app: Flask):
             code = request.form.get("code", "").strip()
 
             responses = {
-                "1234": "something is waiting"
+                "fjnfk": "something is waiting..."
             }
 
             response = responses.get(code, "invalid code")
