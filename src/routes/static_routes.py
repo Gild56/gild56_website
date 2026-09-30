@@ -49,6 +49,11 @@ def register_static_routes(app: Flask):
         return render_template("other/jaime_les_ours.html")
 
 
+    @app.route("/yameru")
+    def yameru():
+        return """<p qsecret="wp cjrt qjsWo dudtkd dmfh rktpdy">give up</p>"""
+
+
     # Error pages
 
     @app.errorhandler(404)
