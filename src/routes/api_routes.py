@@ -9,7 +9,7 @@ import json
 
 
 def register_api_routes(app: Flask):
-    def normalize_level(level:str, top: dict[str, Any]) -> dict[str, Any]:
+    def normalize_level(level: str, top: dict[str, Any]) -> dict[str, Any]:
         try:
             index = next(i for i, item in enumerate(top) if item[0] == level)
 
@@ -90,7 +90,7 @@ def register_api_routes(app: Flask):
                     data["list"] = top_name
                     return data
 
-        return {"error": f"Level at id <{id}> not found or an error occured"}
+        return {"error": f"Level at id <{id}> not found"}
 
 
     @app.route("/api/lists/players/<player>")
