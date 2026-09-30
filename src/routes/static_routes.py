@@ -51,7 +51,29 @@ def register_static_routes(app: Flask):
 
     @app.route("/yameru")
     def yameru():
-        return """<p qsecret="wp cjrt qjsWo dudtkd dmfh rktpdy">give up</p>"""
+        return """<p secret="wp cjrt qjsWo dudtkd dmfh rktpdy">give up</p>"""
+
+
+    @app.route("/dan-eo", methods=["GET", "POST"])
+    def daneo():
+        response = None
+
+        if request.method == "POST":
+            code = request.form.get("code", "").strip()
+
+            responses = {
+                "1234": "something is waiting"
+            }
+
+            response = responses.get(code, "invalid code")
+
+        return f"""
+        <form method="POST">
+            <input type="text" name="code" placeholder="Enter code">
+            <button type="submit">Submit</button>
+        </form>
+        {"<p>" + response + "</p>" if response else ""}
+        """
 
 
     # Error pages
