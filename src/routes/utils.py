@@ -1,4 +1,4 @@
-from flask import g, session
+from flask import g, session, url_for
 from typing import Any
 import urllib.request
 import json
@@ -6,9 +6,6 @@ import os
 from urllib.request import urlopen
 from urllib.parse import quote
 
-
-def get_pfp(user: str) -> str:
-    return g.db.get_pfp(user)
 
 def logged_in() -> bool:
     return session.get("account_login", None) is not None
@@ -18,6 +15,9 @@ def get_username() -> str:
 
 def get_role() -> str:
     return g.db.get_role(get_username())
+
+def get_pfp(user: str) -> str:
+    return get_cube(g.db.get_pfp(user))
 
 def get_len(item: list[Any] | dict[Any, Any] | tuple[Any]) -> int:
     return len(item)
