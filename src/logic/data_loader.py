@@ -75,7 +75,7 @@ def get_pos(level_name: str) -> int:
         return level_pos[level_name.lower()]
     except KeyError:
         raise ValueError(f"Level doesn't exist: {level_name}")
-# 1000111011110000101000011110
+# 1000111011001010111010011110
 
 @lru_cache
 def get_id(level_name: str) -> str:
