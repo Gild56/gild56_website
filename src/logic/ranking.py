@@ -5,29 +5,16 @@ from typing import Any
 import time
 import math
 
+def get_points_by_place(position: int, total_positions: int) -> int:
+    if total_positions <= 1:
+        return 1000
 
-@lru_cache
-def get_points_by_place(rank: int) -> float:
-    if rank <= 8:
-        return 1000 - (rank - 1) * 40
+    k = 4
 
-    if rank <= 20:
-        return 660 - (rank - 9) * 20
+    progress = (position - 1) / (total_positions - 1)
+    points = 1 + 999 * (math.exp(-k * progress) - math.exp(-k)) / (1 - math.exp(-k))
 
-    if rank <= 50:
-        return 396 - (rank - 21) * 4
-
-    if rank <= 75:
-        return 272 - (rank - 51) * 8
-
-    if rank <= 150:
-        return 80 - (rank - 75)
-
-    if rank <= 250:
-        return 4.6 - ((rank - 151) // 10) * 0.4
-
-    level = math.ceil((rank - 250) / 95)
-    return max(1.00 - level * 0.01, 0.05)
+    return round(points)
 
 
 @lru_cache
@@ -69,26 +56,30 @@ def get_top_players() -> list[tuple[str, list[str], list[str], list[str], list[s
     players = get_players()
 
     levels_list = load_file("levels_list")
+    list_length = len(levels_list)
     levels_list_points = {
-        level[0]: get_points_by_place(i + 1)
+        level[0]: get_points_by_place(i + 1, list_length)
         for i, level in enumerate(levels_list)
     }
 
     challenges_list = load_file("challenges_list")
+    list_length = len(challenges_list)
     challenges_list_points = {
-        level[0]: get_points_by_place(i + 1)
+        level[0]: get_points_by_place(i + 1, list_length)
         for i, level in enumerate(challenges_list)
     }
 
     server_levels_list = load_file("levels_list")
+    list_length = len(server_levels_list)
     server_levels_list_points = {
-        level[0]: get_points_by_place(i + 1)
+        level[0]: get_points_by_place(i + 1, list_length)
         for i, level in enumerate(server_levels_list)
     }
 
     server_challenges_list = load_file("challenges_list")
+    list_length = len(server_challenges_list)
     server_challenges_list_points = {
-        level[0]: get_points_by_place(i + 1)
+        level[0]: get_points_by_place(i + 1, list_length)
         for i, level in enumerate(server_challenges_list)
     }
 

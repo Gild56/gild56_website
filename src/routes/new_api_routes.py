@@ -91,7 +91,7 @@ def register_new_api_routes(app: Flask):
         data = dict(zip(keys, level_data))
 
         data["placement"] = placement
-        data["points"] = get_points_by_place(placement)
+        data["points"] = get_points_by_place(placement, len(top))
 
         data["list_percent"] = 100
         data["creator"] = "GILD56"

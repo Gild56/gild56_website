@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, abort, request
 from src.routes.utils import get_username, logged_in, get_len, get_mean, get_cube, get_thumbnail, get_api
 from src.logic.ranking import get_points_by_place
-from src.logic.data_loader import get_pos, get_id
+from src.logic.data_loader import get_pos, get_id, load_file
 
 
 def register_list_routes(app: Flask):
@@ -16,7 +16,7 @@ def register_list_routes(app: Flask):
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=get_api(f"{request.host_url}api/lists/gild/classic"),
             top="levels_list", get_points_by_place=get_points_by_place,
-            iter=iter, next=next, get_thumbnail=get_thumbnail
+            iter=iter, next=next, get_thumbnail=get_thumbnail, total_levels=len(load_file("levels_list"))
         )
 
 
@@ -26,7 +26,7 @@ def register_list_routes(app: Flask):
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=get_api(f"{request.host_url}api/lists/gild/challenges"),
             top="challenges_list", get_points_by_place=get_points_by_place,
-            iter=iter, next=next, get_thumbnail=get_thumbnail
+            iter=iter, next=next, get_thumbnail=get_thumbnail, total_levels=len(load_file("challenges_list"))
         )
 
 
@@ -36,7 +36,7 @@ def register_list_routes(app: Flask):
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=get_api(f"{request.host_url}api/lists/server/classic"),
             top="server_levels_list", get_points_by_place=get_points_by_place,
-            iter=iter, next=next, get_thumbnail=get_thumbnail
+            iter=iter, next=next, get_thumbnail=get_thumbnail, total_levels=len(load_file("server_levels_list"))
         )
 
 
@@ -46,7 +46,7 @@ def register_list_routes(app: Flask):
             "list/list.html", logged_in=logged_in(),
             username=get_username(), levels=get_api(f"{request.host_url}api/lists/server/challenges"),
             top="server_challenges_list", get_points_by_place=get_points_by_place,
-            iter=iter, next=next, get_thumbnail=get_thumbnail
+            iter=iter, next=next, get_thumbnail=get_thumbnail, total_levels=len(load_file("server_challenges_list"))
         )
 
 

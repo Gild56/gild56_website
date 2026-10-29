@@ -110,7 +110,7 @@
                     onerror="this.onerror=null; this.src='{{ 'https://levelthumbs.prevter.me/thumbnail/' + level['id'] }}';">
                     </a>
                 </div>
-                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level['name'] }} <span class="points">({{ get_points_by_place(loop.index0 + 1) }} pts)</span></h1>
+                <h1 class="copyable-heading left-margin" data-copy-text="{{ level[1] }}" onclick="event.stopPropagation()">#{{ loop.index0 + 1 }} - {{ level['name'] }} <span class="points">({{ get_points_by_place(loop.index0 + 1, total_levels) }} pts)</span></h1>
             </div>
         </div>
     {% endfor %}
