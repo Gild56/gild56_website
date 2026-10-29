@@ -86,3 +86,7 @@ def register_static_routes(app: Flask):
             username=get_username(),
             requested_url=request.url
         ), 404
+
+# https://demonlist.org/api-docs
+# https://github.com/XBOCTATUK/Global-List-Integration/blob/9f78d9e0a24b088fad078dccb706ccb5cc788646/src/API/API.hpp#L3
+# https://github.com/XBOCTATUK/Global-List-Integration/blob/9f78d9e0a24b088fad078dccb706ccb5cc788646/src/API/Levels/Levels.cpp#L43

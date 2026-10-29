@@ -5,6 +5,7 @@ from src.routes.community_routes import register_community_routes
 from src.routes.lists_routes import register_list_routes
 from src.routes.radio_routes import register_radio_routes
 from src.routes.api_routes import register_api_routes
+from src.routes.new_api_routes import register_new_api_routes
 
 def create_app():
     app = Flask(
@@ -24,5 +25,6 @@ def create_app():
     register_list_routes(app)
     register_radio_routes(app)
     register_api_routes(app)
+    register_new_api_routes(app)
 
     return app

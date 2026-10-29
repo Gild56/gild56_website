@@ -8,29 +8,29 @@ from typing import Any
 import json
 
 
+def normalize_level(level: str, top: dict[str, Any]) -> dict[str, Any]:
+    try:
+        index = next(i for i, item in enumerate(top) if item[0] == level)
+
+        level_data = top[index]
+
+        position = index + 1
+
+        keys = ["name", "id", "description", "completions"]
+        data = dict(zip(keys, level_data))
+
+        data["position"] = position
+
+        return data
+    except:
+        return {"error": f"Level <{level}> not found or an error occured"}
+
+
+def normalize_levels(levels: dict[str, Any]) -> list[dict[str, Any]]:
+    return [normalize_level(level[0], levels) for level in levels]
+
+
 def register_api_routes(app: Flask):
-    def normalize_level(level: str, top: dict[str, Any]) -> dict[str, Any]:
-        try:
-            index = next(i for i, item in enumerate(top) if item[0] == level)
-
-            level_data = top[index]
-
-            position = index + 1
-
-            keys = ["name", "id", "description", "completions"]
-            data = dict(zip(keys, level_data))
-
-            data["position"] = position
-
-            return data
-        except:
-            return {"error": f"Level <{level}> not found or an error occured"}
-
-
-    def normalize_levels(levels: dict[str, Any]) -> list[dict[str, Any]]:
-        return [normalize_level(level[0], levels) for level in levels]
-
-
     @app.route("/api")
     def api():
         return render_template(
