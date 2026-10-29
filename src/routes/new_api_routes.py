@@ -5,23 +5,29 @@ from src.logic.data_loader import get_pos, load_file, get_demonlist
 from src.routes.utils import get_mean, get_api
 from typing import Any
 import json
-import requests
+import urllib.request
+import urllib.parse
 import base64
 
 
 def get_gd_level(level_id: int) -> dict[str, Any]:
     url = "https://www.boomlings.com/database/getGJLevels21.php"
 
-    data = {
+    data = urllib.parse.urlencode({
         "str": str(level_id),
         "type": 10,
         "secret": "Wmfd2893gb7",
-    }
+    }).encode("utf-8")
 
-    response = requests.post(url, data=data, headers={"User-Agent": ""})
-    response.raise_for_status()
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={"User-Agent": ""}
+    )
 
-    raw = response.text
+    with urllib.request.urlopen(req) as response:
+        raw = response.read().decode("utf-8")
+
     if raw == "-1":
         return {}
 
