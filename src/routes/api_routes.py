@@ -5,6 +5,7 @@ from src.logic.data_loader import get_pos, load_file, get_demonlist
 from src.routes.utils import get_mean, get_api
 from collections import Counter
 from typing import Any
+from random import choice
 import json
 
 
@@ -238,6 +239,8 @@ def register_api_routes(app: Flask):
 
         for player in players:
             country_code = player["country"]
+            if country_code == "":
+                continue
 
             country_index = None
 
@@ -367,3 +370,19 @@ def register_api_routes(app: Flask):
         result.sort(key=lambda x: x["position"])
 
         return result
+
+
+    @app.route("/api/lists/gild/classic/random_completion")
+    def get_random_completion() -> dict[str, str]:
+        top = load_file("levels_list")
+
+        data = []
+        for level in top:
+            for player, video in level[3].items():
+                current = {
+                    "level": level[0],
+                    "player": player,
+                    "video": video}
+                data.append(current)
+
+        return choice(data)

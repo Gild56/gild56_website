@@ -289,3 +289,13 @@ def register_list_routes(app: Flask):
             server_list_levels=get_api(f"{request.host_url}api/lists/server/classic"),
             server_challenges_levels=get_api(f"{request.host_url}api/lists/server/challenges")
         )
+
+
+    @app.route("/lists/gild/classic/random_completion")
+    def random_completion():
+        completion = get_api(f"{request.host_url}api/lists/gild/classic/random_completion")
+        return render_template(
+            "list/random_completion.html", logged_in=logged_in(),
+            username=get_username(), completion=completion,
+            get_cube=get_cube, level_info=get_api(f"{request.host_url}api/lists/gild/classic/levels/{completion["level"]}")
+        )

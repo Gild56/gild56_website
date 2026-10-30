@@ -49,7 +49,7 @@
         {% if player['description'] %}
             <p class="player-description">{{ player['description'] }}</p>
         {% else %}
-            <p class="player-description"><i>For example nothing...</i>></p>
+            <p class="player-description"><i>For example nothing...</i></p>
         {% endif %}
 
         <p><a href="https://youtube.com/{{ player['youtube_channel'] }}" target="_blank">YouTube Channel</a></p>
@@ -101,7 +101,7 @@
         {% endif %}
 
         <h2>Extremes completed:</h2>
-        {% if player['extremes'] == [] %}
+        {% if player['extremes'] == {} %}
             <p>No extremes completed</p>
         {% else %}
             <p>
