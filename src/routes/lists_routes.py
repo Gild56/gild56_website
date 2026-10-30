@@ -297,5 +297,5 @@ def register_list_routes(app: Flask):
         return render_template(
             "list/random_completion.html", logged_in=logged_in(),
             username=get_username(), completion=completion,
-            get_cube=get_cube, level_info=get_api(f"{request.host_url}api/lists/gild/classic/levels/{completion["level"]}")
+            get_cube=get_cube, level_info=get_api(f"{request.host_url}api/lists/gild/classic/levels/{completion['level']}")
         )
